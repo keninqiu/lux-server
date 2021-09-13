@@ -1,7 +1,7 @@
 import { CertificationModel, Certification, ICertification } from '../models/certificationSchema';
 export class CertificationDao {
    public async fetchAll(): Promise<Certification[]> {
-        return await CertificationModel.find({});
+        return await CertificationModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Certification | null> {
         return await CertificationModel.findById(id);

@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 import { parse, HTMLElement } from 'node-html-parser';
-import { SchoolDao } from "../../daos/schoolDao";
+import { CertificationDao } from "../../daos/certificationDao";
 
 export const start = async function() {
-    const dao = new SchoolDao();
+    const dao = new CertificationDao();
     const items = await dao.fetchAll();
     for(let i = 0; i < items.length; i++) {
        try {

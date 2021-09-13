@@ -1,7 +1,7 @@
 import { IndustryModel, Industry, IIndustry } from '../models/industrySchema';
 export class IndustryDao {
    public async fetchAll(): Promise<Industry[]> {
-        return await IndustryModel.find({});
+        return await IndustryModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Industry | null> {
         return await IndustryModel.findById(id);

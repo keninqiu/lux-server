@@ -1,7 +1,7 @@
 import { CityModel, City, ICity } from '../models/citySchema';
 export class CityDao {
    public async fetchAll(): Promise<City[]> {
-        return await CityModel.find({});
+        return await CityModel.find({}).select('name state url');
    }
    public async fetchById(id: string): Promise<City | null> {
         return await CityModel.findById(id);

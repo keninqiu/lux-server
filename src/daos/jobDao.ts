@@ -1,7 +1,7 @@
 import { JobModel, Job, IJob } from '../models/jobSchema';
 export class JobDao {
    public async fetchAll(): Promise<Job[]> {
-        return await JobModel.find({});
+        return await JobModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Job | null> {
         return await JobModel.findById(id);

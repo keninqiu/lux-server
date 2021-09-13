@@ -1,7 +1,7 @@
 import { StateModel, State, IState } from '../models/stateSchema';
 export class StateDao {
    public async fetchAll(): Promise<State[]> {
-        return await StateModel.find({});
+        return await StateModel.find({}).select('name country url');
    }
    public async fetchAllPopulate(): Promise<any[]> {
      return await StateModel.find({}).populate('country');

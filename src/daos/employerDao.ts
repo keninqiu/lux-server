@@ -1,7 +1,7 @@
 import { EmployerModel, Employer, IEmployer } from '../models/employerSchema';
 export class EmployerDao {
    public async fetchAll(): Promise<Employer[]> {
-        return await EmployerModel.find({});
+        return await EmployerModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Employer | null> {
         return await EmployerModel.findById(id);

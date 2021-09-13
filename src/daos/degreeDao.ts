@@ -1,7 +1,7 @@
 import { DegreeModel, Degree, IDegree } from '../models/degreeSchema';
 export class DegreeDao {
    public async fetchAll(): Promise<Degree[]> {
-        return await DegreeModel.find({});
+        return await DegreeModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Degree | null> {
         return await DegreeModel.findById(id);

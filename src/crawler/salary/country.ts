@@ -4,12 +4,11 @@ import { CountryDao } from "../../daos/countryDao";
 
 export const start = async function() {
     const dao = new CountryDao();
-    const countries = await dao.fetchAll();
-    for(let i = 0; i < countries.length; i++) {
+    const items = await dao.fetchAll();
+    for(let i = 0; i < items.length; i++) {
        try {
-        const country = countries[i];
-        const countryName = country.name;
-        const url = country.url;
+        const item = items[i];
+        const url = item.url;
         if(!url) {
             console.log('error, url is empty');
         }
@@ -29,8 +28,8 @@ export const start = async function() {
         //console.log('dataText=', dataText);
         const data = parseData(dataText);
         //console.log('data=', data);
-        const newCoutry = await dao.update(country._id, data);
-        //console.log('newSchool=', newSchool);
+        const newItem = await dao.update(item._id, data);
+        console.log('newItem=', newItem);
       } catch(e: any) {
          i --;
       }

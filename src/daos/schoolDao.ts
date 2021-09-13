@@ -1,7 +1,7 @@
 import { SchoolModel, School, ISchool } from '../models/schoolSchema';
 export class SchoolDao {
    public async fetchAll(): Promise<School[]> {
-        return await SchoolModel.find({});
+        return await SchoolModel.find({}).select('name url category');
    }
 
    public async fetchAllAndPopulate(): Promise<any[]> {

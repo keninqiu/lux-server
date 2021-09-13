@@ -1,7 +1,7 @@
 import { SkillModel, Skill, ISkill } from '../models/skillSchema';
 export class SkillDao {
    public async fetchAll(): Promise<Skill[]> {
-        return await SkillModel.find({});
+        return await SkillModel.find({}).select('name url category');
    }
    public async fetchById(id: string): Promise<Skill | null> {
         return await SkillModel.findById(id);
