@@ -9,6 +9,7 @@ export const start = async function() {
 
     const countries = await countryDao.fetchAll();
     for(let i = 0; i < countries.length; i++) {
+        try {
         console.log('i=', i);
         const country = countries[i];
         const code = country.code;
@@ -60,7 +61,9 @@ export const start = async function() {
             console.log('body=', body);
             await dao.create(body);
         }
-
+        } catch(e: any) {
+            i--;
+        }
 
     }
     
