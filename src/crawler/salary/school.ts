@@ -4,7 +4,6 @@ import { CountryDao } from "../../daos/countryDao";
 import { CategoryDao } from "../../daos/categoryDao";
 import { SchoolDao } from "../../daos/schoolDao";
 
-const type = 'School';
 export const start = async function() {
     const countryDao = new CountryDao();
     const categoryDao = new CategoryDao();

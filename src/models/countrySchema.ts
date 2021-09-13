@@ -10,19 +10,51 @@ export interface ICountry {
     name: string,
     code: string,
     url: string,
-    currencyCode: string
+    currencyCode: string,
+    jobs?: string[],
+    employers?: string[],
+    degrees?: string[],
+    schools?: string[]
 }
 export interface Country extends Document {
     name: string,
     code: string,
     url: string,
-    currencyCode: string
+    currencyCode: string,
+    jobs: string[],
+    employers: string[],
+    degrees: string[],
+    schools: string[]
 }
 const CountrySchema = new Schema<Country>({
     name: String,
     code: String,
     url: String,
     currencyCode: String,
+    jobs: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Job'
+        }
+    ],
+    employers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Employer'
+        }
+    ],
+    degrees: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Degree'
+        }
+    ],
+    schools: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'School'
+        }
+    ],
     createdAt: {
         type: Date,
         required: true,
