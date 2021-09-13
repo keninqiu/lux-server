@@ -15,7 +15,9 @@ export const start = async function() {
     const childNodes = rows.childNodes;
     //console.log('\n');
     //console.log(childNodes);
-    childNodes.forEach( node => {
+    for(let i = 0; i < childNodes.length; i++) {
+        console.log('i=', i);
+        const node = childNodes[i];
         const aNode = node.childNodes[0] as HTMLElement;
         const href = aNode.rawAttributes['href'];
         //console.log('node.text=', node.text);
@@ -30,5 +32,5 @@ export const start = async function() {
             currencyCode: ''
         };
         dao.create(body);
-    });
+    }
 }
