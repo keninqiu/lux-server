@@ -8,7 +8,7 @@ export class CertificationDao {
    }
 
    public async create(data: ICertification): Promise<Certification | null> {
-       return await CertificationModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await CertificationModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Certification | null> {

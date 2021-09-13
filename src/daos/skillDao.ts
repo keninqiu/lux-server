@@ -8,7 +8,7 @@ export class SkillDao {
    }
 
    public async create(data: ISkill): Promise<Skill | null> {
-       return await SkillModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await SkillModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Skill | null> {

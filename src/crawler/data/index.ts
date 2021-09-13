@@ -7,13 +7,11 @@ import * as degree from './degree';
 import * as employer from './employer';
 
 export const start = async function() {
-    //await school.start();
-    //await industry.start();
-    //await job.start();
-
-
-    //await certification.start();
-    //await skill.start();
-    //await degree.start();
+    await school.start();
+    await industry.start();
+    await job.start();
+    await certification.start();
+    await skill.start();
+    await degree.start();
     await employer.start();
 }

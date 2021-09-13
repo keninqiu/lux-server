@@ -8,7 +8,7 @@ export class IndustryDao {
    }
 
    public async create(data: IIndustry): Promise<Industry | null> {
-       return await IndustryModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await IndustryModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Industry | null> {

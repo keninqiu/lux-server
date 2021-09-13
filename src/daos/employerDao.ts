@@ -8,7 +8,7 @@ export class EmployerDao {
    }
 
    public async create(data: IEmployer): Promise<Employer | null> {
-       return await EmployerModel.create(data);
+       return await EmployerModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Employer | null> {

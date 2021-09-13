@@ -17,7 +17,13 @@ export const start = async function() {
     for(let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const categoryId = category._id;
+        const categoryType = category.type;
+        if(categoryType != type) {
+            console.log('categoryType != type, stop');
+            return;
+        }
         const url = category.url;
+
         const response = await fetch('https://www.payscale.com' + url);        
         const body = await response.text();
         

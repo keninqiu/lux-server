@@ -17,7 +17,7 @@ export class CategoryDao {
    }
 
    public async create(data: ICategory): Promise<Category | null> {
-       return await CategoryModel.findOneAndUpdate({name: data.name, country: data.country}, data, {upsert: true, new: true});
+       return await CategoryModel.findOneAndUpdate({name: data.name, type: data.type, url: data.url, country: data.country}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Category | null> {

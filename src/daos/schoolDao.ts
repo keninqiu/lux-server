@@ -18,7 +18,7 @@ export class SchoolDao {
    }
 
    public async create(data: any): Promise<School | null> {
-       return await SchoolModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await SchoolModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async deleteAll(): Promise<any> {

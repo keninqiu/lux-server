@@ -8,7 +8,7 @@ export class JobDao {
    }
 
    public async create(data: IJob): Promise<Job | null> {
-       return await JobModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await JobModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Job | null> {

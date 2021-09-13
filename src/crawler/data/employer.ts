@@ -18,6 +18,11 @@ export const start = async function() {
         console.log('i=', i);
         const category = categories[i];
         const categoryId = category._id;
+        const categoryType = category.type;
+        if(categoryType != type) {
+            console.log('categoryType != type, stop');
+            return;
+        }
         const url = category.url;
         if(!url) {
             console.log('url is empty for category:' + categoryId);

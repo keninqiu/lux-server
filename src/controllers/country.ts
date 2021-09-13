@@ -46,6 +46,25 @@ export class CountryController {
     }
     }
 
+    @Get('code/:code')
+    private async fetchByCode(req: Request, res: Response): Promise<Response> {
+    try {
+        const code = req.params.code;
+       const item = await this.dao.fetchByCode(code);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: item
+        }           
+       );
+    } catch (err) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }
+
     @Put(':id')
     @Middleware([authAdmin])
     private async update(req: Request, res: Response) {

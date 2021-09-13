@@ -22,8 +22,8 @@ const main = async function() {
     //await state.start();
     //await city.start();
     //await category.start();
-    //await data.start();
-    await salary.start();
+    await data.start();
+    //await salary.start();
 }
 
 main();

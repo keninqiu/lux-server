@@ -8,7 +8,7 @@ export class DegreeDao {
    }
 
    public async create(data: IDegree): Promise<Degree | null> {
-       return await DegreeModel.findOneAndUpdate({name: data.name, category: data.category}, data, {upsert: true, new: true});
+       return await DegreeModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 
    public async update(id: string, data: any): Promise<Degree | null> {

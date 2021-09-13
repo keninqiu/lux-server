@@ -6,7 +6,10 @@ export class CountryDao {
    public async fetchById(id: string): Promise<Country | null> {
         return await CountryModel.findById(id);
    }
-
+   public async fetchByCode(code: string): Promise<Country | null> {
+     return await CountryModel.findOne({code});
+   }
+   
    public async create(data: ICountry): Promise<Country | null> {
        return await CountryModel.findOneAndUpdate({name: data.name}, data, {upsert: true, new: true});
    }
