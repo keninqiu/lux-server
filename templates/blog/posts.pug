@@ -1,0 +1,23 @@
+each blog in blogs
+    div(class="col-lg-4 mb-4")
+        div(class="entry2")
+            a(href='/article/' + blog.uri)
+                img(src=blog.image alt="Image" class="img-fluid rounded")
+            div(class="excerpt")
+                span(class="post-category text-white bg-secondary mb-3") 
+                    a(href='/cat/' + blog.category.uri) #{blog.category.title}
+                h2
+                    a(href=blog.uri) #{blog.title}
+                div(class="post-meta align-items-center text-left clearfix")
+                    figure(class="author-figure mb-0 mr-3 float-left")
+                        img(src="/img/logo.svg" alt="Image" class="img-fluid")
+                    span(class="d-inline-block mt-1")
+                        a(href="/") Flaswap Admin
+                    span &nbsp;-&nbsp; #{blog.createdAt}
+                p #{blog.summary}
+                p 
+                    a(href="#{$blog.uri}.html") Read More
+
+
+
+

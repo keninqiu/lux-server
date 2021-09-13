@@ -1,0 +1,41 @@
+.site-section {
+    padding: 2.5em 0;
+}
+
+.entry2 h2 a {
+    color: #000;
+}
+
+.entry2 .post-meta a {
+    color: #000;
+}
+
+.post-category {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: .2em;
+    font-weight: 700;
+    font-size: .6rem;
+    text-transform: uppercase;
+}
+
+.entry2 .post-meta {
+    color: #b3b3b3;
+    font-size: 13px;
+    width: 100%;
+    display: block;
+}
+
+.entry2 .post-meta .author-figure img {
+    width: 30px;
+    border-radius: 50%;
+}
+.entry2 img {
+    margin-bottom: 30px;
+}
+
+.exchange-logo {
+    height: 30px;
+    width: auto;
+}

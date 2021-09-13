@@ -1,0 +1,18 @@
+curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=AVdN8&f.sid=8920575618715452926&bl=boq_translate-webserver_20210217.12_p0&hl=zh-CN&soc-app=1&soc-platform=1&soc-device=1&_reqid=3027744&rt=c' \
+  -H 'authority: translate.google.com' \
+  -H $'x-goog-batchexecute-bgr: ["\u0021tbaltvrNAAV3gfYgd0LuS0GifSYnxzsAKQAjCPxGzOrxaLzmV0uBMiApKezwDx4MzegwfWyPZgoZMra9PMn0qmD1AgAAAHRSAAAAEWgBBwoA3xLouETYa6RWoU-hkiMuFXABKEXcksmIO4GnQVoltis-7nbCEelxbOgXBnZqALHPMkIpYssdhOnb4r_m-gRpYiqTb9b8ezcuxjbSBA1GeOlhy8jpU4URhc_qlLBpjjgssJs7VaLUUUa31-UHlmfuQuSGm6PJPQ-7wEz31OA0N2_aHAUtZlOFIcd6RVAyXudOS-SIEM1DcEh5fd_mgT1bdS8n8NCUQLbvLrgBrnPR2Nefz7tDM2TJC5o6kU1eMFB0J5GagBpNatFv7hgxgg-pCaUojB4_5cADbsd2HzDUl_KZAcN8cdjU6_QgsSNtOPBhAR1UcNlcYnenCclMlRdf3RvWcfysXnQlw_34BxNMpXNq2m8M6aDW6VOJM8X1To8DAAAWN7Sfe9PANIhW6ApLvEx5EZK79ph9j8EyGOalIWySdP0FhMlJSF_GFRf6yAgR5m8D6rCnAI90nAJf9Dw2k_gY2g5x2Q74AzJhV1I2SqvtCmrlog7cbfpqUfwOslbYow7lK_tJQ0hKAaEQCTIF4QrSTJCgs5LwExMMIM7ptnv_kavJa04lM0Dfhjf80xPaqq4kBmspfEi75k-c-pfbt3HaKxc4Nok-PI6II96_nr7bJE9jUOhWsG3zL840KTaNLdyLbOJstcqWfXPomtmkiLmGVhfM7rEaErVMPuqvSfmudXn5MQ7Hting_jI3Q2w46Hx3RTCQBwt0cSud8vpeZ1W-shQy2rjCJbjrvrYB6uordJMOfsiNzLzcxHEt96gcgyDEh2-AHP0M5WoYC06zF639tk080EFLirKeEfgaufmQNOgRX6mOECuMw6DUNt55jPx20XfIjp4C5MpeDe_-Gz_Ww3ERJI-4CAY1PvByJVeoSU3RPvFzIFb49TFR-G8ml9WLo35G",null,null,20,null,null,null,0]' \
+  -H 'x-same-domain: 1' \
+  -H 'x-goog-ext-174067345-jspb: [[1]]' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36' \
+  -H 'content-type: application/x-www-form-urlencoded;charset=UTF-8' \
+  -H 'accept: */*' \
+  -H 'origin: https://translate.google.com' \
+  -H 'x-client-data: CIe2yQEIpLbJAQjEtskBCKmdygEIlcPKAQj4x8oBCKTNygEI3NXKAQj54coBCKecywEIxZzLAQjknMsBCKmdywEY+bjKAQ==' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: https://translate.google.com/' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'cookie: SEARCH_SAMESITE=CgQI5JEB; ANID=AHWqTUlueZZWjTS3rjRu1wWOZu338D0MR59-UgeszX6_5yOQ59FuSX1Hru4-GAez; _ga=GA1.3.1930012561.1612357187; OTZ=5834220_76_76_104100_72_446760; SID=6geIR1abG_UI7AyywGSDyiKCZsX1xFOwoY2irnpbOSX4ucuEWafYoZVHc1dhC0tk_bgw7w.; __Secure-3PSID=6geIR1abG_UI7AyywGSDyiKCZsX1xFOwoY2irnpbOSX4ucuE-LuGlAGVlCFNLXVxrr7JOg.; HSID=A332BNb0i-niU8JQH; SSID=Ap01GzKlFFIXnc4Lz; APISID=752y4HsFdcD5oLQF/AWrVmOHltgmRQGEQF; SAPISID=DfEV_uwFTeePMXvI/AHEG5YxgRjbNEbWF6; __Secure-3PAPISID=DfEV_uwFTeePMXvI/AHEG5YxgRjbNEbWF6; _gid=GA1.3.1055177062.1613873726; 1P_JAR=2021-02-21-12; NID=209=VvVnKnnHo1ESjw8UktYQ11ROQ0kyVrII4c58gK6vhZ2GZrBVL6YNh3UpzAIyr8p98OcHClql0KzJO_rFlefwg-_NwjM1_jf4yf7VB-PzSNNPYpwJmluAfLYGlItYjPxLLHJDneLLgEFioqQfo3LHtkBLbJ3EbcBymfOsvb9D8Vab5-g0j3Ey3d8zdSItIcTQzCGDzw2-4oIuCN6WwddpXJOjkYCwpGuAlr8c34jxyDfNHaKQ2uWQgaNxVtT4gDtPfg1eAD2PhB2bp_rMO0XKjeQ1ky2VYi-8LDNG-ubbhAZZJxktdJWwaRTMB1PHfWHgrDE; SIDCC=AJi4QfHAYcOTm4ue2C_zrAcOEGitsg-QGqmyC7KJbAhPG1ABNE6DkvmufWv83WH_pXOS4ddN5g; __Secure-3PSIDCC=AJi4QfHDg6ol9_k-X7v_Zh3X6hSIv__B10qWKD3CDZP9KHvqxiUYPyRQrWuZ5Nm0VxBEd4U0lVM' \
+  --data-raw 'f.req=%5B%5B%5B%22AVdN8%22%2C%22%5B%5C%22firs%5C%22%2C%5C%22en%5C%22%2C%5C%22zh-CN%5C%22%5D%22%2Cnull%2C%22generic%22%5D%5D%5D&at=AD08yZkS5SqPlvFiBnKF09gA2Zoh%3A1613911343189&' \
+  --compressed

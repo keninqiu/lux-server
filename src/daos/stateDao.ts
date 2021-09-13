@@ -1,0 +1,33 @@
+import { StateModel, State, IState } from '../models/stateSchema';
+export class StateDao {
+   public async fetchAll(): Promise<State[]> {
+        return await StateModel.find({});
+   }
+   public async fetchAllPopulate(): Promise<any[]> {
+     return await StateModel.find({}).populate('country');
+   }
+
+   public async fetchById(id: string): Promise<State | null> {
+        return await StateModel.findById(id);
+   }
+
+   public async create(data: IState): Promise<State | null> {
+       return await StateModel.findOneAndUpdate({name: data.name, country: data.country}, data, {upsert: true, new: true});
+   }
+
+   public async update(id: string, data: any): Promise<State | null> {
+        return await StateModel.updateOne({_id: id}, data);
+   }   
+  
+   public async delete(id: string): Promise<State | null> {
+        return await StateModel.findByIdAndDelete(id);
+   } 
+
+   public async deleteAll(): Promise<any> {
+        return await StateModel.deleteMany({});
+   }
+   
+   public async deleteMany(ids: string[]): Promise<any> {
+        return await StateModel.deleteMany({_id: {$in: ids}});
+   }     
+}
