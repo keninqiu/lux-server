@@ -6,6 +6,7 @@ export const start = async function() {
     const dao = new CountryDao();
     const countries = await dao.fetchAll();
     for(let i = 0; i < countries.length; i++) {
+       try {
         const country = countries[i];
         const countryName = country.name;
         const url = country.url;
@@ -28,13 +29,18 @@ export const start = async function() {
         //console.log('dataText=', dataText);
         const data = parseData(dataText);
         //console.log('data=', data);
-        //const newSchool = await dao.update(school._id, data);
+        const newCoutry = await dao.update(country._id, data);
         //console.log('newSchool=', newSchool);
+      } catch(e: any) {
+         i --;
+      }
     }
 }
 
 const parseData = function(dataText: string) {
     const json = JSON.parse(dataText);
+    
+    /*
     const byDimension = json.props.pageProps.pageData.byDimension;
     
     console.log('byDimension=', byDimension);
@@ -42,7 +48,11 @@ const parseData = function(dataText: string) {
     const employers = byDimension['Average Salary by Employer']['rows'];
     const degrees = byDimension['Average Salary by Degree']['rows'];
     const schools = byDimension['Average Salary by School']['rows'];
-    
+    */
+
+    return {
+       rawData: json
+    }
 }
 
 

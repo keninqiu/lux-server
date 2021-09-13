@@ -14,7 +14,8 @@ export interface ICountry {
     jobs?: string[],
     employers?: string[],
     degrees?: string[],
-    schools?: string[]
+    schools?: string[],
+    rawData?: any
 }
 export interface Country extends Document {
     name: string,
@@ -24,7 +25,8 @@ export interface Country extends Document {
     jobs: string[],
     employers: string[],
     degrees: string[],
-    schools: string[]
+    schools: string[],
+    rawData: any
 }
 const CountrySchema = new Schema<Country>({
     name: String,
@@ -55,6 +57,7 @@ const CountrySchema = new Schema<Country>({
             ref: 'School'
         }
     ],
+    rawData: Object,
     createdAt: {
         type: Date,
         required: true,

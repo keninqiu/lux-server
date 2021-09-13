@@ -15,7 +15,7 @@ export class CountryDao {
    }
 
    public async update(id: string, data: any): Promise<Country | null> {
-        return await CountryModel.updateOne({_id: id}, data);
+        return await CountryModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Country | null> {
