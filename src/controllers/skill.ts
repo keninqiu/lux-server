@@ -61,7 +61,7 @@ export class SkillController {
                     data: item
                 }
                 );
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message
@@ -85,7 +85,7 @@ export class SkillController {
                     data: item
                 }
             );
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message
@@ -107,7 +107,7 @@ export class SkillController {
                     data: item
                 }
                 );
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message
@@ -127,7 +127,7 @@ export class SkillController {
                     data: items
                 }
                 );
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message
