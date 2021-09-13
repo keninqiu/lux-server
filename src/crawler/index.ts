@@ -19,11 +19,12 @@ const setupDatabase = function() {
 const main = async function() {
     setupDatabase();
     //await country.start();
-    await state.start();
-    //await city.start();
+    //await state.start();
+    await city.start();
     //await category.start();
     //await data.start();
     //await salary.start();
+    console.log('done');
 }
 
 main();

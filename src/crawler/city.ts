@@ -13,6 +13,7 @@ export const start = async function() {
 
     const states = await stateDao.fetchAllPopulate();
     for(let i = 0; i < states.length; i++) {
+        try {
         const state = states[i];
         const stateId = state._id;
         let url = state.url;
@@ -70,7 +71,9 @@ export const start = async function() {
             console.log('body=', body);
             await dao.create(body);
         }
-
+        } catch(e: any) {
+            i --;
+        } 
 
     }
     
