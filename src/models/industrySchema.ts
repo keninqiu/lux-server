@@ -10,11 +10,13 @@ export interface IIndustry {
     name: string,
     url: string,
     category: string,
+    rawData?: any
 }
 export interface Industry extends Document {
     name: string,
     url: string,
     category: string,
+    rawData: any
 }
 const IndustrySchema = new Schema<Industry>({
     name: String,
@@ -22,6 +24,7 @@ const IndustrySchema = new Schema<Industry>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    rawData: Object,
     url: String,
     createdAt: {
         type: Date,

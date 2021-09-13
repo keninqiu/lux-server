@@ -9,12 +9,14 @@ Id	code  CountryName	CurrencyCode
 export interface IJob {
     name: string,
     url: string,
-    category: string
+    category: string,
+    rawData?: any
 }
 export interface Job extends Document {
     name: string,
     url: string,
-    category: string
+    category: string,
+    rawData: any
 }
 const JobSchema = new Schema<Job>({
     name: String,
@@ -22,6 +24,7 @@ const JobSchema = new Schema<Job>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    rawData: Object,
     url: String,
     createdAt: {
         type: Date,

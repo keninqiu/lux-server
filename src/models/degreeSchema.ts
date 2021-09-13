@@ -9,12 +9,14 @@ Id	code  CountryName	CurrencyCode
 export interface IDegree {
     name: string,
     category: string,
-    url: string
+    url: string,
+    rawData?: any
 }
 export interface Degree extends Document {
     name: string,
     url: string,
-    category: string
+    category: string,
+    rawData: any
 }
 const DegreeSchema = new Schema<Degree>({
     name: String,
@@ -23,6 +25,7 @@ const DegreeSchema = new Schema<Degree>({
         ref: 'Category'
     },
     url: String,
+    rawData: Object,
     createdAt: {
         type: Date,
         required: true,

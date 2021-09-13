@@ -10,13 +10,15 @@ export interface ICity {
     name: string,
     code: string,
     url: string,
-    state: string
+    state: string,
+    rawData?: any
 }
 export interface City extends Document {
     name: string,
     code: string,
     url: string,
-    state: string
+    state: string,
+    rawData: any
 }
 const CitySchema = new Schema<City>({
     name: String,
@@ -26,6 +28,7 @@ const CitySchema = new Schema<City>({
         ref: 'Country'
     },
     url: String,
+    rawData: Object,
     createdAt: {
         type: Date,
         required: true,

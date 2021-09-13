@@ -11,6 +11,7 @@ export interface IState {
     code: string,
     url: string,
     type: string,
+    rawData?: any,
     location: string,
     country: string
 }
@@ -20,7 +21,8 @@ export interface State extends Document {
     url: string,
     type: string,
     location: string,
-    country: string
+    country: string,
+    rawData: any
 }
 const StateSchema = new Schema<State>({
     name: String,
@@ -28,6 +30,7 @@ const StateSchema = new Schema<State>({
     type: String,
     url: String,
     location: String,
+    rawData: Object,
     country: {
         type: Schema.Types.ObjectId,
         ref: 'Country'

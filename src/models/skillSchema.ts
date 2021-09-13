@@ -9,12 +9,14 @@ Id	code  CountryName	CurrencyCode
 export interface ISkill {
     name: string,
     url: string,
+    rawData?: any,
     category: string
 }
 export interface Skill extends Document {
     name: string,
     url: string,
-    category: string
+    category: string,
+    rawData: any
 }
 const SkillSchema = new Schema<Skill>({
     name: String,
@@ -23,6 +25,7 @@ const SkillSchema = new Schema<Skill>({
         ref: 'Category'
     },
     url: String,
+    rawData: Object,
     createdAt: {
         type: Date,
         required: true,

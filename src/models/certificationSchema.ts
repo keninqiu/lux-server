@@ -10,11 +10,13 @@ export interface ICertification {
     name: string,
     category: string,
     url: string,
+    rawData?: any
 }
 export interface Certification extends Document {
     name: string,
     category: string,
     url: string,
+    rawData: any
 }
 const CertificationSchema = new Schema<Certification>({
     name: String,
@@ -29,6 +31,7 @@ const CertificationSchema = new Schema<Certification>({
         default: Date.now
 
     },
+    rawData: Object,
     updatedAt: {
         type: Date
     }
