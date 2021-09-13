@@ -11,7 +11,7 @@ const authAdmin = (req: any, res: Response, next: NextFunction) => {
    });
    }
    if (authToken) {
-   verify(authToken, Secret.jwtSecret, function(err, decoded: any) {
+   verify(authToken, Secret.jwtSecret, function(err: any, decoded: any) {
       if (err) {
          return res.status(StatusCodes.UNAUTHORIZED).json({
             error: 'Invalid authentication token!',

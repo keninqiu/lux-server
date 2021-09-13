@@ -24,7 +24,7 @@ export class AuthController {
                     data: user
                 }
                 );
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message
@@ -66,7 +66,7 @@ export class AuthController {
                         token: token
                     }
                });            
-          } catch (err) {
+          } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
                  error: err.message

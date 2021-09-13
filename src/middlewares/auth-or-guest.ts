@@ -8,7 +8,7 @@ const authorGuest = (req: any, res: Response, next: NextFunction) => {
       return next();
    }
    if (authToken) {
-   verify(authToken, Secret.jwtSecret, function(err, decoded) {
+   verify(authToken, Secret.jwtSecret, function(err: any, decoded: any) {
       if (err) {
          return next();
       }
