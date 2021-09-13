@@ -15,47 +15,50 @@ export const start = async function() {
     await dao.deleteAll();
     const categories = await categoryDao.fetchAllByTypePopulate(type);
     for(let i = 0; i < categories.length; i++) {
-        const category = categories[i];
-        const categoryId = category._id;
-        const categoryType = category.type;
-        if(categoryType != type) {
-            console.log('categoryType != type, stop');
-            return;
-        }
-        const url = category.url;
-        if(!url) {
-            console.log('url is empty for category:' + categoryId);
-            return;
-        }
-        const response = await fetch('https://www.payscale.com' + url);
-        const body = await response.text();
+        try {
+            const category = categories[i];
+            const categoryId = category._id;
+            const categoryType = category.type;
+            if(categoryType != type) {
+                console.log('categoryType != type, stop');
+                return;
+            }
+            const url = category.url;
+            if(!url) {
+                console.log('url is empty for category:' + categoryId);
+                return;
+            }
+            const response = await fetch('https://www.payscale.com' + url);
+            const body = await response.text();
+            
+            const root = parse(body);
         
-        const root = parse(body);
-    
-        const rows = root.querySelector('.subcats__links');
-    
-        if(!rows) {
-            continue;
-        }
+            const rows = root.querySelector('.subcats__links');
         
-        const childNodes = rows.childNodes;
-        for(let j = 0; j < childNodes.length; j++) {
-            const node = childNodes[j] as HTMLElement;
-            const href = node.getAttribute('href');
-            if(!href) {
+            if(!rows) {
                 continue;
             }
-            const name = node.text;
+            
+            const childNodes = rows.childNodes;
+            for(let j = 0; j < childNodes.length; j++) {
+                const node = childNodes[j] as HTMLElement;
+                const href = node.getAttribute('href');
+                if(!href) {
+                    continue;
+                }
+                const name = node.text;
 
-            const body = {
-                name: name,
-                url: href,
-                category: categoryId
-            };
-            console.log('body in certification==', body);
-            await dao.create(body);
+                const body = {
+                    name: name,
+                    url: href,
+                    category: categoryId
+                };
+                console.log('body in certification==', body);
+                await dao.create(body);
+            }
+        }catch(e: any) {
+            i --;
         }
-
 
     }
     

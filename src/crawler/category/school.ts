@@ -10,6 +10,7 @@ export const start = async function() {
     await dao.deleteAllByType(type);
     const countries = await countryDao.fetchAll();
     for(let i = 0; i < countries.length; i++) {
+        try {
         const country = countries[i];
         const code = country.code;
         const countryId = country._id;
@@ -51,7 +52,9 @@ export const start = async function() {
             await dao.create(body);
         }
 
-
+        } catch(e: any) {
+            i --;
+        }
     }
     
 

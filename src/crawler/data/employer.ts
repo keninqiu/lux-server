@@ -15,6 +15,7 @@ export const start = async function() {
     await dao.deleteAll();
     const categories = await categoryDao.fetchAllByTypePopulate(type);
     for(let i = 0; i < categories.length; i++) {
+        try {
         console.log('i=', i);
         const category = categories[i];
         const categoryId = category._id;
@@ -60,7 +61,9 @@ export const start = async function() {
             console.log('body==', body);
             await dao.create(body);
         }
-
+        }catch(e: any) {
+            i --;
+        }
 
     }
     
