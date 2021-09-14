@@ -12,7 +12,7 @@ export class IndustryDao {
    }
 
    public async update(id: string, data: any): Promise<Industry | null> {
-        return await IndustryModel.updateOne({_id: id}, data);
+        return await IndustryModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Industry | null> {

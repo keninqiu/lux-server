@@ -12,7 +12,7 @@ export class SkillDao {
    }
 
    public async update(id: string, data: any): Promise<Skill | null> {
-        return await SkillModel.updateOne({_id: id}, data);
+        return await SkillModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Skill | null> {

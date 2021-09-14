@@ -16,7 +16,7 @@ export class StateDao {
    }
 
    public async update(id: string, data: any): Promise<State | null> {
-        return await StateModel.updateOne({_id: id}, data);
+        return await StateModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<State | null> {

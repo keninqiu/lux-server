@@ -12,7 +12,7 @@ export class EmployerDao {
    }
 
    public async update(id: string, data: any): Promise<Employer | null> {
-        return await EmployerModel.updateOne({_id: id}, data);
+        return await EmployerModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Employer | null> {

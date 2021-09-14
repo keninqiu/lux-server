@@ -12,7 +12,7 @@ export class CertificationDao {
    }
 
    public async update(id: string, data: any): Promise<Certification | null> {
-        return await CertificationModel.updateOne({_id: id}, data);
+        return await CertificationModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Certification | null> {

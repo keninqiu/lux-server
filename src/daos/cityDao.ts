@@ -12,7 +12,7 @@ export class CityDao {
    }
 
    public async update(id: string, data: any): Promise<City | null> {
-        return await CityModel.updateOne({_id: id}, data);
+        return await CityModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<City | null> {

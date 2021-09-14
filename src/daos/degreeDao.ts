@@ -12,7 +12,7 @@ export class DegreeDao {
    }
 
    public async update(id: string, data: any): Promise<Degree | null> {
-        return await DegreeModel.updateOne({_id: id}, data);
+        return await DegreeModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Degree | null> {

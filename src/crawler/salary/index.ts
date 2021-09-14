@@ -10,8 +10,8 @@ import * as degree from './degree';
 import * as employer from './employer';
 
 export const start = async function() {
-    await country.start();
-    await state.start();
+    //await country.start();
+    //await state.start();
     await city.start();
     await school.start();
     await industry.start();

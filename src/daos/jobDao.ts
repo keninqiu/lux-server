@@ -12,7 +12,7 @@ export class JobDao {
    }
 
    public async update(id: string, data: any): Promise<Job | null> {
-        return await JobModel.updateOne({_id: id}, data);
+        return await JobModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Job | null> {
