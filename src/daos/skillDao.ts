@@ -3,6 +3,9 @@ export class SkillDao {
    public async fetchAll(): Promise<Skill[]> {
         return await SkillModel.find({}).select('name url category');
    }
+   public async fetchAllWithoutRawData(): Promise<Skill[]> {
+     return await SkillModel.find({rawData: null}).select('name url category');
+   }
    public async fetchById(id: string): Promise<Skill | null> {
         return await SkillModel.findById(id);
    }

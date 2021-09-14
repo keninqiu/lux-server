@@ -4,7 +4,7 @@ import { JobDao } from "../../daos/jobDao";
 
 export const start = async function() {
     const dao = new JobDao();
-    const items = await dao.fetchAll();
+    const items = await dao.fetchAllWithoutRawData();
     for(let i = 0; i < items.length; i++) {
        try {
         const item = items[i];

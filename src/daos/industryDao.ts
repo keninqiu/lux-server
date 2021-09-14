@@ -3,6 +3,9 @@ export class IndustryDao {
    public async fetchAll(): Promise<Industry[]> {
         return await IndustryModel.find({}).select('name url category');
    }
+   public async fetchAllWithoutRawData(): Promise<Industry[]> {
+     return await IndustryModel.find({rawData: null}).select('name url category');
+   }
    public async fetchById(id: string): Promise<Industry | null> {
         return await IndustryModel.findById(id);
    }

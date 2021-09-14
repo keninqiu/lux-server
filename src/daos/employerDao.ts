@@ -3,6 +3,9 @@ export class EmployerDao {
    public async fetchAll(): Promise<Employer[]> {
         return await EmployerModel.find({}).select('name url category');
    }
+   public async fetchAllWithoutRawData(): Promise<Employer[]> {
+     return await EmployerModel.find({rawData: null}).select('name url category');
+   }
    public async fetchById(id: string): Promise<Employer | null> {
         return await EmployerModel.findById(id);
    }

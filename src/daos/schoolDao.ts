@@ -3,7 +3,9 @@ export class SchoolDao {
    public async fetchAll(): Promise<School[]> {
         return await SchoolModel.find({}).select('name url category');
    }
-
+   public async fetchAllWithoutRawData(): Promise<School[]> {
+     return await SchoolModel.find({rawData: null}).select('name url category');
+   }
    public async fetchAllAndPopulate(): Promise<any[]> {
      return await SchoolModel.find({}).populate(
           {

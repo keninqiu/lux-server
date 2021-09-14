@@ -4,7 +4,7 @@ import { SchoolDao } from "../../daos/schoolDao";
 
 export const start = async function() {
     const dao = new SchoolDao();
-    const items = await dao.fetchAll();
+    const items = await dao.fetchAllWithoutRawData();
     for(let i = 0; i < items.length; i++) {
        try {
         const item = items[i];

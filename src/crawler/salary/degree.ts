@@ -4,7 +4,7 @@ import { DegreeDao } from "../../daos/degreeDao";
 
 export const start = async function() {
     const dao = new DegreeDao();
-    const items = await dao.fetchAll();
+    const items = await dao.fetchAllWithoutRawData();
     for(let i = 0; i < items.length; i++) {
        try {
         const item = items[i];

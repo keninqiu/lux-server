@@ -4,7 +4,7 @@ import { CertificationDao } from "../../daos/certificationDao";
 
 export const start = async function() {
     const dao = new CertificationDao();
-    const items = await dao.fetchAll();
+    const items = await dao.fetchAllWithoutRawData();
     for(let i = 0; i < items.length; i++) {
        try {
         const item = items[i];
