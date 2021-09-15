@@ -25,11 +25,11 @@ export const start = async function() {
         }
         
         const dataText = nextDataNode.text;
-        //console.log('dataText=', dataText);
+        console.log('dataText=', dataText);
         const data = parseData(dataText);
         //console.log('data=', data);
         const newItem = await dao.update(item._id, data);
-        console.log('newItem=', newItem);
+        //console.log('newItem=', newItem);
       } catch(e: any) {
          i --;
       }

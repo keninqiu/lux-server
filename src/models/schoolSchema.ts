@@ -11,6 +11,7 @@ export interface ISchool {
     category: string,
     url: string,
     city: string,
+    rawDataParsed: boolean,
     rawData?: any,
     compensation: {
         hourlyRate: {
@@ -79,31 +80,48 @@ export interface ISchool {
     byDimension: {
         experience: {
             entryLevel: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             earlyCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             midCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             lateCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             experienced: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             }
         },
         gender: {
             male: {
               profileCount: number,
               min: number,
-              max: number
+              max: number,
+              avg: number
             },
             female: {
               profileCount: number,
               min: number,
-              max: number
+              max: number,
+              avg: number
             }
         }
     }     
@@ -113,6 +131,7 @@ export interface School extends Document {
     category: string,
     url: string,
     city: string,
+    rawDataParsed: boolean,
     rawData: any,
     compensation: {
         hourlyRate: {
@@ -181,31 +200,48 @@ export interface School extends Document {
     byDimension: {
         experience: {
             entryLevel: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             earlyCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             midCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             lateCareer: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             },
             experienced: {
-                profileCount: number
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             }
         },
         gender: {
             male: {
               profileCount: number,
               min: number,
-              max: number
+              max: number,
+              avg: number
             },
             female: {
               profileCount: number,
               min: number,
-              max: number
+              max: number,
+              avg: number
             }
         }
     }      
@@ -217,6 +253,7 @@ const SchoolSchema = new Schema<School>({
         ref: 'Category'
     },
     url: String,
+    rawDataParsed: Boolean,
     rawData: Object,
     city: {
         type: Schema.Types.ObjectId,
@@ -289,31 +326,48 @@ const SchoolSchema = new Schema<School>({
     byDimension: {
         experience: {
             entryLevel: {
-                profileCount: Number
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             },
             earlyCareer: {
-                profileCount: Number
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             },
             midCareer: {
-                profileCount: Number
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             },
             lateCareer: {
-                profileCount: Number
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             },
             experienced: {
-                profileCount: Number
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             }
         },
         gender: {
             male: {
               profileCount: Number,
               min: Number,
-              max: Number
+              max: Number,
+              avg: Number
             },
             female: {
               profileCount: Number,
               min: Number,
-              max: Number
+              max: Number,
+              avg: Number
             }
         }
     },

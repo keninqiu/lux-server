@@ -22,6 +22,15 @@ export class SchoolDao {
         return await SchoolModel.findById(id);
    }
 
+   public async fetchByIdAndPopulate(id: string): Promise<School | null> {
+     return await SchoolModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+
    public async create(data: any): Promise<School | null> {
        return await SchoolModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
