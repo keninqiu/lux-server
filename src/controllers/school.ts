@@ -56,12 +56,10 @@ export class SchoolController {
             error: 'not found'
         });          
        }
-       if(item.rawData) {
+       if(item.rawData &&  !item.rawDataParsed) {
            const pageProps = item.rawData.props.pageProps;
            const collegeData = pageProps.collegeData;
            const pageData = pageProps.pageData;
-           if(item.rawDataParsed) {
-               await this.dao.update(id, {rawDataParsed: true});
                 const about = collegeData.about;
                 item.about = {
                     abstract: about.abstract,
@@ -217,7 +215,6 @@ export class SchoolController {
                     } 
                 }
 
-           }
        }
 
        return res.status(StatusCodes.OK).json(
