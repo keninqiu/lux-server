@@ -14,22 +14,99 @@ export interface ISchool {
     rawData?: any,
     compensation: {
         hourlyRate: {
-            10: string,
-            25: string,
-            50: string,
-            75: string,
-            90: string,
-            profileCount: string
+            min: number,
+            max: number,
+            avg: number
         },
         salary: {
-            10: string,
-            25: string,
-            50: string,
-            75: string,
-            90: string,
-            profileCount: string
+            min: number,
+            max: number,
+            avg: number
         },
-    }
+    },
+    about: {
+        abstract: string,
+        streetAddress: string,
+        city: string,
+        state: string,
+        zip: string,
+        website: string,
+        admissionsUrl: string,
+        wikiUrl: string,
+        percentStem: number,
+        graduationRate: number,
+        percentStayInState: number,
+        percentReceivingPellGrants: number,
+        studentsEnrolled: number,
+        satScores: {
+            lowerPercentile: number,
+            upperPercentile: number
+        }
+        actScores:{
+           lowerPercentile: number,
+           upperPercentile: number
+        },
+    },  
+    roi: {
+        totalCostOnCampus: number,
+        totalCostOffCampus: number,
+        net20YearRoiOnCampus: number,
+        net20YearRoiOffCampus: number,
+        net20YearRoiWithAidOnCampus: number,
+        net20YearRoiWithAidOffCampus: number,
+        annualizedRoiOnCampus: number,
+        annualizedRoiOffCampus: number,
+        annualizedRoiWithAidOnCampus: number,
+        annualizedRoiWithAidOffCampus: number,
+        graduationRate: number,
+        typicalYearsToGraduate: number,
+        percentReceivingGrantMoney: number,
+        averageLoanAmount4Years: number,
+        overallRank: number        
+    },   
+    salary: {
+        earlyCareerMedianPay: number,
+        midCareerMedianPay: number,
+        percentHighMeaning: number,
+        percentMale: number,
+        percentFemale: number,
+        percentStem: number,
+        percentPell: number,
+        percentRecommending: number,
+        undergraduateEnrollment: number,
+        rank: number,     
+    },
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: number
+            },
+            earlyCareer: {
+                profileCount: number
+            },
+            midCareer: {
+                profileCount: number
+            },
+            lateCareer: {
+                profileCount: number
+            },
+            experienced: {
+                profileCount: number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: number,
+              min: number,
+              max: number
+            },
+            female: {
+              profileCount: number,
+              min: number,
+              max: number
+            }
+        }
+    }     
 }
 export interface School extends Document {
     name: string,
@@ -39,22 +116,99 @@ export interface School extends Document {
     rawData: any,
     compensation: {
         hourlyRate: {
-            10: string,
-            25: string,
-            50: string,
-            75: string,
-            90: string,
-            profileCount: string
+            min: number,
+            max: number,
+            avg: number
         },
         salary: {
-            10: string,
-            25: string,
-            50: string,
-            75: string,
-            90: string,
-            profileCount: string
+            min: number,
+            max: number,
+            avg: number
         },
-    }    
+    },
+    about: {
+        abstract: string,
+        streetAddress: string,
+        city: string,
+        state: string,
+        zip: string,
+        website: string,
+        admissionsUrl: string,
+        wikiUrl: string,
+        percentStem: number,
+        graduationRate: number,
+        percentStayInState: number,
+        percentReceivingPellGrants: number,
+        studentsEnrolled: number,
+        satScores: {
+            lowerPercentile: number,
+            upperPercentile: number
+        }
+        actScores:{
+           lowerPercentile: number,
+           upperPercentile: number
+        },
+    },  
+    roi: {
+        totalCostOnCampus: number,
+        totalCostOffCampus: number,
+        net20YearRoiOnCampus: number,
+        net20YearRoiOffCampus: number,
+        net20YearRoiWithAidOnCampus: number,
+        net20YearRoiWithAidOffCampus: number,
+        annualizedRoiOnCampus: number,
+        annualizedRoiOffCampus: number,
+        annualizedRoiWithAidOnCampus: number,
+        annualizedRoiWithAidOffCampus: number,
+        graduationRate: number,
+        typicalYearsToGraduate: number,
+        percentReceivingGrantMoney: number,
+        averageLoanAmount4Years: number,
+        overallRank: number        
+    },   
+    salary: {
+        earlyCareerMedianPay: number,
+        midCareerMedianPay: number,
+        percentHighMeaning: number,
+        percentMale: number,
+        percentFemale: number,
+        percentStem: number,
+        percentPell: number,
+        percentRecommending: number,
+        undergraduateEnrollment: number,
+        rank: number
+    },
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: number
+            },
+            earlyCareer: {
+                profileCount: number
+            },
+            midCareer: {
+                profileCount: number
+            },
+            lateCareer: {
+                profileCount: number
+            },
+            experienced: {
+                profileCount: number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: number,
+              min: number,
+              max: number
+            },
+            female: {
+              profileCount: number,
+              min: number,
+              max: number
+            }
+        }
+    }      
 }
 const SchoolSchema = new Schema<School>({
     name: String,
@@ -70,22 +224,99 @@ const SchoolSchema = new Schema<School>({
     },
     compensation: {
         hourlyRate: {
-            10: Number,
-            25: Number,
-            50: Number,
-            75: Number,
-            90: Number,
-            profileCount: Number
+            min: Number,
+            max: Number,
+            avg: Number
         },
         salary: {
-            10: Number,
-            25: Number,
-            50: Number,
-            75: Number,
-            90: Number,
-            profileCount: Number
+            min: Number,
+            max: Number,
+            avg: Number
         },
-    },    
+    },  
+    about: {
+        abstract: String,
+        streetAddress: String,
+        city: String,
+        state: String,
+        zip: String,
+        website: String,
+        admissionsUrl: String,
+        wikiUrl: String,
+        graduationRate: Number,
+        percentStem: Number,
+        percentStayInState: Number,
+        percentReceivingPellGrants: Number,
+        studentsEnrolled: Number,
+        satScores: {
+            lowerPercentile: Number,
+            upperPercentile: Number
+        },
+        actScores:{
+           lowerPercentile: Number,
+           upperPercentile: Number
+        },
+    },  
+    roi: {
+        totalCostOnCampus: Number,
+        totalCostOffCampus: Number,
+        net20YearRoiOnCampus: Number,
+        net20YearRoiOffCampus: Number,
+        net20YearRoiWithAidOnCampus: Number,
+        net20YearRoiWithAidOffCampus: Number,
+        annualizedRoiOnCampus: Number,
+        annualizedRoiOffCampus: Number,
+        annualizedRoiWithAidOnCampus: Number,
+        annualizedRoiWithAidOffCampus: Number,
+        graduationRate: Number,
+        typicalYearsToGraduate: Number,
+        percentReceivingGrantMoney: Number,
+        averageLoanAmount4Years: Number,
+        overallRank: Number        
+    },
+    salary: {
+        earlyCareerMedianPay: Number,
+        midCareerMedianPay: Number,
+        percentHighMeaning: Number,
+        percentMale: Number,
+        percentFemale: Number,
+        percentStem: Number,
+        percentPell: Number,
+        percentRecommending: Number,
+        undergraduateEnrollment: Number,
+        rank: Number      
+    },  
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: Number
+            },
+            earlyCareer: {
+                profileCount: Number
+            },
+            midCareer: {
+                profileCount: Number
+            },
+            lateCareer: {
+                profileCount: Number
+            },
+            experienced: {
+                profileCount: Number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: Number,
+              min: Number,
+              max: Number
+            },
+            female: {
+              profileCount: Number,
+              min: Number,
+              max: Number
+            }
+        }
+    },
     createdAt: {
         type: Date,
         required: true,

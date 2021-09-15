@@ -1,15 +1,19 @@
 import { CategoryModel, Category, ICategory } from '../models/categorySchema';
 export class CategoryDao {
    public async fetchAll(): Promise<Category[]> {
-        return await CategoryModel.find({});
+        return await CategoryModel.find({}).sort('name');
+   }
+
+   public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
+     return await CategoryModel.find({country: countryId, type}).sort('name');
    }
 
    public async fetchAllByType(type: string): Promise<Category[]> {
-    return await CategoryModel.find({type});
+    return await CategoryModel.find({type}).sort('name');
    }
 
    public async fetchAllByTypePopulate(type: string): Promise<any[]> {
-    return await CategoryModel.find({type}).populate('country');
+    return await CategoryModel.find({type}).populate('country').sort('name');
    }
 
    public async fetchById(id: string): Promise<Category | null> {

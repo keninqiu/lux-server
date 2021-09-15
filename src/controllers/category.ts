@@ -27,6 +27,26 @@ export class CategoryController {
     }
     }  
     
+    @Get('country/:countryId/type/:type')
+    private async fetchAllByCountry(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        const coutryId = req.params.countryId;
+        const type = req.params.type;
+       const items = await this.dao.fetchAllByCountryAndType(coutryId, type);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
     @Get('type/:type')
     private async fetchAllByType(req: ICustomRequest, res: Response): Promise<Response> {
     try {

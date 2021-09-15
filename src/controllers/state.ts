@@ -27,6 +27,25 @@ export class StateController {
     }
     }  
     
+    @Get('country/:id')
+    private async fetchAllByCountry(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        const id = req.params.id;
+       const items = await this.dao.fetchAllByCountry(id);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
     @Get(':id')
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {

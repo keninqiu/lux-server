@@ -27,11 +27,65 @@ export class SchoolController {
     }
     }       
 
+    @Get('all/withRawData')
+    private async fetchAllWithRawData(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllWithRawData();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
     @Get(':id')
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {
         const id = req.params.id;
        const item = await this.dao.fetchById(id);
+       if(!item) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            success: false,
+            error: 'not found'
+        });          
+       }
+       if(item.rawData) {
+           const pageProps = item.rawData.props.pageProps;
+           const collegeData = pageProps;
+            if(!item.about) {
+                const about = collegeData.about;
+                if(about) {
+                    item.about = {
+                        abstract: about.abstract,
+                        website: about.website,
+                        admissionsUrl: about.admissionsUrl,
+                        streetAddress: about.streetAddress,
+                        graduationRate: about.graduationRate ? about.graduationRate.split('%')[0] : 0,
+                        percentStayInState: about.percentStayInState ? about.percentStayInState.split('%')[0] : 0,
+                        percentStem: about.percentStem ? about.percentStem.split('%')[0] : 0,
+                        percentReceivingPellGrants: about.percentReceivingPellGrants ? about.percentReceivingPellGrants.split('%')[0] : 0,
+                        city: about.city,
+                        state: about.state,
+                        zip: about.zip,
+                        wikiUrl: about.wikiUrl,
+                        studentsEnrolled: about.studentsEnrolled ? about.studentsEnrolled.split(',').join('') : 0,
+                        satScores: about.satScores,
+                        actScores: about.actScores
+                    };
+                }
+            }
+            if(!item.compensation) {
+
+            }
+       }
+
        return res.status(StatusCodes.OK).json(
         {
             success: true,
