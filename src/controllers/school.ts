@@ -180,6 +180,9 @@ export class SchoolController {
                                 item.byDimension.gender.female.avg = byGenderItem.range['50'];
                             }
                         }
+
+
+                        
                     }
                 }
 

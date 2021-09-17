@@ -135,7 +135,13 @@ export class JobController {
                   min: 0,
                   max: 0,
                   avg: 0
-                }
+                },
+                selfDefine: {
+                    profileCount: 0,
+                    min: 0,
+                    max: 0,
+                    avg: 0
+                } 
             }
         };                
         const byDimension = pageData.byDimension;
@@ -161,6 +167,14 @@ export class JobController {
                         item.byDimension.gender.female.avg = byGenderItem.range['50'];
                     }
 
+                } else
+                if(byGenderItem.name == 'Prefer to self-define') {
+                    item.byDimension.gender.selfDefine.profileCount = byGenderItem.profileCount;
+                    if(byGenderItem.range) {
+                        item.byDimension.gender.selfDefine.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                        item.byDimension.gender.selfDefine.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                        item.byDimension.gender.selfDefine.avg = byGenderItem.range['50'];
+                    }
                 }
             }
         }

@@ -127,6 +127,12 @@ export interface IJob {
               min: number,
               max: number,
               avg: number
+            },
+            selfDefine: {
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             }
         }
     },
@@ -252,6 +258,12 @@ export interface Job extends Document {
               min: number,
               max: number,
               avg: number
+            },
+            selfDefine: {
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number
             }
         }
     },
@@ -384,6 +396,12 @@ const JobSchema = new Schema<Job>({
               min: Number,
               max: Number,
               avg: Number
+            },
+            selfDefine: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
             }
         }
     },
