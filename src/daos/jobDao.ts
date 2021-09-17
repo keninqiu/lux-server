@@ -10,7 +10,16 @@ export class JobDao {
         return await JobModel.findById(id);
    }
 
-   public async create(data: IJob): Promise<Job | null> {
+   public async fetchByIdAndPopulate(id: string): Promise<Job | null> {
+     return await JobModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+
+   public async create(data: any): Promise<Job | null> {
        return await JobModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 

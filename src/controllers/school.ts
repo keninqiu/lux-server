@@ -61,6 +61,7 @@ export class SchoolController {
            const collegeData = pageProps.collegeData;
            const pageData = pageProps.pageData;
                 const about = collegeData.about;
+                item.currencyCode = pageData.currencyCode;
                 item.about = {
                     abstract: about.abstract,
                     website: about.website,
@@ -165,15 +166,19 @@ export class SchoolController {
                         const byGenderItem = byGenderItems[i];
                         if(byGenderItem.name == 'Male') {
                             item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
-                            item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                            item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                            item.byDimension.gender.male.avg = byGenderItem.range['50'];
+                            if(byGenderItem.range) {
+                                item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                item.byDimension.gender.male.avg = byGenderItem.range['50'];
+                            }
                         } else 
                         if(byGenderItem.name == 'Female') {
                             item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
-                            item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                            item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                            item.byDimension.gender.female.avg = byGenderItem.range['50'];
+                            if(byGenderItem.range) {
+                                item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                item.byDimension.gender.female.avg = byGenderItem.range['50'];
+                            }
                         }
                     }
                 }
@@ -185,32 +190,42 @@ export class SchoolController {
                         console.log('byExperienceItem===', byExperienceItem);
                         if(byExperienceItem.name == '10-19 years') {
                             item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
-                            item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
+                            if(byExperienceItem.range) {
+                                item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
+                            }
                         } else 
                         if(byExperienceItem.name == '20 years or more') {
                             item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
-                            item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
+                            if(byExperienceItem.range) {
+                                item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
+                            }
                         } else 
                         if(byExperienceItem.name == '1-4 years') {
                             item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
-                            item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
+                            if(byExperienceItem.range) {
+                                item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
+                            }
                         } else 
                         if(byExperienceItem.name == '5-9 years') {
                             item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
-                            item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
+                            if(byExperienceItem.range) {
+                                item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
+                            }
                         } else {
                             item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
-                            item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];                            
+                            if(byExperienceItem.range) {
+                                item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];   
+                            }                         
                         }
                     } 
                 }

@@ -12,6 +12,7 @@ export interface ISchool {
     url: string,
     city: string,
     rawDataParsed: boolean,
+    currencyCode: string,
     rawData?: any,
     compensation: {
         hourlyRate: {
@@ -131,6 +132,7 @@ export interface School extends Document {
     category: string,
     url: string,
     city: string,
+    currencyCode: string,
     rawDataParsed: boolean,
     rawData: any,
     compensation: {
@@ -253,6 +255,7 @@ const SchoolSchema = new Schema<School>({
         ref: 'Category'
     },
     url: String,
+    currencyCode: String,
     rawDataParsed: Boolean,
     rawData: Object,
     city: {

@@ -4,6 +4,7 @@ import * as city from './city';
 import * as category from './category';
 import * as data from './data';
 import * as salary from './salary';
+import * as single from './single';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -23,7 +24,8 @@ const main = async function() {
     //await city.start();
     //await category.start();
     //await data.start();
-    await salary.start();
+    //await salary.start();
+    await single.start();
     console.log('done');
 }
 
