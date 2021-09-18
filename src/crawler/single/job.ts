@@ -19,6 +19,7 @@ export const start = async function() {
     const dataText = nextDataNode.text;
     console.log('dataText=', dataText);
     const data = parseData(dataText);
+    const newItem = await dao.updateByQuery({url: url}, data);
 }
 
 const parseData = function(dataText: string) {

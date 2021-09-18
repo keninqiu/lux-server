@@ -134,6 +134,20 @@ export interface IJob {
                 max: number,
                 avg: number
             }
+        },
+        healthBenefit: {
+            medical: {
+                profileCount: number
+            },
+            dental: {
+                profileCount: number
+            },
+            vision: {
+                profileCount: number
+            },
+            none: {
+                profileCount: number
+            }
         }
     },
     currencyCode?: string,
@@ -264,6 +278,20 @@ export interface Job extends Document {
                 min: number,
                 max: number,
                 avg: number
+            }
+        },
+        healthBenefit: {
+            medical: {
+                profileCount: number
+            },
+            dental: {
+                profileCount: number
+            },
+            vision: {
+                profileCount: number
+            },
+            none: {
+                profileCount: number
             }
         }
     },
@@ -402,6 +430,20 @@ const JobSchema = new Schema<Job>({
                 min: Number,
                 max: Number,
                 avg: Number
+            }
+        },
+        healthBenefit: {
+            medical: {
+                profileCount: Number
+            },
+            dental: {
+                profileCount: Number
+            },
+            vision: {
+                profileCount: Number
+            },
+            none: {
+                profileCount: Number
             }
         }
     },

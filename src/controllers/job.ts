@@ -46,6 +46,7 @@ export class JobController {
         const pageData = pageProps.pageData;
         //const about = collegeData.about;
         item.currencyCode = pageData.currencyCode;
+
         item.careerPathData = pageProps.careerPathData;
         item.narratives = pageData.narratives;
         const compensation = pageData.compensation;
@@ -142,6 +143,20 @@ export class JobController {
                     max: 0,
                     avg: 0
                 } 
+            },
+            healthBenefit: {
+                medical: {
+                    profileCount: 0
+                },
+                dental: {
+                    profileCount: 0
+                },
+                vision: {
+                    profileCount: 0
+                },
+                none: {
+                    profileCount: 0
+                }
             }
         };                
         const byDimension = pageData.byDimension;
@@ -227,7 +242,24 @@ export class JobController {
         }
 
 
-
+        const byHealthBenefitItems = byDimension['Health Insurance Overall']['rows'];
+        if(byHealthBenefitItems && byHealthBenefitItems.length > 0) {
+            for(let i = 0; i < byHealthBenefitItems.length;i++) {
+                const byHealthBenefitItem = byHealthBenefitItems[i];
+                if(byHealthBenefitItem.name == 'Medical / Health') {
+                    item.byDimension.healthBenefit.medical.profileCount = byHealthBenefitItem.profileCount;
+                } else 
+                if(byHealthBenefitItem.name == 'None') {
+                    item.byDimension.healthBenefit.none.profileCount = byHealthBenefitItem.profileCount;
+                } else
+                if(byHealthBenefitItem.name == 'Dental') {
+                    item.byDimension.healthBenefit.dental.profileCount = byHealthBenefitItem.profileCount;
+                } else
+                if(byHealthBenefitItem.name == 'Vision') {
+                    item.byDimension.healthBenefit.vision.profileCount = byHealthBenefitItem.profileCount;
+                }
+            }
+        }
 
              /*
              item.about = {
