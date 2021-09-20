@@ -1,4 +1,5 @@
 import { CategoryModel, Category, ICategory } from '../models/categorySchema';
+import { CountryModel, Country, ICountry } from '../models/countrySchema';
 export class CategoryDao {
    public async fetchAll(): Promise<Category[]> {
         return await CategoryModel.find({}).sort('name');
@@ -6,6 +7,14 @@ export class CategoryDao {
 
    public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
      return await CategoryModel.find({country: countryId, type}).sort('name');
+   }
+
+   public async fetchAllByCountryCodeAndType(countryCode: string, type: string): Promise<Category[]> {
+        const country = await CountryModel.findOne({code: countryCode});
+        if(!country) {
+             return [];
+        }
+        return await this.fetchAllByCountryAndType(country._id, type);
    }
 
    public async fetchAllByType(type: string): Promise<Category[]> {

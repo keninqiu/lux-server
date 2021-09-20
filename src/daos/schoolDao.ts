@@ -1,10 +1,25 @@
 import { SchoolModel, School, ISchool } from '../models/schoolSchema';
+import { CategoryModel, Category, ICategory } from '../models/categorySchema';
+import { CountryModel, Country, ICountry } from '../models/countrySchema';
 export class SchoolDao {
    public async fetchAll(): Promise<School[]> {
-        return await SchoolModel.find({}).select('name url category');
+        return await SchoolModel.find({}).select('name slug category url');
    }
+
+   public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<School[]>  {
+     const country = await CountryModel.findOne({code: countryCode});
+     if(!country) {
+          return [];
+     }
+     const category = await CategoryModel.findOne({type: 'School', country: country._id, slug: categorySlug});
+     if(category == null) {
+          return [];
+     }
+     return await SchoolModel.find({category: category._id}).select('name slug url category');
+   }
+
    public async fetchAllWithoutRawData(): Promise<School[]> {
-     return await SchoolModel.find({rawData: null}).select('name url category');
+     return await SchoolModel.find({rawData: null}).select('name slug url category');
    }
    public async fetchAllWithRawData(): Promise<School[]> {
      return await SchoolModel.find({rawData: { $ne: null }});
@@ -31,6 +46,30 @@ export class SchoolDao {
      );
     }
 
+   public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<School | null> {
+     const schools = await SchoolModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     if(!schools || schools.length == 0) {
+          return null;
+     }
+     
+     const filterSchools = schools.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterSchools || filterSchools.length == 0) {
+          return null;
+     }     
+     return filterSchools[0];
+    }
+
    public async create(data: any): Promise<School | null> {
        return await SchoolModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
@@ -43,6 +82,10 @@ export class SchoolDao {
         return await SchoolModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
+   public async updateByQuery(query: any, data: any): Promise<School | null> {
+     return await SchoolModel.findOneAndUpdate(query, data, {new: true});
+   }   
+
    public async delete(id: string): Promise<School | null> {
         return await SchoolModel.findByIdAndDelete(id);
    } 

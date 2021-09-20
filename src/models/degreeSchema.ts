@@ -10,11 +10,15 @@ export interface IDegree {
     name: string,
     category: string,
     url: string,
+    slug?: string,
+    salaryType?: string,
     rawData?: any
 }
 export interface Degree extends Document {
     name: string,
     url: string,
+    slug: string,
+    salaryType: string,
     category: string,
     rawData: any
 }
@@ -25,6 +29,8 @@ const DegreeSchema = new Schema<Degree>({
         ref: 'Category'
     },
     url: String,
+    slug: String,
+    salaryType: String,
     rawData: Object,
     createdAt: {
         type: Date,

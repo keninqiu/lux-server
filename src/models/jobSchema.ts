@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { Category } from "./categorySchema";
 
 /*
 
@@ -9,6 +10,8 @@ Id	code  CountryName	CurrencyCode
 export interface IJob {
     name: string,
     url: string,
+    slug?: string,
+    salaryType?: string,
     category: string,
     rawData?: any,
     rawDataParsed?: boolean,
@@ -155,7 +158,9 @@ export interface IJob {
 export interface Job extends Document {
     name: string,
     url: string,
-    category: string,
+    slug: string,
+    salaryType: string,
+    category: Category,
     rawData: any,
     careerPathData: {
         childCount: number,
@@ -309,6 +314,8 @@ const JobSchema = new Schema<Job>({
     rawDataParsed: Boolean,
     rawData: Object,
     url: String,
+    slug: String,
+    salaryType: String,
     careerPathData: {
         childCount: Number,
         children: [

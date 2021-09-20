@@ -1,5 +1,5 @@
 import * as job from './job';
-
+import * as school from './school';
 
 export const start = async function() {
     //await country.start();
@@ -7,7 +7,7 @@ export const start = async function() {
     /*
     await city.start();
     */
-    //await school.start();
+    await school.start();
     /*
     await industry.start();
     
@@ -17,5 +17,5 @@ export const start = async function() {
     await degree.start();
     await employer.start();
     */
-    await job.start();
+    //await job.start();
 }

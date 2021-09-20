@@ -9,12 +9,16 @@ Id	code  CountryName	CurrencyCode
 export interface IIndustry {
     name: string,
     url: string,
+    slug?: string,
+    salaryType?: string,
     category: string,
     rawData?: any
 }
 export interface Industry extends Document {
     name: string,
     url: string,
+    slug: string,
+    salaryType: string,
     category: string,
     rawData: any
 }
@@ -26,6 +30,8 @@ const IndustrySchema = new Schema<Industry>({
     },
     rawData: Object,
     url: String,
+    slug: String,
+    salaryType: String,
     createdAt: {
         type: Date,
         required: true,

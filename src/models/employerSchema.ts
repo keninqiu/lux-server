@@ -9,18 +9,24 @@ Id	code  CountryName	CurrencyCode
 export interface IEmployer {
     name: string,
     url: string,
+    slug?: string,
+    salaryType?: string,
     category: string,
     rawData?: any
 }
 export interface Employer extends Document {
     name: string,
     url: string,
+    slug: string,
+    salaryType: string,
     category: string,
     rawData: any
 }
 const EmployerSchema = new Schema<Employer>({
     name: String,
     url: String,
+    slug: String,
+    salaryType: String,
     rawData: Object,
     category: {
         type: Schema.Types.ObjectId,

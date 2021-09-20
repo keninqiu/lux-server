@@ -5,6 +5,7 @@ import * as category from './category';
 import * as data from './data';
 import * as salary from './salary';
 import * as single from './single';
+import * as slug from './slug';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -25,7 +26,8 @@ const main = async function() {
     //await category.start();
     //await data.start();
     //await salary.start();
-    await single.start();
+    //await single.start();
+    await slug.start();
     console.log('done');
 }
 

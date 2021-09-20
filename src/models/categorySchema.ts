@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { Country } from "./countrySchema";
 
 /*
 
@@ -8,12 +9,14 @@ Id	code  CountryName	CurrencyCode
 
 export interface ICategory {
     name: string,
+    slug?: string;
     type: string,
     url: string,
     country: string
 }
 export interface Category extends Document {
     name: string,
+    slug: string;
     type: string,
     url: string,
     country: string
@@ -23,6 +26,7 @@ const CategorySchema = new Schema<Category>({
     type: {
         type: String
     },
+    slug: String,
     url: String,
     country: {
         type: Schema.Types.ObjectId,

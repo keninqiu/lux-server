@@ -10,12 +10,16 @@ export interface ICertification {
     name: string,
     category: string,
     url: string,
+    slug?: string,
+    salaryType?: string,
     rawData?: any
 }
 export interface Certification extends Document {
     name: string,
     category: string,
     url: string,
+    slug: string,
+    salaryType: string,
     rawData: any
 }
 const CertificationSchema = new Schema<Certification>({
@@ -25,6 +29,8 @@ const CertificationSchema = new Schema<Certification>({
         ref: 'Category'
     },
     url: String,
+    slug: String,
+    salaryType: String,
     createdAt: {
         type: Date,
         required: true,

@@ -1,11 +1,32 @@
 import { JobModel, Job, IJob } from '../models/jobSchema';
+import { CountryModel, Country, ICountry } from '../models/countrySchema';
+import { CategoryModel, Category, ICategory } from '../models/categorySchema';
 export class JobDao {
    public async fetchAll(): Promise<Job[]> {
         return await JobModel.find({}).select('name url category');
    }
+
+   public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<Job[]>  {
+     console.log('countryCode==');
+     const country = await CountryModel.findOne({code: countryCode});
+     console.log('country=', country);
+     if(!country) {
+          return [];
+     }
+     
+     const category = await CategoryModel.findOne({type: 'Job', country: country._id, slug: categorySlug});
+     console.log('category=', category);
+     if(category == null) {
+          return [];
+     }
+
+     return await JobModel.find({category: category._id}).select('name slug url category');
+   }   
+
    public async fetchAllWithoutRawData(): Promise<Job[]> {
      return await JobModel.find({rawData: null}).select('name url category');
    }
+
    public async fetchById(id: string): Promise<Job | null> {
         return await JobModel.findById(id);
    }
@@ -17,6 +38,30 @@ export class JobDao {
                populate: 'country'
           }
      );
+    }
+
+    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Job | null> {
+     const jobs = await JobModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     if(!jobs || jobs.length == 0) {
+          return null;
+     }
+     
+     const filterJobs = jobs.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterJobs || filterJobs.length == 0) {
+          return null;
+     }     
+     return filterJobs[0];
     }
 
    public async create(data: any): Promise<Job | null> {

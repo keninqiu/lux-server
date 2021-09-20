@@ -1,4 +1,7 @@
 import { DegreeModel, Degree, IDegree } from '../models/degreeSchema';
+import { CategoryModel, Category, ICategory } from '../models/categorySchema';
+import { CountryModel, Country, ICountry } from '../models/countrySchema';
+
 export class DegreeDao {
    public async fetchAll(): Promise<Degree[]> {
         return await DegreeModel.find({}).select('name url category');
@@ -6,6 +9,22 @@ export class DegreeDao {
    public async fetchAllWithoutRawData(): Promise<Degree[]> {
      return await DegreeModel.find({rawData: null}).select('name url category');
    }
+
+   public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<Degree[]>  {
+     const country = await CountryModel.findOne({code: countryCode});
+     console.log('countryCode==', countryCode);
+     if(!country) {
+          return [];
+     }
+     console.log('country=', country);
+     const category = await CategoryModel.findOne({type: 'Degree', country: country._id, slug: categorySlug});
+     if(category == null) {
+          return [];
+     }
+     console.log('category=', category);
+     return await DegreeModel.find({category: category._id}).select('name slug url category');
+   }
+
    public async fetchById(id: string): Promise<Degree | null> {
         return await DegreeModel.findById(id);
    }

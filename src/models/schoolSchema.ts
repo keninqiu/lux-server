@@ -1,10 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-
-/*
-
-Id	code  CountryName	CurrencyCode
-1	AU	  Australia	 AUD
-*/
+import { Category } from "./categorySchema";
 
 export interface ISchool {
     name: string,
@@ -14,6 +9,8 @@ export interface ISchool {
     rawDataParsed: boolean,
     currencyCode: string,
     rawData?: any,
+    slug?: string,
+    salaryType?: string,
     compensation: {
         hourlyRate: {
             min: number,
@@ -124,14 +121,65 @@ export interface ISchool {
               max: number,
               avg: number
             }
+        },
+        salaryByJob: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        hourlyRateByJob: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        salaryByEmployer: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        hourlyRateByEmployer: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ]
+    },
+    related: [
+        {
+            name: string,
+            url: string,
+            min: number,
+            max: number,
+            avg: number                
         }
-    }     
+    ] 
 }
 export interface School extends Document {
     name: string,
-    category: string,
+    category: Category,
     url: string,
     city: string,
+    slug: string,
+    salaryType: string,
     currencyCode: string,
     rawDataParsed: boolean,
     rawData: any,
@@ -245,8 +293,57 @@ export interface School extends Document {
               max: number,
               avg: number
             }
+        },
+        salaryByJob: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        hourlyRateByJob: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        salaryByEmployer: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ],
+        hourlyRateByEmployer: [
+            {
+                name: string,
+                url: string,
+                profileCount: number,
+                min: number,
+                max: number,
+                avg: number                
+            }
+        ]
+    },
+    related: [
+        {
+            name: string,
+            url: string,
+            min: number,
+            max: number,
+            avg: number                
         }
-    }      
+    ]          
 }
 const SchoolSchema = new Schema<School>({
     name: String,
@@ -255,6 +352,8 @@ const SchoolSchema = new Schema<School>({
         ref: 'Category'
     },
     url: String,
+    slug: String,
+    salaryType: String,
     currencyCode: String,
     rawDataParsed: Boolean,
     rawData: Object,
@@ -372,8 +471,57 @@ const SchoolSchema = new Schema<School>({
               max: Number,
               avg: Number
             }
-        }
+        },
+        salaryByJob: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],
+        hourlyRateByJob: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],
+        salaryByEmployer: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],
+        hourlyRateByEmployer: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ]
     },
+    related: [
+        {
+            name: String,
+            url: String,
+            min: Number,
+            max: Number,
+            avg: Number                
+        }
+    ],
     createdAt: {
         type: Date,
         required: true,
