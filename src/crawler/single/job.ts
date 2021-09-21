@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { parse, HTMLElement } from 'node-html-parser';
 import { JobDao } from "../../daos/jobDao";
-
+//http://localhost:4200/research/US/Job%3DOffice_Manager/Hourly_Rate
 export const start = async function() {
     const dao = new JobDao();
     const url = '/research/US/Job=Office_Manager/Hourly_Rate';

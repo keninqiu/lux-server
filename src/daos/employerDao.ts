@@ -14,6 +14,8 @@ export class EmployerDao {
           return [];
      }
      console.log('country=', country);
+     const categories = await CategoryModel.find({country: country._id, slug: categorySlug});
+     console.log('categories====', categories);
      const category = await CategoryModel.findOne({type: 'Employer', country: country._id, slug: categorySlug});
      if(category == null) {
           return [];

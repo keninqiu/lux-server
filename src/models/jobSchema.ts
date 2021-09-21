@@ -154,6 +154,12 @@ export interface IJob {
         }
     },
     currencyCode?: string,
+    ratings?: {
+        overall: {
+            profileCount: number,
+            score: number
+        }
+    },
 }
 export interface Job extends Document {
     name: string,
@@ -298,6 +304,12 @@ export interface Job extends Document {
             none: {
                 profileCount: number
             }
+        }
+    },
+    ratings: {
+        overall: {
+            profileCount: number,
+            score: number
         }
     },
     rawDataParsed: boolean,
@@ -452,6 +464,12 @@ const JobSchema = new Schema<Job>({
             none: {
                 profileCount: Number
             }
+        }
+    },
+    ratings: {
+        overall: {
+            profileCount: Number,
+            score: Number
         }
     },
     createdAt: {

@@ -13,6 +13,8 @@ export const start = async function() {
     await state.start();
     await city.start();
     */
+    await category.start();
+   /*
     await school.start();
     await job.start();
     await industry.start();
@@ -20,5 +22,5 @@ export const start = async function() {
     await skill.start();
     await degree.start();
     await employer.start();
-    
+   */ 
 }

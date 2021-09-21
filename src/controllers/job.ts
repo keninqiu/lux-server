@@ -274,7 +274,9 @@ export class JobController {
                 }
             }
     
-    
+            item.ratings = {
+                overall: pageData.ratings['Job Satisfaction Overall']
+            };
            };
            return item;
     }
