@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { Category } from "./categorySchema";
 
 /*
 
@@ -16,7 +17,7 @@ export interface ICertification {
 }
 export interface Certification extends Document {
     name: string,
-    category: string,
+    category: Category,
     url: string,
     slug: string,
     salaryType: string,

@@ -4,10 +4,10 @@ import { CountryModel, Country, ICountry } from '../models/countrySchema';
 
 export class DegreeDao {
    public async fetchAll(): Promise<Degree[]> {
-        return await DegreeModel.find({}).select('name url category');
+        return await DegreeModel.find({}).select('name url slug category');
    }
    public async fetchAllWithoutRawData(): Promise<Degree[]> {
-     return await DegreeModel.find({rawData: null}).select('name url category');
+     return await DegreeModel.find({rawData: null}).select('name url category slug');
    }
 
    public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<Degree[]>  {
@@ -25,11 +25,52 @@ export class DegreeDao {
      return await DegreeModel.find({category: category._id}).select('name slug url category');
    }
 
+   public async fetchAllByCountryCode(countryCode: string): Promise<Degree[]>  {
+     const country = await CountryModel.findOne({code: countryCode});
+     console.log('countryCode==', countryCode);
+     if(!country) {
+          return [];
+     }
+     console.log('country=', country);
+     const categories = await CategoryModel.find({type: 'Degree', country: country._id});
+     if(categories == null) {
+          return [];
+     }
+     console.log('categories=', categories);
+     const categoryIds = categories.map(item => item._id);
+     return await DegreeModel.find({category: { "$in" : categoryIds}}).select('name slug url category');
+   }
+
+   public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Degree | null> {
+     const items = await DegreeModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     console.log('items===', items);
+     if(!items || items.length == 0) {
+          return null;
+     }
+     
+     const filterItems = items.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterItems || filterItems.length == 0) {
+          return null;
+     }     
+     return filterItems[0];
+    }
+
    public async fetchById(id: string): Promise<Degree | null> {
         return await DegreeModel.findById(id);
    }
 
-   public async create(data: IDegree): Promise<Degree | null> {
+   public async create(data: any): Promise<Degree | null> {
        return await DegreeModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 

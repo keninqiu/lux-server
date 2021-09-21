@@ -25,11 +25,35 @@ export class CertificationDao {
      return await CertificationModel.find({category: category._id}).select('name slug url category');
    }
 
+   public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Certification | null> {
+     const items = await CertificationModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     if(!items || items.length == 0) {
+          return null;
+     }
+     
+     const filterItems = items.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterItems || filterItems.length == 0) {
+          return null;
+     }     
+     return filterItems[0];
+    }
+
    public async fetchById(id: string): Promise<Certification | null> {
         return await CertificationModel.findById(id);
    }
 
-   public async create(data: ICertification): Promise<Certification | null> {
+   public async create(data: any): Promise<Certification | null> {
        return await CertificationModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 

@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { Category } from "./categorySchema";
 
 /*
 
@@ -19,7 +20,7 @@ export interface Degree extends Document {
     url: string,
     slug: string,
     salaryType: string,
-    category: string,
+    category: Category,
     rawData: any
 }
 const DegreeSchema = new Schema<Degree>({

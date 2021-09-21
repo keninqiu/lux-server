@@ -22,6 +22,30 @@ export class SkillDao {
      return await SkillModel.find({category: category._id}).select('name slug url category');
    }   
 
+   public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Skill | null> {
+     const items = await SkillModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     if(!items || items.length == 0) {
+          return null;
+     }
+     
+     const filterItems = items.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterItems || filterItems.length == 0) {
+          return null;
+     }     
+     return filterItems[0];
+    }
+
    public async fetchAllWithoutRawData(): Promise<Skill[]> {
      return await SkillModel.find({rawData: null}).select('name url category');
    }
@@ -29,7 +53,7 @@ export class SkillDao {
         return await SkillModel.findById(id);
    }
 
-   public async create(data: ISkill): Promise<Skill | null> {
+   public async create(data: any): Promise<Skill | null> {
        return await SkillModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 

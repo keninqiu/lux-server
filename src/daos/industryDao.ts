@@ -22,6 +22,30 @@ export class IndustryDao {
      return await IndustryModel.find({category: category._id}).select('name slug url category');
    }
 
+   public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Industry | null> {
+     const items = await IndustryModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+
+     if(!items || items.length == 0) {
+          return null;
+     }
+     
+     const filterItems = items.filter(item => 
+          {
+               const country: any = item.category.country;
+               return country.code == countryCode;
+          });
+
+     if(!filterItems || filterItems.length == 0) {
+          return null;
+     }     
+     return filterItems[0];
+    }
+
    public async fetchAllWithoutRawData(): Promise<Industry[]> {
      return await IndustryModel.find({rawData: null}).select('name url category');
    }
@@ -29,7 +53,7 @@ export class IndustryDao {
         return await IndustryModel.findById(id);
    }
 
-   public async create(data: IIndustry): Promise<Industry | null> {
+   public async create(data: any): Promise<Industry | null> {
        return await IndustryModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }
 

@@ -47,6 +47,52 @@ export class DegreeController {
     }
     }     
 
+    @Get('countryCode/:countryCode')
+    private async fetchAllByCountryCode(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const countryCode = req.params.countryCode;
+       const items = await this.dao.fetchAllByCountryCode(countryCode);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
+    @Get('countryCode/:countryCode/slug/:slug')
+    private async fetchByCountryCodeAndSlug(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        console.log('fetch all');
+       const countryCode = req.params.countryCode;
+       let slug = req.params.slug;
+
+       slug = slug.replace(",", "%2C").replace("'", "%27").replace("/", "%2F");
+
+       console.log('slugggg=', slug);
+       let item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
+       console.log('item in here===', item);
+       //item = this.parseRawData(item);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: item
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get(':id')
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {

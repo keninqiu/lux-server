@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { Category } from "./categorySchema";
 
 /*
 
@@ -19,7 +20,7 @@ export interface Employer extends Document {
     url: string,
     slug: string,
     salaryType: string,
-    category: string,
+    category: Category,
     rawData: any
 }
 const EmployerSchema = new Schema<Employer>({
