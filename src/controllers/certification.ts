@@ -164,7 +164,6 @@ export class CertificationController {
                 salaryByEmployer:[]
             };
 
-            
             if(byDimension) {
                 if(byDimension['Average Salary by Gender'] || byDimension['Average Hourly Rate by Gender']) {
                     const byGenderItems = 
@@ -193,7 +192,6 @@ export class CertificationController {
                         }
                     }
                 }
-
 
             if(byDimension['Average Salary by Years_Experience Range'] || byDimension['Average Hourly Rate by Years_Experience Range']) {
                 const byExperienceItems = 
@@ -248,7 +246,6 @@ export class CertificationController {
     
             }
 
-
             if(byDimension['Average Salary by Job'] || byDimension['Average Hourly Rate by Job']) {
                 const salaryByJobItems = 
                 byDimension['Average Salary by Job'] ?
@@ -270,7 +267,6 @@ export class CertificationController {
             }
    
             
-
             if(byDimension['Average Salary by Employer']) {
                 const salaryByEmployerItems = byDimension['Average Salary by Employer']['rows'];
                 if(salaryByEmployerItems && salaryByEmployerItems.length > 0) {
@@ -288,7 +284,6 @@ export class CertificationController {
                 }  
             }
                
-            
             if(byDimension['Average Hourly Rate by Employer']) {
                 const hourlyRateByEmployerItems = byDimension['Average Hourly Rate by Employer']['rows'];
                 if(hourlyRateByEmployerItems && hourlyRateByEmployerItems.length > 0) {
