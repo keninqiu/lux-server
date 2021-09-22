@@ -28,8 +28,8 @@ const main = async function() {
     //await data.start();
     //await salary.start();
     //await single.start();
-    //await slug.start();
-    await popular.start();
+    await slug.start();
+    //await popular.start();
     console.log('done');
 }
 
