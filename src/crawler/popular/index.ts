@@ -22,8 +22,13 @@ export const start = async function() {
 
     for(let i = 0; i < types.length; i++) {
         const type = types[i];
+        
         for(let j = 0; j < countries.length; j++) {
             const country = countries[j];
+            const existed = await dao.fetchByCountryCodeAndType(country.code, type);
+            if(existed) {
+                continue;
+            }
             const url = '/research/' + country.code + '/' + type;
             if(!url) {
                 console.log('error, url is empty');
