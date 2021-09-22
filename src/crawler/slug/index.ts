@@ -27,5 +27,3 @@ export const start = async function() {
     await skill.start();
     await degree.start();
 }
-
-start();
