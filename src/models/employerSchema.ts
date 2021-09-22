@@ -10,29 +10,375 @@ Id	code  CountryName	CurrencyCode
 export interface IEmployer {
     name: string,
     url: string,
+    currencyCode: string,
     slug?: string,
     salaryType?: string,
     category: string,
+    compensation: {
+        bonus: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        commission: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        salary: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        hourlyRate: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number            
+        },
+        profitSharing: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number              
+        },
+        total: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number              
+        }
+    },  
+    ratings?: {
+        overall: {
+            profileCount: number,
+            score: number
+        },
+        appreciation: {
+            profileCount: number,
+            score: number
+        },
+        companyOutlook: {
+            profileCount: number,
+            score: number
+        },
+        fairPay: {
+            profileCount: number,
+            score: number
+        },
+        learningandDevelopment: {
+            profileCount: number,
+            score: number
+        },
+        managerCommunication: {
+            profileCount: number,
+            score: number
+        },
+        managerRelationship: {
+            profileCount: number,
+            score: number
+        },
+        payTransparency: {
+            profileCount: number,
+            score: number
+        }
+    },
+    reviews?: [
+        {
+            answerBody: string,
+            answerCon: string,
+            answerPro: string,
+            answerTitle: string,
+            city: string,
+            country: string,
+            employer: string,
+            jobTitle: string,
+            questionId: number,
+            questionPrompt: string,
+            questionType: number,
+            updated: Date
+        }
+    ],
     rawData?: any
 }
 export interface Employer extends Document {
     name: string,
     url: string,
     slug: string,
+    currencyCode: string,
     salaryType: string,
     category: Category,
+    compensation: {
+        bonus: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        commission: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        salary: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number
+        },
+        hourlyRate: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number            
+        },
+        profitSharing: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number              
+        },
+        total: {
+            min: number,
+            max: number,
+            avg: number,
+            profileCount: number              
+        }
+    },  
+    ratings: {
+        overall: {
+            profileCount: number,
+            score: number
+        },
+        appreciation: {
+            profileCount: number,
+            score: number
+        },
+        companyOutlook: {
+            profileCount: number,
+            score: number
+        },
+        fairPay: {
+            profileCount: number,
+            score: number
+        },
+        learningandDevelopment: {
+            profileCount: number,
+            score: number
+        },
+        managerCommunication: {
+            profileCount: number,
+            score: number
+        },
+        managerRelationship: {
+            profileCount: number,
+            score: number
+        },
+        payTransparency: {
+            profileCount: number,
+            score: number
+        }
+    },
+    reviews?: [
+        {
+            answerBody: string,
+            answerCon: string,
+            answerPro: string,
+            answerTitle: string,
+            city: string,
+            country: string,
+            employer: string,
+            jobTitle: string,
+            questionId: number,
+            questionPrompt: string,
+            questionType: number,
+            updated: Date
+        }
+    ],
     rawData: any
 }
 const EmployerSchema = new Schema<Employer>({
     name: String,
     url: String,
     slug: String,
+    currencyCode: String,
     salaryType: String,
     rawData: Object,
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    compensation: {
+        bonus: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        commission: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        salary: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        hourlyRate: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number            
+        },
+        profitSharing: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number              
+        },
+        total: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number              
+        }
+    }, 
+    ratings: {
+        overall: {
+            profileCount: Number,
+            score: Number
+        },
+        appreciation: {
+            profileCount: Number,
+            score: Number
+        },
+        companyOutlook: {
+            profileCount: Number,
+            score: Number
+        },
+        fairPay: {
+            profileCount: Number,
+            score: Number
+        },
+        learningandDevelopment: {
+            profileCount: Number,
+            score: Number
+        },
+        managerCommunication: {
+            profileCount: Number,
+            score: Number
+        },
+        managerRelationship: {
+            profileCount: Number,
+            score: Number
+        },
+        payTransparency: {
+            profileCount: Number,
+            score: Number
+        }
+    },
+    reviews: [
+        {
+            answerBody: String,
+            answerCon: String,
+            answerPro: String,
+            answerTitle: String,
+            city: String,
+            country: String,
+            employer: String,
+            jobTitle: String,
+            questionId: Number,
+            questionPrompt: String,
+            questionType: Number,
+            updated: Date
+        }
+    ],
+
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            earlyCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            midCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            lateCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            experienced: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            },
+            female: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            }
+        },        
+        salaryByJob: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],        
+        salaryByDegree: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ]
+    },
+
+    related: [
+        {
+            name: String,
+            url: String,
+            min: Number,
+            max: Number,
+            avg: Number                
+        }
+    ],
     createdAt: {
         type: Date,
         required: true,

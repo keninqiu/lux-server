@@ -71,10 +71,9 @@ export class DegreeController {
     try {
         console.log('fetch all');
        const countryCode = req.params.countryCode;
-       let slug = req.params.slug;
+       let slug:string = req.params.slug;
 
-       slug = slug.replace(",", "%2C").replace("'", "%27").replace("/", "%2F");
-
+       slug = encodeURIComponent(slug);
        console.log('slugggg=', slug);
        let item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
        console.log('item in here===', item);

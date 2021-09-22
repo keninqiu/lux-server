@@ -51,10 +51,9 @@ export class SkillController {
     private async fetchByCountryCodeAndSlug(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const countryCode = req.params.countryCode;
-       let slug = req.params.slug;
+       let slug:string = req.params.slug;
 
-       slug = slug.replace(",", "%2C").replace("'", "%27").replace("/", "%2F");
-
+       slug = encodeURIComponent(slug);
        let item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
        console.log('item in here===', item);
        //item = this.parseRawData(item);

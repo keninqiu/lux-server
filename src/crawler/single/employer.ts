@@ -1,10 +1,11 @@
+//http://localhost:4200/research/US/Employer%3DICF_International/Salary
 import fetch from 'node-fetch';
 import { parse, HTMLElement } from 'node-html-parser';
-import { SchoolDao } from "../../daos/schoolDao";
-//http://localhost:4200/research/US/School%3DCollins_College_-_Phoenix,_AZ/Salary
+import { EmployerDao } from "../../daos/employerDao";
+
 export const start = async function() {
-    const dao = new SchoolDao();
-    const url = '/research/US/School=Collins_College_-_Phoenix%2C_AZ/Salary';
+    const dao = new EmployerDao();
+    const url = '/research/US/Employer=ICF_International/Salary';
     if(!url) {
         console.log('error, url is empty');
     }
@@ -17,7 +18,6 @@ export const start = async function() {
     const nextDataNode = root.querySelector('#__NEXT_DATA__');
 
     const dataText = nextDataNode.text;
-    console.log('dataText=', dataText);
     const data = parseData(dataText);
     const newItem = await dao.updateByQuery({url: url}, data);
 }

@@ -67,6 +67,10 @@ export class EmployerDao {
         return await EmployerModel.findByIdAndDelete(id);
    } 
 
+   public async updateByQuery(query: any, data: any): Promise<Employer | null> {
+     return await EmployerModel.findOneAndUpdate(query, data, {new: true});
+   }   
+
    public async deleteAll(): Promise<any> {
      return await EmployerModel.remove({});
    }  

@@ -32,6 +32,54 @@ const SkillSchema = new Schema<Skill>({
     url: String,
     slug: String,
     salaryType: String,
+    currencyCode: String,
+    compensation: {
+        bonus: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        commission: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        salary: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number
+        },
+        hourlyRate: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number            
+        },
+        profitSharing: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number              
+        },
+        total: {
+            min: Number,
+            max: Number,
+            avg: Number,
+            profileCount: Number              
+        }
+    }, 
+    related: [
+        {
+            name: String,
+            url: String,
+            min: Number,
+            max: Number,
+            avg: Number                
+        }
+    ],
     rawData: Object,
     createdAt: {
         type: Date,
