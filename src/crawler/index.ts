@@ -6,6 +6,7 @@ import * as data from './data';
 import * as salary from './salary';
 import * as single from './single';
 import * as slug from './slug';
+import * as popular from './popular';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -25,9 +26,10 @@ const main = async function() {
     //await city.start();
     //await category.start();
     //await data.start();
-    await salary.start();
+    //await salary.start();
     //await single.start();
     //await slug.start();
+    await popular.start();
     console.log('done');
 }
 
