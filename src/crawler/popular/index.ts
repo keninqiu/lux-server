@@ -9,15 +9,14 @@ export const start = async function() {
     const countries = await countryDao.fetchAll();
 
     const types = [
-        'Skill'
-        /*
+        //'Skill',
         'Job',
         'Certification',
         'Degree',
         'Employer',
         'Industry',
         'School',
-        */
+        
     ];
 
     for(let i = 0; i < types.length; i++) {
@@ -30,11 +29,14 @@ export const start = async function() {
                 continue;
             }
             const url = '/research/' + country.code + '/' + type;
+
             if(!url) {
                 console.log('error, url is empty');
             }
             try {
-                const response = await fetch('https://www.payscale.com' + url);
+                const fullUrl = 'https://www.payscale.com' + url;
+                console.log('rullUrl==', fullUrl);
+                const response = await fetch(fullUrl);
         
                 const body = await response.text();
                 
