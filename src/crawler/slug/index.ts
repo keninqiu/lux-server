@@ -8,19 +8,24 @@ import * as skill from './skill';
 import * as degree from './degree';
 import * as employer from './employer';
 export const start = async function() {
+    console.log('haha');
     /*
     await country.start();
     await state.start();
     await city.start();
     */
-    await category.start();
+    //await category.start();
    /*
     await school.start();
     await job.start();
     await industry.start();
     await certification.start();
-    await skill.start();
-    await degree.start();
+    
     await employer.start();
    */ 
+    await employer.start();
+    await skill.start();
+    await degree.start();
 }
+
+start();
