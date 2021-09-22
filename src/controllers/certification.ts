@@ -165,7 +165,8 @@ export class CertificationController {
             };
 
             
-            const byGenderItems = 
+            if(byDimension) {
+                const byGenderItems = 
                 byDimension['Average Salary by Gender'] ? 
                 byDimension['Average Salary by Gender']['rows'] :
                 byDimension['Average Hourly Rate by Gender']['rows'];
@@ -299,6 +300,8 @@ export class CertificationController {
                     }
                 } 
             }
+            }
+
 
 
 

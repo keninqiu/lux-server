@@ -174,105 +174,116 @@ export class JobController {
             };                
             const byDimension = pageData.byDimension;
             //console.log('byDimension==', byDimension);
-            const byGenderItems = byDimension['Gender Breakdown']['rows'];
-            if(byGenderItems && byGenderItems.length > 0) {
-                for(let i = 0; i < byGenderItems.length;i++) {
-                    const byGenderItem = byGenderItems[i];
-                    if(byGenderItem.name == 'Male') {
-                        item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
-                        if(byGenderItem.range) {
-                            item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                            item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                            item.byDimension.gender.male.avg = byGenderItem.range['50'];
+
+            if(byDimension) {
+                if(byDimension['Gender Breakdown']) {
+                    const byGenderItems = byDimension['Gender Breakdown']['rows'];
+                    if(byGenderItems && byGenderItems.length > 0) {
+                        for(let i = 0; i < byGenderItems.length;i++) {
+                            const byGenderItem = byGenderItems[i];
+                            if(byGenderItem.name == 'Male') {
+                                item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
+                                if(byGenderItem.range) {
+                                    item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    item.byDimension.gender.male.avg = byGenderItem.range['50'];
+                                }
+            
+                            } else 
+                            if(byGenderItem.name == 'Female') {
+                                item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
+                                if(byGenderItem.range) {
+                                    item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    item.byDimension.gender.female.avg = byGenderItem.range['50'];
+                                }
+            
+                            } else
+                            if(byGenderItem.name == 'Prefer to self-define') {
+                                item.byDimension.gender.selfDefine.profileCount = byGenderItem.profileCount;
+                                if(byGenderItem.range) {
+                                    item.byDimension.gender.selfDefine.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    item.byDimension.gender.selfDefine.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    item.byDimension.gender.selfDefine.avg = byGenderItem.range['50'];
+                                }
+                            }
                         }
+                    }
+                }
     
-                    } else 
-                    if(byGenderItem.name == 'Female') {
-                        item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
-                        if(byGenderItem.range) {
-                            item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                            item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                            item.byDimension.gender.female.avg = byGenderItem.range['50'];
-                        }
+                if(byDimension['Job by Experience']) {
+                    const byExperienceItems = byDimension['Job by Experience']['rows'];
+                    if(byExperienceItems && byExperienceItems.length > 0) {
+                        for(let i = 0; i < byExperienceItems.length;i++) {
+                            const byExperienceItem = byExperienceItems[i];
+                            console.log('byExperienceItem===', byExperienceItem);
+                            if(byExperienceItem.name == '10-19 years') {
+                                item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '20 years or more') {
+                                item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '1-4 years') {
+                                item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '5-9 years') {
+                                item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else {
+                                item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];    
+                                }                        
+                            }
+                        } 
+                    }
+                }
     
-                    } else
-                    if(byGenderItem.name == 'Prefer to self-define') {
-                        item.byDimension.gender.selfDefine.profileCount = byGenderItem.profileCount;
-                        if(byGenderItem.range) {
-                            item.byDimension.gender.selfDefine.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                            item.byDimension.gender.selfDefine.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                            item.byDimension.gender.selfDefine.avg = byGenderItem.range['50'];
+        
+                if(byDimension['Health Insurance Overall']) {
+                    const byHealthBenefitItems = byDimension['Health Insurance Overall']['rows'];
+                    if(byHealthBenefitItems && byHealthBenefitItems.length > 0) {
+                        for(let i = 0; i < byHealthBenefitItems.length;i++) {
+                            const byHealthBenefitItem = byHealthBenefitItems[i];
+                            if(byHealthBenefitItem.name == 'Medical / Health') {
+                                item.byDimension.healthBenefit.medical.profileCount = byHealthBenefitItem.profileCount;
+                            } else 
+                            if(byHealthBenefitItem.name == 'None') {
+                                item.byDimension.healthBenefit.none.profileCount = byHealthBenefitItem.profileCount;
+                            } else
+                            if(byHealthBenefitItem.name == 'Dental') {
+                                item.byDimension.healthBenefit.dental.profileCount = byHealthBenefitItem.profileCount;
+                            } else
+                            if(byHealthBenefitItem.name == 'Vision') {
+                                item.byDimension.healthBenefit.vision.profileCount = byHealthBenefitItem.profileCount;
+                            }
                         }
                     }
                 }
             }
-    
-            const byExperienceItems = byDimension['Job by Experience']['rows'];
-            if(byExperienceItems && byExperienceItems.length > 0) {
-                for(let i = 0; i < byExperienceItems.length;i++) {
-                    const byExperienceItem = byExperienceItems[i];
-                    console.log('byExperienceItem===', byExperienceItem);
-                    if(byExperienceItem.name == '10-19 years') {
-                        item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
-                        if(byExperienceItem.range) {
-                            item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
-                        }
-                    } else 
-                    if(byExperienceItem.name == '20 years or more') {
-                        item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
-                        if(byExperienceItem.range) {
-                            item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
-                        }
-                    } else 
-                    if(byExperienceItem.name == '1-4 years') {
-                        item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
-                        if(byExperienceItem.range) {
-                            item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
-                        }
-                    } else 
-                    if(byExperienceItem.name == '5-9 years') {
-                        item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
-                        if(byExperienceItem.range) {
-                            item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
-                        }
-                    } else {
-                        item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
-                        if(byExperienceItem.range) {
-                            item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                            item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                            item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];    
-                        }                        
-                    }
-                } 
-            }
-    
-    
-            const byHealthBenefitItems = byDimension['Health Insurance Overall']['rows'];
-            if(byHealthBenefitItems && byHealthBenefitItems.length > 0) {
-                for(let i = 0; i < byHealthBenefitItems.length;i++) {
-                    const byHealthBenefitItem = byHealthBenefitItems[i];
-                    if(byHealthBenefitItem.name == 'Medical / Health') {
-                        item.byDimension.healthBenefit.medical.profileCount = byHealthBenefitItem.profileCount;
-                    } else 
-                    if(byHealthBenefitItem.name == 'None') {
-                        item.byDimension.healthBenefit.none.profileCount = byHealthBenefitItem.profileCount;
-                    } else
-                    if(byHealthBenefitItem.name == 'Dental') {
-                        item.byDimension.healthBenefit.dental.profileCount = byHealthBenefitItem.profileCount;
-                    } else
-                    if(byHealthBenefitItem.name == 'Vision') {
-                        item.byDimension.healthBenefit.vision.profileCount = byHealthBenefitItem.profileCount;
-                    }
-                }
-            }
+
+
     
             item.ratings = {
                 overall: pageData.ratings['Job Satisfaction Overall']

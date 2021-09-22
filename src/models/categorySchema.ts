@@ -1,11 +1,4 @@
 import { Schema, model, Document } from "mongoose";
-import { Country } from "./countrySchema";
-
-/*
-
-Id	code  CountryName	CurrencyCode
-1	AU	  Australia	 AUD
-*/
 
 export interface ICategory {
     name: string,
