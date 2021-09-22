@@ -13,6 +13,9 @@ export const start = async function() {
         if(!url) {
             continue;
         }
+        if(item.slug) {
+            continue;
+        }
         const index = url.lastIndexOf('=');
         const index2 = url.lastIndexOf('/');
         const slug = url.substring(index + 1, index2);
