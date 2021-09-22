@@ -6,7 +6,7 @@ import { CertificationDao } from "../../daos/certificationDao";
 
 export const start = async function() {
     const dao = new CertificationDao();
-    const url = '/research/US/Certification=Certified_Euthanasia_technician/Hourly_Rate';
+    const url = '/research/US/Certification=Certificate_in_Human_Resource_Management/Salary';
     if(!url) {
         console.log('error, url is empty');
     }

@@ -27,8 +27,8 @@ const main = async function() {
     //await category.start();
     //await data.start();
     //await salary.start();
-    //await single.start();
-    await slug.start();
+    await single.start();
+    //await slug.start();
     //await popular.start();
     console.log('done');
 }
