@@ -61,6 +61,10 @@ export class SkillDao {
         return await SkillModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
+   public async updateByQuery(query: any, data: any): Promise<Skill | null> {
+     return await SkillModel.findOneAndUpdate(query, data, {new: true});
+   }  
+
    public async delete(id: string): Promise<Skill | null> {
         return await SkillModel.findByIdAndDelete(id);
    } 

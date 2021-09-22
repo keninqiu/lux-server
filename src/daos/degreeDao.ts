@@ -70,6 +70,10 @@ export class DegreeDao {
         return await DegreeModel.findById(id);
    }
 
+   public async updateByQuery(query: any, data: any): Promise<Degree | null> {
+     return await DegreeModel.findOneAndUpdate(query, data, {new: true});
+   }  
+
    public async create(data: any): Promise<Degree | null> {
        return await DegreeModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }

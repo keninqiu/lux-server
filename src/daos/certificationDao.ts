@@ -61,6 +61,10 @@ export class CertificationDao {
         return await CertificationModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
+   public async updateByQuery(query: any, data: any): Promise<Certification | null> {
+     return await CertificationModel.findOneAndUpdate(query, data, {new: true});
+   }  
+
    public async delete(id: string): Promise<Certification | null> {
         return await CertificationModel.findByIdAndDelete(id);
    } 

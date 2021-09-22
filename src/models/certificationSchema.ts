@@ -13,6 +13,12 @@ export interface ICertification {
     url: string,
     slug?: string,
     salaryType?: string,
+    ratings?: {
+        overall: {
+            profileCount: number,
+            score: number
+        }
+    },
     rawData?: any
 }
 export interface Certification extends Document {
@@ -21,6 +27,12 @@ export interface Certification extends Document {
     url: string,
     slug: string,
     salaryType: string,
+    ratings: {
+        overall: {
+            profileCount: number,
+            score: number
+        }
+    },
     rawData: any
 }
 const CertificationSchema = new Schema<Certification>({
@@ -80,6 +92,91 @@ const CertificationSchema = new Schema<Certification>({
             avg: Number                
         }
     ],
+
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            earlyCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            midCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            lateCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            experienced: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            },
+            female: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            }
+        },  
+        salaryByJob: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],
+        salaryByEmployer: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number               
+            }
+        ],
+        hourlyRateByEmployer: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number               
+            }
+        ]  
+    },
+    ratings: {
+        jobSatisfaction: {
+            profileCount: Number,
+            score: Number
+        }
+    },
     createdAt: {
         type: Date,
         required: true,

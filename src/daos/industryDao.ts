@@ -61,6 +61,10 @@ export class IndustryDao {
         return await IndustryModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
+   public async updateByQuery(query: any, data: any): Promise<Industry | null> {
+     return await IndustryModel.findOneAndUpdate(query, data, {new: true});
+   }  
+
    public async delete(id: string): Promise<Industry | null> {
         return await IndustryModel.findByIdAndDelete(id);
    } 

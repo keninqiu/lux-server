@@ -1,6 +1,10 @@
 import * as job from './job';
 import * as school from './school';
 import * as employer from './employer';
+import * as degree from './degree';
+import * as industry from './industry';
+import * as certification from './certification';
+
 export const start = async function() {
     //await country.start();
     //await state.start();
@@ -9,15 +13,18 @@ export const start = async function() {
     */
     //await school.start();
     /*
-    await industry.start();
     
     
-    await certification.start();
+    
+    
     await skill.start();
-    await degree.start();
+    
     
     */
     //await job.start();
     //await employer.start();
-    await school.start();
+    //await school.start();
+    //await degree.start();
+    //await industry.start();
+    await certification.start();
 }
