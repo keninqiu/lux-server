@@ -26,24 +26,29 @@ export const start = async function() {
             if(!url) {
                 console.log('error, url is empty');
             }
-            const response = await fetch('https://www.payscale.com' + url);
+            try {
+                const response = await fetch('https://www.payscale.com' + url);
         
-            const body = await response.text();
+                const body = await response.text();
+                
+                const root = parse(body);
             
-            const root = parse(body);
-        
-            const nextDataNode = root.querySelector('#__NEXT_DATA__');
-        
-            const dataText = nextDataNode.text;
-            const data = parseData(dataText);
-            const item = {
-                url: url,
-                rawData: data.rawData,
-                country: country._id,
-                type: type
+                const nextDataNode = root.querySelector('#__NEXT_DATA__');
+            
+                const dataText = nextDataNode.text;
+                const data = parseData(dataText);
+                const item = {
+                    url: url,
+                    rawData: data.rawData,
+                    country: country._id,
+                    type: type
+                }
+                const newItem = await dao.create(item);
+                console.log('newItem==', newItem);                
+            } catch(e: any) {
+                j --;
             }
-            const newItem = await dao.create(item);
-            console.log('newItem==', newItem);
+
         }
     }
 
