@@ -12,14 +12,16 @@ export interface ICategory {
     slug?: string;
     type: string,
     url: string,
-    country: string
+    country: string,
+    rawData?: any
 }
 export interface Category extends Document {
     name: string,
     slug: string;
     type: string,
     url: string,
-    country: string
+    country: string,
+    rawData: any
 }
 const CategorySchema = new Schema<Category>({
     name: String,
@@ -28,6 +30,7 @@ const CategorySchema = new Schema<Category>({
     },
     slug: String,
     url: String,
+    rawData: Object,
     country: {
         type: Schema.Types.ObjectId,
         ref: 'Country'

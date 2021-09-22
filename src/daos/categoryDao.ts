@@ -5,6 +5,10 @@ export class CategoryDao {
         return await CategoryModel.find({}).sort('name');
    }
 
+   public async fetchAllWithoutRawData(): Promise<Category[]> {
+     return await CategoryModel.find({rawData: null}).select('name url');
+   }
+
    public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
      return await CategoryModel.find({country: countryId, type}).sort('name');
    }

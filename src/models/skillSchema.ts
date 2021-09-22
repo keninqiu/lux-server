@@ -71,6 +71,64 @@ const SkillSchema = new Schema<Skill>({
             profileCount: Number              
         }
     }, 
+    byDimension: {
+        experience: {
+            entryLevel: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            earlyCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            midCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            lateCareer: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            },
+            experienced: {
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number
+            }
+        },
+        gender: {
+            male: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            },
+            female: {
+              profileCount: Number,
+              min: Number,
+              max: Number,
+              avg: Number
+            }
+        },        
+        salaryByJob: [
+            {
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ]
+    },
     related: [
         {
             name: String,

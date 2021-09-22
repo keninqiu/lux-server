@@ -202,143 +202,162 @@ export class SchoolController {
                  item.related = [];       
                  const byDimension = pageData.byDimension;
                  //console.log('byDimension==', byDimension);
-                 const byGenderItems = byDimension['Average Salary By Gender']['rows'];
-                 if(byGenderItems && byGenderItems.length > 0) {
-                     for(let i = 0; i < byGenderItems.length;i++) {
-                         const byGenderItem = byGenderItems[i];
-                         if(byGenderItem.name == 'Male') {
-                             item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
-                             if(byGenderItem.range) {
-                                 item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                                 item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                                 item.byDimension.gender.male.avg = byGenderItem.range['50'];
-                             }
-                         } else 
-                         if(byGenderItem.name == 'Female') {
-                             item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
-                             if(byGenderItem.range) {
-                                 item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                                 item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                                 item.byDimension.gender.female.avg = byGenderItem.range['50'];
-                             }
-                         }
- 
- 
-                         
-                     }
-                 }
- 
-                 const byExperienceItems = byDimension['Average Salary by Years_Experience Range']['rows'];
-                 if(byExperienceItems && byExperienceItems.length > 0) {
-                     for(let i = 0; i < byExperienceItems.length;i++) {
-                         const byExperienceItem = byExperienceItems[i];
-                         console.log('byExperienceItem===', byExperienceItem);
-                         if(byExperienceItem.name == '10-19 years') {
-                             item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
-                             if(byExperienceItem.range) {
-                                 item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                 item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                 item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
-                             }
-                         } else 
-                         if(byExperienceItem.name == '20 years or more') {
-                             item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
-                             if(byExperienceItem.range) {
-                                 item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                 item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                 item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
-                             }
-                         } else 
-                         if(byExperienceItem.name == '1-4 years') {
-                             item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
-                             if(byExperienceItem.range) {
-                                 item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                 item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                 item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
-                             }
-                         } else 
-                         if(byExperienceItem.name == '5-9 years') {
-                             item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
-                             if(byExperienceItem.range) {
-                                 item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                 item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                 item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
-                             }
-                         } else {
-                             item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
-                             if(byExperienceItem.range) {
-                                 item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                 item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                 item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];   
-                             }                         
-                         }
-                     } 
+
+                 if(byDimension['Average Salary By Gender']) {
+                    const byGenderItems = byDimension['Average Salary By Gender']['rows'];
+                    if(byGenderItems && byGenderItems.length > 0) {
+                        for(let i = 0; i < byGenderItems.length;i++) {
+                            const byGenderItem = byGenderItems[i];
+                            if(byGenderItem.name == 'Male') {
+                                item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
+                                if(byGenderItem.range) {
+                                    item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    item.byDimension.gender.male.avg = byGenderItem.range['50'];
+                                }
+                            } else 
+                            if(byGenderItem.name == 'Female') {
+                                item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
+                                if(byGenderItem.range) {
+                                    item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    item.byDimension.gender.female.avg = byGenderItem.range['50'];
+                                }
+                            }
+    
+    
+                            
+                        }
+                    }
                  }
 
+ 
+                 if(byDimension['Average Salary by Years_Experience Range']) {
+                    const byExperienceItems = byDimension['Average Salary by Years_Experience Range']['rows'];
+                    if(byExperienceItems && byExperienceItems.length > 0) {
+                        for(let i = 0; i < byExperienceItems.length;i++) {
+                            const byExperienceItem = byExperienceItems[i];
+                            console.log('byExperienceItem===', byExperienceItem);
+                            if(byExperienceItem.name == '10-19 years') {
+                                item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '20 years or more') {
+                                item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '1-4 years') {
+                                item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else 
+                            if(byExperienceItem.name == '5-9 years') {
+                                item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
+                                }
+                            } else {
+                                item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
+                                if(byExperienceItem.range) {
+                                    item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                    item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                    item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];   
+                                }                         
+                            }
+                        } 
+                    }
+                 }
 
-                 const salaryByJobItems = byDimension['Average Salary by Job']['rows'];
-                 if(salaryByJobItems && salaryByJobItems.length > 0) {
-                     for(let i = 0; i < salaryByJobItems.length;i++) {
-                         const salaryByJobItem = salaryByJobItems[i];
-                         const byDimensionItem = {
-                             name: salaryByJobItem.name,
-                             url: salaryByJobItem.url,
-                             avg: salaryByJobItem.range['50'],
-                             min: salaryByJobItem.range['10'] ? salaryByJobItem.range['10'] : (salaryByJobItem.range['25'] ? salaryByJobItem.range['25'] : 0),
-                             max: salaryByJobItem.range['90'] ? salaryByJobItem.range['90'] : (salaryByJobItem.range['75'] ? salaryByJobItem.range['75'] : 0)
-                         }
-                         item.byDimension.salaryByJob.push(byDimensionItem);
-                     }
-                 }                 
+
+
+                 if(byDimension['Average Salary by Job']) {
+                    const salaryByJobItems = byDimension['Average Salary by Job']['rows'];
+                    if(salaryByJobItems && salaryByJobItems.length > 0) {
+                        for(let i = 0; i < salaryByJobItems.length;i++) {
+                            const salaryByJobItem = salaryByJobItems[i];
+                            const byDimensionItem = {
+                                name: salaryByJobItem.name,
+                                url: salaryByJobItem.url,
+                                avg: salaryByJobItem.range['50'],
+                                min: salaryByJobItem.range['10'] ? salaryByJobItem.range['10'] : (salaryByJobItem.range['25'] ? salaryByJobItem.range['25'] : 0),
+                                max: salaryByJobItem.range['90'] ? salaryByJobItem.range['90'] : (salaryByJobItem.range['75'] ? salaryByJobItem.range['75'] : 0)
+                            }
+                            item.byDimension.salaryByJob.push(byDimensionItem);
+                        }
+                    }  
+                 }
+               
 
                  
-                 const hourlyRateByJobItems = byDimension['Average Hourly Rate by Job']['rows'];
-                 if(hourlyRateByJobItems && hourlyRateByJobItems.length > 0) {
-                     for(let i = 0; i < hourlyRateByJobItems.length;i++) {
-                         const hourlyRateByJobItem = hourlyRateByJobItems[i];
-                         const byDimensionItem = {
-                             name: hourlyRateByJobItem.name,
-                             url: hourlyRateByJobItem.url,
-                             avg: hourlyRateByJobItem.range['50'],
-                             min: hourlyRateByJobItem.range['10'] ? hourlyRateByJobItem.range['10'] : (hourlyRateByJobItem.range['25'] ? hourlyRateByJobItem.range['25'] : 0),
-                             max: hourlyRateByJobItem.range['90'] ? hourlyRateByJobItem.range['90'] : (hourlyRateByJobItem.range['75'] ? hourlyRateByJobItem.range['75'] : 0)
-                         }
-                         item.byDimension.hourlyRateByJob.push(byDimensionItem);
-                     }
-                 }    
+                 if(byDimension['Average Hourly Rate by Job']) {
+                    const hourlyRateByJobItems = byDimension['Average Hourly Rate by Job']['rows'];
+                    if(hourlyRateByJobItems && hourlyRateByJobItems.length > 0) {
+                        for(let i = 0; i < hourlyRateByJobItems.length;i++) {
+                            const hourlyRateByJobItem = hourlyRateByJobItems[i];
+                            const byDimensionItem = {
+                                name: hourlyRateByJobItem.name,
+                                url: hourlyRateByJobItem.url,
+                                avg: hourlyRateByJobItem.range['50'],
+                                min: hourlyRateByJobItem.range['10'] ? hourlyRateByJobItem.range['10'] : (hourlyRateByJobItem.range['25'] ? hourlyRateByJobItem.range['25'] : 0),
+                                max: hourlyRateByJobItem.range['90'] ? hourlyRateByJobItem.range['90'] : (hourlyRateByJobItem.range['75'] ? hourlyRateByJobItem.range['75'] : 0)
+                            }
+                            item.byDimension.hourlyRateByJob.push(byDimensionItem);
+                        }
+                    }   
+                 }
+ 
                  
 
 
-                 const salaryByEmployerItems = byDimension['Average Salary by Employer']['rows'];
-                 if(salaryByEmployerItems && salaryByEmployerItems.length > 0) {
-                     for(let i = 0; i < salaryByEmployerItems.length;i++) {
-                         const salaryByEmployerItem = salaryByEmployerItems[i];
-                         const byDimensionItem = {
-                             name: salaryByEmployerItem.name,
-                             url: salaryByEmployerItem.url,
-                             avg: salaryByEmployerItem.range['50'],
-                             min: salaryByEmployerItem.range['10'] ? salaryByEmployerItem.range['10'] : (salaryByEmployerItem.range['25'] ? salaryByEmployerItem.range['25'] : 0),
-                             max: salaryByEmployerItem.range['90'] ? salaryByEmployerItem.range['90'] : (salaryByEmployerItem.range['75'] ? salaryByEmployerItem.range['75'] : 0)
-                         }
-                         item.byDimension.salaryByEmployer.push(byDimensionItem);
-                     }
-                 }                 
+                 if(byDimension['Average Salary by Employer']) {
+                    const salaryByEmployerItems = byDimension['Average Salary by Employer']['rows'];
+                    if(salaryByEmployerItems && salaryByEmployerItems.length > 0) {
+                        for(let i = 0; i < salaryByEmployerItems.length;i++) {
+                            const salaryByEmployerItem = salaryByEmployerItems[i];
+                            const byDimensionItem = {
+                                name: salaryByEmployerItem.name,
+                                url: salaryByEmployerItem.url,
+                                avg: salaryByEmployerItem.range['50'],
+                                min: salaryByEmployerItem.range['10'] ? salaryByEmployerItem.range['10'] : (salaryByEmployerItem.range['25'] ? salaryByEmployerItem.range['25'] : 0),
+                                max: salaryByEmployerItem.range['90'] ? salaryByEmployerItem.range['90'] : (salaryByEmployerItem.range['75'] ? salaryByEmployerItem.range['75'] : 0)
+                            }
+                            item.byDimension.salaryByEmployer.push(byDimensionItem);
+                        }
+                    }  
+                 }
+               
 
                  
-                 const hourlyRateByEmployerItems = byDimension['Average Hourly Rate by Employer']['rows'];
-                 if(hourlyRateByEmployerItems && hourlyRateByEmployerItems.length > 0) {
-                     for(let i = 0; i < hourlyRateByEmployerItems.length;i++) {
-                         const hourlyRateByEmployerItem = hourlyRateByEmployerItems[i];
-                         const byDimensionItem = {
-                             name: hourlyRateByEmployerItem.name,
-                             url: hourlyRateByEmployerItem.url,
-                             avg: hourlyRateByEmployerItem.range['50'],
-                             min: hourlyRateByEmployerItem.range['10'] ? hourlyRateByEmployerItem.range['10'] : (hourlyRateByEmployerItem.range['25'] ? hourlyRateByEmployerItem.range['25'] : 0),
-                             max: hourlyRateByEmployerItem.range['90'] ? hourlyRateByEmployerItem.range['90'] : (hourlyRateByEmployerItem.range['75'] ? hourlyRateByEmployerItem.range['75'] : 0)
-                         }
-                         item.byDimension.hourlyRateByEmployer.push(byDimensionItem);
-                     }
-                 } 
+                 if(byDimension['Average Hourly Rate by Employer']) {
+                    const hourlyRateByEmployerItems = byDimension['Average Hourly Rate by Employer']['rows'];
+                    if(hourlyRateByEmployerItems && hourlyRateByEmployerItems.length > 0) {
+                        for(let i = 0; i < hourlyRateByEmployerItems.length;i++) {
+                            const hourlyRateByEmployerItem = hourlyRateByEmployerItems[i];
+                            const byDimensionItem = {
+                                name: hourlyRateByEmployerItem.name,
+                                url: hourlyRateByEmployerItem.url,
+                                avg: hourlyRateByEmployerItem.range['50'],
+                                min: hourlyRateByEmployerItem.range['10'] ? hourlyRateByEmployerItem.range['10'] : (hourlyRateByEmployerItem.range['25'] ? hourlyRateByEmployerItem.range['25'] : 0),
+                                max: hourlyRateByEmployerItem.range['90'] ? hourlyRateByEmployerItem.range['90'] : (hourlyRateByEmployerItem.range['75'] ? hourlyRateByEmployerItem.range['75'] : 0)
+                            }
+                            item.byDimension.hourlyRateByEmployer.push(byDimensionItem);
+                        }
+                    } 
+                 }
+
 
 
 
