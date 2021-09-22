@@ -10,7 +10,7 @@ export class CategoryDao {
    }
 
    public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
-     return await CategoryModel.find({country: countryId, type}).sort('name');
+     return await CategoryModel.find({country: countryId, type}).select('name url').sort('name');
    }
 
    public async fetchAllByCountryCodeAndType(countryCode: string, type: string): Promise<Category[]> {
