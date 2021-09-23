@@ -7,6 +7,10 @@ export class SkillDao {
         return await SkillModel.find({}).select('name url category');
    }
 
+   public async fetchAllByText(countryCode: string, text: string): Promise<Skill[]> {
+     return await SkillModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 
+   }
+
    public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<Skill[]>  {
      const country = await CountryModel.findOne({code: countryCode});
      console.log('countryCode==', countryCode);

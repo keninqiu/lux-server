@@ -30,7 +30,6 @@ export class EmployerController {
     @Get('countryCode/:countryCode/categorySlug/:categorySlug')
     private async fetchAllByCountryCodeAndCategorySlug(req: ICustomRequest, res: Response): Promise<Response> {
     try {
-        console.log('nnnn');
        const countryCode = req.params.countryCode;
        const categorySlug = req.params.categorySlug;
        const items = await this.dao.fetchAllByCountryCodeAndCategorySlug(countryCode, categorySlug);
