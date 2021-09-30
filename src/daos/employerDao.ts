@@ -81,7 +81,7 @@ export class EmployerDao {
    } 
 
    public async updateByQuery(query: any, data: any): Promise<Employer | null> {
-     return await EmployerModel.findOneAndUpdate(query, data, {new: true});
+     return await EmployerModel.updateMany(query, data);
    }   
 
    public async deleteAll(): Promise<any> {

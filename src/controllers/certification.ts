@@ -201,7 +201,6 @@ export class CertificationController {
                 if(byExperienceItems && byExperienceItems.length > 0) {
                     for(let i = 0; i < byExperienceItems.length;i++) {
                         const byExperienceItem = byExperienceItems[i];
-                        console.log('byExperienceItem===', byExperienceItem);
                         if(byExperienceItem.name == '10-19 years') {
                             item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {

@@ -5,7 +5,7 @@ import { EmployerDao } from "../../daos/employerDao";
 
 export const start = async function() {
     const dao = new EmployerDao();
-    const url = '/research/US/Employer=ICF_International/Salary';
+    const url = '/research/AT/Employer=Novartis/Salary';
     if(!url) {
         console.log('error, url is empty');
     }
@@ -20,6 +20,7 @@ export const start = async function() {
     const dataText = nextDataNode.text;
     const data = parseData(dataText);
     const newItem = await dao.updateByQuery({url: url}, data);
+    console.log('newItem=', newItem);
 }
 
 const parseData = function(dataText: string) {
