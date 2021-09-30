@@ -38,7 +38,7 @@ export class CategoryDao {
    }
 
    public async update(id: string, data: any): Promise<Category | null> {
-        return await CategoryModel.updateOne({_id: id}, data);
+        return await CategoryModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
   
    public async delete(id: string): Promise<Category | null> {

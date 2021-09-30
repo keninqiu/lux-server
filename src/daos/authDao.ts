@@ -15,8 +15,7 @@ export class AuthDao {
     public async login(data: ILoginModel): Promise<User | null> {
         const query = {
             password: md5(data.password),
-            email: data.email,
-            store: data.store
+            email: data.email
         }
         const user = await UserModel.findOne(query);
         

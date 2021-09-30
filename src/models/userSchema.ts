@@ -6,8 +6,10 @@ export interface IUser {
    phone?: string;
    email: string;
    password: string; 
-   store?: string;
    avatar?: string;
+   employer: {
+      employees: number
+   }
 }
 
 export interface IRegisterModel {
@@ -15,13 +17,14 @@ export interface IRegisterModel {
     lastName?: string;
     email: string;
     password: string; 
-    store?: string;
+    employer: {
+      employees: number
+    }
 }
 
 export interface ILoginModel {
     email: string;
     password: string; 
-    store: string;
 }
 
 export interface User extends Document {
@@ -30,8 +33,10 @@ export interface User extends Document {
     phone?: string;
     email: string;
     password: string; 
-    store?: string;
     avatar?: string;
+    employer: {
+      employees: number
+    }
 }
 
 const UserSchema = new Schema<User>({
@@ -47,9 +52,8 @@ const UserSchema = new Schema<User>({
       type: String,
       required: true
    },
-   store: {
-      type: Schema.Types.ObjectId,
-      ref: 'Store'    
+   employer: {
+      employees: Number
    }
 });
 

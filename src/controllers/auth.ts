@@ -14,16 +14,16 @@ export class AuthController {
         
         try {
             // Parses the request body and assign to the variables on the left.
-            const { store, firstName, lastName, email, password } = req.body;
+            const { firstName, lastName, email, employer, password } = req.body;
 
-            const user = await this.authDao.register({ store, firstName, lastName, email, password });
+            const user = await this.authDao.register({ firstName, lastName, email, employer, password });
           
             return res.status(StatusCodes.OK).json(
                 {
                     success: true,
                     data: user
                 }
-                );
+            );
           } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
@@ -37,8 +37,8 @@ export class AuthController {
         
         try {
             // Parses the request body and assign to the variables on the left.
-            const { store, email, password } = req.body;
-            const user = await this.authDao.login({ store, email, password });
+            const { email, password } = req.body;
+            const user = await this.authDao.login({ email, password });
             if(!user) {
                 return res.status(StatusCodes.BAD_REQUEST).json({
                     success: false,
