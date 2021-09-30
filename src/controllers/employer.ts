@@ -98,16 +98,19 @@ export class EmployerController {
                     avg: compensation.total ? compensation.total['50'] : 0                    
                 }
             };
-            item.ratings = {
-                overall: pageData.ratings['Overall Employee Satisfaction'],
-                appreciation: pageData.ratings['Appreciation'],
-                companyOutlook: pageData.ratings['Company Outlook'],
-                fairPay: pageData.ratings['Fair Pay'],
-                learningandDevelopment: pageData.ratings['Learning and Development'],
-                managerCommunication: pageData.ratings['Manager Communication'],
-                managerRelationship: pageData.ratings['Manager Relationship'],
-                payTransparency: pageData.ratings['Pay Transparency']
-            };
+            if(pageData.ratings) {
+                item.ratings = {
+                    overall: pageData.ratings['Overall Employee Satisfaction'],
+                    appreciation: pageData.ratings['Appreciation'],
+                    companyOutlook: pageData.ratings['Company Outlook'],
+                    fairPay: pageData.ratings['Fair Pay'],
+                    learningandDevelopment: pageData.ratings['Learning and Development'],
+                    managerCommunication: pageData.ratings['Manager Communication'],
+                    managerRelationship: pageData.ratings['Manager Relationship'],
+                    payTransparency: pageData.ratings['Pay Transparency']
+                };
+            }
+
 
             item.byDimension = {
                 experience: {
@@ -328,7 +331,7 @@ export class EmployerController {
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {
         const id = req.params.id;
-       let item = await this.dao.fetchById(id);
+       let item = await this.dao.fetchByIdAndPopulate(id);
        item = this.parseRawData(item);
        return res.status(StatusCodes.OK).json(
         {

@@ -59,6 +59,15 @@ export class EmployerDao {
         return await EmployerModel.findById(id);
    }
 
+   public async fetchByIdAndPopulate(id: string): Promise<Employer | null> {
+     return await EmployerModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+    
    public async create(data: any): Promise<Employer | null> {
        return await EmployerModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }

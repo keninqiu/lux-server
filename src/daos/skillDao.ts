@@ -53,9 +53,19 @@ export class SkillDao {
    public async fetchAllWithoutRawData(): Promise<Skill[]> {
      return await SkillModel.find({rawData: null}).select('name url category');
    }
+
    public async fetchById(id: string): Promise<Skill | null> {
         return await SkillModel.findById(id);
    }
+
+   public async fetchByIdAndPopulate(id: string): Promise<Skill | null> {
+     return await SkillModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
 
    public async create(data: any): Promise<Skill | null> {
        return await SkillModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});

@@ -56,6 +56,15 @@ export class CertificationDao {
         return await CertificationModel.findById(id);
    }
 
+   public async fetchByIdAndPopulate(id: string): Promise<Certification | null> {
+     return await CertificationModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+
    public async create(data: any): Promise<Certification | null> {
        return await CertificationModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }

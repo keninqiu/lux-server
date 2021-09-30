@@ -57,6 +57,15 @@ export class IndustryDao {
         return await IndustryModel.findById(id);
    }
 
+   public async fetchByIdAndPopulate(id: string): Promise<Industry | null> {
+     return await IndustryModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+
    public async create(data: any): Promise<Industry | null> {
        return await IndustryModel.findOneAndUpdate({name: data.name, category: data.category, url: data.url}, data, {upsert: true, new: true});
    }

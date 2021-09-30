@@ -72,6 +72,15 @@ export class DegreeDao {
         return await DegreeModel.findById(id);
    }
 
+   public async fetchByIdAndPopulate(id: string): Promise<Degree | null> {
+     return await DegreeModel.findById(id).populate(
+          {
+               path: 'category',
+               populate: 'country'
+          }
+     );
+    }
+
    public async updateByQuery(query: any, data: any): Promise<Degree | null> {
      return await DegreeModel.findOneAndUpdate(query, data, {new: true});
    }  

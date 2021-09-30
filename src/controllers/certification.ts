@@ -359,7 +359,7 @@ export class CertificationController {
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {
         const id = req.params.id;
-       let item = await this.dao.fetchById(id);
+       let item = await this.dao.fetchByIdAndPopulate(id);
        item = this.parseRawData(item);
        return res.status(StatusCodes.OK).json(
         {
