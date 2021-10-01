@@ -6,7 +6,9 @@ export class EmployerDao {
    public async fetchAll(): Promise<Employer[]> {
         return await EmployerModel.find({}).select('name url category');
    }
-
+   public async fetchAllWithoutDuplicate(): Promise<Employer[]> {
+     return await EmployerModel.find({duplicatedWith: null}).select('name url category');
+   }
    public async fetchAllByText(countryCode: string, text: string): Promise<Employer[]> {
      return await EmployerModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 
    }

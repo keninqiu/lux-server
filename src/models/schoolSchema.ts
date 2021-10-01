@@ -351,6 +351,16 @@ const SchoolSchema = new Schema<School>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
+    },
     url: String,
     slug: String,
     salaryType: String,

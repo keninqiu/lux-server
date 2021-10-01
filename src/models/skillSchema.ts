@@ -13,7 +13,8 @@ export interface ISkill {
     slug?: string,
     salaryType?: string,
     rawData?: any,
-    category: string
+    category: string,
+    categories: string[]
 }
 export interface Skill extends Document {
     name: string,
@@ -21,6 +22,7 @@ export interface Skill extends Document {
     slug: string,
     salaryType: string,
     category: Category,
+    categories: Category[],
     rawData: any
 }
 const SkillSchema = new Schema<Skill>({
@@ -28,6 +30,16 @@ const SkillSchema = new Schema<Skill>({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
+    },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Skill'
     },
     url: String,
     slug: String,

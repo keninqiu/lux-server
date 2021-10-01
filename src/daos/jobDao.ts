@@ -5,7 +5,9 @@ export class JobDao {
    public async fetchAll(): Promise<Job[]> {
         return await JobModel.find({}).select('name url category');
    }
-
+   public async fetchAllWithoutDuplicate(): Promise<Job[]> {
+     return await JobModel.find({duplicatedWith: null}).select('name url category');
+   }
    public async fetchAllByText(countryCode: string, text: string): Promise<Job[]> {
      return await JobModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 
    }

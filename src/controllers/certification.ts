@@ -10,6 +10,7 @@ export class CertificationController {
     private dao = new CertificationDao();
 
     @Get('')
+    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();
@@ -26,6 +27,26 @@ export class CertificationController {
     });
     }
     }  
+
+    @Get('all/withoutDuplicate')
+    @Middleware([authAdmin])
+    private async fetchAllWithoutDuplicated(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllWithoutDuplicate();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+    
 
     @Get('countryCode/:countryCode/categorySlug/:categorySlug')
     private async fetchAllByCountryCodeAndCategorySlug(req: ICustomRequest, res: Response): Promise<Response> {

@@ -1,4 +1,4 @@
-//import * as job from './job';
+
 import * as school from './school';
 import * as job from './job';
 import * as category from './category';

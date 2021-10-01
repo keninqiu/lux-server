@@ -10,6 +10,7 @@ export class SchoolController {
     private dao = new SchoolDao();
 
     @Get('')
+    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();
@@ -26,6 +27,25 @@ export class SchoolController {
     });
     }
     }       
+
+    @Get('all/withoutDuplicate')
+    @Middleware([authAdmin])
+    private async fetchAllWithoutDuplicated(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllWithoutDuplicate();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
 
     @Get('countryCode/:countryCode/categorySlug/:categorySlug')
     private async fetchAllByCountryCodeAndCategorySlug(req: ICustomRequest, res: Response): Promise<Response> {
@@ -48,6 +68,7 @@ export class SchoolController {
     }  
 
     @Get('all/withRawData')
+    @Middleware([authAdmin])
     private async fetchAllWithRawData(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAllWithRawData();
@@ -97,56 +118,65 @@ export class SchoolController {
             const pageProps = item.rawData.props.pageProps;
             const collegeData = pageProps.collegeData;
             const pageData = pageProps.pageData;
-                 const about = collegeData.about;
-                 item.currencyCode = pageData.currencyCode;
-                 item.about = {
-                     abstract: about.abstract,
-                     website: about.website,
-                     admissionsUrl: about.admissionsUrl,
-                     streetAddress: about.streetAddress,
-                     graduationRate: about.graduationRate ? about.graduationRate.split('%')[0] : 0,
-                     percentStayInState: about.percentStayInState ? about.percentStayInState.split('%')[0] : 0,
-                     percentStem: about.percentStem ? about.percentStem.split('%')[0] : 0,
-                     percentReceivingPellGrants: about.percentReceivingPellGrants ? about.percentReceivingPellGrants.split('%')[0] : 0,
-                     city: about.city,
-                     state: about.state,
-                     zip: about.zip,
-                     wikiUrl: about.wikiUrl,
-                     studentsEnrolled: about.studentsEnrolled ? about.studentsEnrolled.split(',').join('') : 0,
-                     satScores: about.satScores,
-                     actScores: about.actScores
-                 };
-                 const compensation = pageData.compensation;
-                 item.compensation = {
-                     salary: {
-                         min: compensation.salary ? (compensation.salary['10'] ? compensation.salary['10'] : compensation.salary['25']) : 0,
-                         max: compensation.salary ? (compensation.salary['90'] ? compensation.salary['90'] : compensation.salary['75']) : 0,
-                         avg: compensation.salary ? compensation.salary['50'] : 0
-                     },
-                     hourlyRate: {
-                         min: compensation.hourlyRate ? (compensation.hourlyRate['10'] ? compensation.hourlyRate['10'] : compensation.hourlyRate['25']) : 0,
-                         max: compensation.hourlyRate ? (compensation.hourlyRate['90'] ? compensation.hourlyRate['90'] : compensation.hourlyRate['75']) : 0,
-                         avg: compensation.hourlyRate ? compensation.hourlyRate['50'] : 0                    
-                     }
-                 }
-                 item.roi = collegeData.roi;
-                 if(item.roi.annualizedRoiOffCampus) {
-                     item.roi.annualizedRoiOffCampus = Number((item.roi.annualizedRoiOffCampus * 100).toFixed(2));
-                 }
-                 if(item.roi.annualizedRoiOnCampus) {
-                     item.roi.annualizedRoiOnCampus = Number((item.roi.annualizedRoiOnCampus * 100).toFixed(2));
-                 }
-                 if(item.roi.annualizedRoiWithAidOnCampus) {
-                     item.roi.annualizedRoiWithAidOnCampus = Number((item.roi.annualizedRoiWithAidOnCampus * 100).toFixed(2));
-                 }
-                 if(item.roi.annualizedRoiWithAidOffCampus) {
-                     item.roi.annualizedRoiWithAidOffCampus = Number((item.roi.annualizedRoiWithAidOffCampus * 100).toFixed(2));
-                 }
-                 item.salary = collegeData.salary;
- 
-                 if(item.salary.percentHighMeaning) {
-                     item.salary.percentHighMeaning = Number((item.salary.percentHighMeaning * 100).toFixed());
-                 }
+            item.currencyCode = pageData.currencyCode;
+            if(collegeData) {
+                const about = collegeData.about;
+                 
+                item.about = {
+                    abstract: about.abstract,
+                    website: about.website,
+                    admissionsUrl: about.admissionsUrl,
+                    streetAddress: about.streetAddress,
+                    graduationRate: about.graduationRate ? about.graduationRate.split('%')[0] : 0,
+                    percentStayInState: about.percentStayInState ? about.percentStayInState.split('%')[0] : 0,
+                    percentStem: about.percentStem ? about.percentStem.split('%')[0] : 0,
+                    percentReceivingPellGrants: about.percentReceivingPellGrants ? about.percentReceivingPellGrants.split('%')[0] : 0,
+                    city: about.city,
+                    state: about.state,
+                    zip: about.zip,
+                    wikiUrl: about.wikiUrl,
+                    studentsEnrolled: about.studentsEnrolled ? about.studentsEnrolled.split(',').join('') : 0,
+                    satScores: about.satScores,
+                    actScores: about.actScores
+                };
+                item.roi = collegeData.roi;
+                if(item.roi.annualizedRoiOffCampus) {
+                    item.roi.annualizedRoiOffCampus = Number((item.roi.annualizedRoiOffCampus * 100).toFixed(2));
+                }
+                if(item.roi.annualizedRoiOnCampus) {
+                    item.roi.annualizedRoiOnCampus = Number((item.roi.annualizedRoiOnCampus * 100).toFixed(2));
+                }
+                if(item.roi.annualizedRoiWithAidOnCampus) {
+                    item.roi.annualizedRoiWithAidOnCampus = Number((item.roi.annualizedRoiWithAidOnCampus * 100).toFixed(2));
+                }
+                if(item.roi.annualizedRoiWithAidOffCampus) {
+                    item.roi.annualizedRoiWithAidOffCampus = Number((item.roi.annualizedRoiWithAidOffCampus * 100).toFixed(2));
+                }
+                item.salary = collegeData.salary;
+
+                if(item.salary.percentHighMeaning) {
+                    item.salary.percentHighMeaning = Number((item.salary.percentHighMeaning * 100).toFixed());
+                }
+
+            }
+
+            const compensation = pageData.compensation;
+            if(compensation) {
+                item.compensation = {
+                    salary: {
+                        min: compensation.salary ? (compensation.salary['10'] ? compensation.salary['10'] : compensation.salary['25']) : 0,
+                        max: compensation.salary ? (compensation.salary['90'] ? compensation.salary['90'] : compensation.salary['75']) : 0,
+                        avg: compensation.salary ? compensation.salary['50'] : 0
+                    },
+                    hourlyRate: {
+                        min: compensation.hourlyRate ? (compensation.hourlyRate['10'] ? compensation.hourlyRate['10'] : compensation.hourlyRate['25']) : 0,
+                        max: compensation.hourlyRate ? (compensation.hourlyRate['90'] ? compensation.hourlyRate['90'] : compensation.hourlyRate['75']) : 0,
+                        avg: compensation.hourlyRate ? compensation.hourlyRate['50'] : 0                    
+                    }
+                }
+            }
+
+
                  item.byDimension = {
                      experience: {
                          entryLevel: {

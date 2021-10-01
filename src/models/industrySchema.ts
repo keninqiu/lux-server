@@ -29,6 +29,16 @@ const IndustrySchema = new Schema<Industry>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Industry'
+    },
     rawData: Object,
     url: String,
     slug: String,

@@ -322,6 +322,16 @@ const JobSchema = new Schema<Job>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Job'
+    },
     currencyCode: String,
     rawDataParsed: Boolean,
     rawData: Object,

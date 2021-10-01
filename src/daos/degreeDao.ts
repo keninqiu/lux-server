@@ -6,6 +6,9 @@ export class DegreeDao {
    public async fetchAll(): Promise<Degree[]> {
         return await DegreeModel.find({}).select('name url slug category');
    }
+   public async fetchAllWithoutDuplicate(): Promise<Degree[]> {
+     return await DegreeModel.find({duplicatedWith: null}).select('name url category');
+   }
    public async fetchAllWithoutRawData(): Promise<Degree[]> {
      return await DegreeModel.find({rawData: null}).select('name url category slug');
    }

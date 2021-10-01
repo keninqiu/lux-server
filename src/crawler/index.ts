@@ -7,6 +7,7 @@ import * as salary from './salary';
 import * as single from './single';
 import * as slug from './slug';
 import * as popular from './popular';
+import * as duplicate from './duplicate';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -29,7 +30,8 @@ const main = async function() {
     //await salary.start();
     //await single.start();
     //await slug.start();
-    await popular.start();
+    //await popular.start();
+    await duplicate.start();
     console.log('done');
 }
 

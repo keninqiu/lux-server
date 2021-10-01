@@ -29,6 +29,16 @@ const DegreeSchema = new Schema<Degree>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Degree'
+    },
     url: String,
     slug: String,
     salaryType: String,

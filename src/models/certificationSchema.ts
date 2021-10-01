@@ -41,6 +41,16 @@ const CertificationSchema = new Schema<Certification>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Certification'
+    },
     url: String,
     slug: String,
     salaryType: String,

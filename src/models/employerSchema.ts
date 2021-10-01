@@ -212,6 +212,16 @@ const EmployerSchema = new Schema<Employer>({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    categories: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
+    duplicatedWith: {
+        type: Schema.Types.ObjectId,
+        ref: 'Employer'
+    },
     compensation: {
         bonus: {
             min: Number,
