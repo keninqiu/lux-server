@@ -9,9 +9,10 @@ import * as industry from './industry';
 import * as certification from './certification';
 
 export const start = async function() {
-    await skill.start();
-    /*
+    //await skill.start();
+    
     await school.start();
+    /*
     await job.start();
     await industry.start();
     await employer.start();
