@@ -278,7 +278,6 @@ export class SkillController {
                }
             }  
 
-            //item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
         }
 
         return item;

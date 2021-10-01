@@ -6,7 +6,7 @@ import { DegreeDao } from "../../daos/degreeDao";
 
 export const start = async function() {
     const dao = new DegreeDao();
-    const url = '/research/US/Degree=Bachelor_of_Science_(BS_%2F_BSc)%2C_German_Studies/Salary';
+    const url = '/research/AL/Degree=Bachelor_of_Architecture_(BArch)%2C_Architecture/Salary';
     if(!url) {
         console.log('error, url is empty');
     }

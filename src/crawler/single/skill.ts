@@ -5,7 +5,7 @@ import { SkillDao } from "../../daos/skillDao";
 
 export const start = async function() {
     const dao = new SkillDao();
-    const url = '/research/US/Skill=Animal_Husbandry/Salary';
+    const url = '/research/AF/Skill=Microsoft_Access/Salary';
     if(!url) {
         console.log('error, url is empty');
     }

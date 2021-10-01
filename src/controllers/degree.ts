@@ -117,6 +117,7 @@ export class DegreeController {
                     avg: compensation.total ? compensation.total['50'] : 0                    
                 }
             };
+            /*
             item.ratings = {
                 overall: pageData.ratings['Overall Employee Satisfaction'],
                 appreciation: pageData.ratings['Appreciation'],
@@ -127,6 +128,7 @@ export class DegreeController {
                 managerRelationship: pageData.ratings['Manager Relationship'],
                 payTransparency: pageData.ratings['Pay Transparency']
             };
+            */
 
             item.byDimension = {
                 experience: {
@@ -294,7 +296,11 @@ export class DegreeController {
                }
             }  
 
-            item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
+            if(pageData.ratings && pageData.ratings['Job Satisfaction Overall']) {
+                item.ratings = {
+                    jobSatisfaction: pageData.ratings['Job Satisfaction Overall']
+                };
+            }
         }
 
         return item;

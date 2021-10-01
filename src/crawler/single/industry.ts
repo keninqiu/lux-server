@@ -6,7 +6,7 @@ import { IndustryDao } from "../../daos/industryDao";
 
 export const start = async function() {
     const dao = new IndustryDao();
-    const url = '/research/US/Industry=Sheep_Farming/Hourly_Rate';
+    const url = '/research/AF/Industry=Intelligence%2C_Surveillance%2C_and_Reconnaissance_Services/Salary';
     if(!url) {
         console.log('error, url is empty');
     }

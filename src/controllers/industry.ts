@@ -269,7 +269,6 @@ export class IndustryController {
                }
             }  
 
-            //item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
         }
 
         return item;

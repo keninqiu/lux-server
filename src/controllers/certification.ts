@@ -318,8 +318,11 @@ export class CertificationController {
                    item.related.push(relatedItemChanged);
                }
             }  
+            if(pageData.ratings && pageData.ratings['Job Satisfaction Overall']) {
+                item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
+            }
 
-            item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
+            
 
             console.log('item.ratings', item.ratings);
             console.log('item===', item);
