@@ -9,6 +9,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface IDegree {
     name: string,
+    namet?: string,
     category: string,
     url: string,
     slug?: string,
@@ -17,6 +18,7 @@ export interface IDegree {
 }
 export interface Degree extends Document {
     name: string,
+    namet: string,
     url: string,
     slug: string,
     salaryType: string,
@@ -25,6 +27,10 @@ export interface Degree extends Document {
 }
 const DegreeSchema = new Schema<Degree>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'

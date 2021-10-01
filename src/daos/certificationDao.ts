@@ -7,7 +7,7 @@ export class CertificationDao {
         return await CertificationModel.find({}).select('name url category');
    }
    public async fetchAllWithoutDuplicate(): Promise<Certification[]> {
-     return await CertificationModel.find({duplicatedWith: null}).select('name url category');
+     return await CertificationModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
 
    public async fetchAllWithoutRawData(): Promise<Certification[]> {

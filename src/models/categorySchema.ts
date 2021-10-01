@@ -2,6 +2,7 @@ import { Schema, model, Document } from "mongoose";
 
 export interface ICategory {
     name: string,
+    namet?: string,
     slug?: string;
     type: string,
     url: string,
@@ -10,6 +11,7 @@ export interface ICategory {
 }
 export interface Category extends Document {
     name: string,
+    namet: string,
     slug: string;
     type: string,
     url: string,
@@ -18,6 +20,10 @@ export interface Category extends Document {
 }
 const CategorySchema = new Schema<Category>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     type: {
         type: String
     },

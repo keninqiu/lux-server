@@ -1,7 +1,7 @@
 import { StateModel, State, IState } from '../models/stateSchema';
 export class StateDao {
    public async fetchAll(): Promise<State[]> {
-        return await StateModel.find({}).select('name country url').sort('name');
+        return await StateModel.find({}).populate('namet').select('name namet country url').sort('name');
    }
 
    public async fetchAllByCountry(id: string): Promise<State[]> {

@@ -9,14 +9,15 @@ export const start = async function() {
     const countries = await countryDao.fetchAll();
 
     const types = [
-        //'Skill',
+        'Skill',
+        /*
         'Job',
         'Certification',
         'Degree',
         'Employer',
         'Industry',
         'School',
-        
+        */
     ];
 
     for(let i = 0; i < types.length; i++) {

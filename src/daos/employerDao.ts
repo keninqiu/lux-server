@@ -7,7 +7,7 @@ export class EmployerDao {
         return await EmployerModel.find({}).select('name url category');
    }
    public async fetchAllWithoutDuplicate(): Promise<Employer[]> {
-     return await EmployerModel.find({duplicatedWith: null}).select('name url category');
+     return await EmployerModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
    public async fetchAllByText(countryCode: string, text: string): Promise<Employer[]> {
      return await EmployerModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 

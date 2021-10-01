@@ -8,6 +8,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface ICountry {
     name: string,
+    namet?: string,
     code: string,
     url: string,
     currencyCode: string,
@@ -19,6 +20,7 @@ export interface ICountry {
 }
 export interface Country extends Document {
     name: string,
+    namet: string,
     code: string,
     url: string,
     currencyCode: string,
@@ -30,6 +32,10 @@ export interface Country extends Document {
 }
 const CountrySchema = new Schema<Country>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     code: String,
     url: String,
     currencyCode: String,

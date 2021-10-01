@@ -9,6 +9,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface IEmployer {
     name: string,
+    namet?: string,
     url: string,
     currencyCode: string,
     slug?: string,
@@ -106,6 +107,7 @@ export interface IEmployer {
 }
 export interface Employer extends Document {
     name: string,
+    namet: string,
     url: string,
     slug: string,
     currencyCode: string,
@@ -203,6 +205,10 @@ export interface Employer extends Document {
 }
 const EmployerSchema = new Schema<Employer>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     url: String,
     slug: String,
     currencyCode: String,

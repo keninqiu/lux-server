@@ -9,6 +9,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface ISkill {
     name: string,
+    namet?: string,
     url: string,
     slug?: string,
     salaryType?: string,
@@ -18,6 +19,7 @@ export interface ISkill {
 }
 export interface Skill extends Document {
     name: string,
+    namet: string,
     url: string,
     slug: string,
     salaryType: string,
@@ -27,6 +29,10 @@ export interface Skill extends Document {
 }
 const SkillSchema = new Schema<Skill>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'

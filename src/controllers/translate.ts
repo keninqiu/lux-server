@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { Controller, Middleware, Get, Put, Post, Delete } from '@overnightjs/core';
 import { StatusCodes } from 'http-status-codes';
-import { StateDao } from "../daos/stateDao";
+import { TranslateDao } from "../daos/translateDao";
 import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
 
-@Controller('api/state')
-export class StateController {
-    private dao = new StateDao();
+@Controller('api/translate')
+export class TranslateController {
+    private dao = new TranslateDao();
 
     @Get('')
     @Middleware([authAdmin])
@@ -28,11 +28,13 @@ export class StateController {
     }
     }  
     
-    @Get('country/:id')
-    private async fetchAllByCountry(req: ICustomRequest, res: Response): Promise<Response> {
+
+    @Get('type/:type')
+    @Middleware([authAdmin])
+    private async fetchAllByType(req: ICustomRequest, res: Response): Promise<Response> {
     try {
-        const id = req.params.id;
-       const items = await this.dao.fetchAllByCountry(id);
+        const type = req.params.type;
+       const items = await this.dao.fetchAllByType(type);
        return res.status(StatusCodes.OK).json(
         {
             success: true,
@@ -65,6 +67,7 @@ export class StateController {
     });
     }
     }
+
 
     @Put(':id')
     @Middleware([authAdmin])

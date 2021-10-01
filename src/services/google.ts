@@ -4,7 +4,8 @@ const querystring = require('querystring');
 export class GoogleService {
     translate(text: string) {
 
-        text = encodeURI(text);
+        text = text.replace(new RegExp('"', 'g'), '\\"');
+        text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
         console.log('text==', text);
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
         const curlCommand = "curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=4554740978145578046&bl=boq_translate-webserver_20210929.09_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=1637397&rt=c' \
@@ -31,10 +32,10 @@ export class GoogleService {
         --compressed";
 
 
-        console.log('curlCommand===', curlCommand);
+        //console.log('curlCommand===', curlCommand);
         const output = execSync(curlCommand, { encoding: 'utf-8' });
 
-        console.log('output=', output);
+        //console.log('output=', output);
         const str1 = ',[[\\"';
         const str2 = '\\",';
         const output1 = output.substring(output.indexOf(str1) + str1.length);

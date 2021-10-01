@@ -2,7 +2,7 @@ import { CategoryModel, Category, ICategory } from '../models/categorySchema';
 import { CountryModel, Country, ICountry } from '../models/countrySchema';
 export class CategoryDao {
    public async fetchAll(): Promise<Category[]> {
-        return await CategoryModel.find({}).sort('name');
+        return await CategoryModel.find({}).populate('namet').sort('name');
    }
 
    public async fetchAllWithoutRawData(): Promise<Category[]> {

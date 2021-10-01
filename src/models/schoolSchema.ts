@@ -3,6 +3,7 @@ import { Category } from "./categorySchema";
 
 export interface ISchool {
     name: string,
+    namet?: string,
     category: string,
     url: string,
     city: string,
@@ -175,6 +176,7 @@ export interface ISchool {
 }
 export interface School extends Document {
     name: string,
+    namet: string,
     category: Category,
     url: string,
     city: string,
@@ -347,6 +349,10 @@ export interface School extends Document {
 }
 const SchoolSchema = new Schema<School>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'

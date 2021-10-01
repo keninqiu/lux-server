@@ -1,7 +1,7 @@
 import { CityModel, City, ICity } from '../models/citySchema';
 export class CityDao {
    public async fetchAll(): Promise<City[]> {
-        return await CityModel.find({}).select('name state url');
+        return await CityModel.find({}).populate('namet').select('name namet state url');
    }
    public async fetchAllWithoutRawData(): Promise<City[]> {
      return await CityModel.find({rawData: null}).select('name state url');

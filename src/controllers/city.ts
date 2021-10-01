@@ -10,6 +10,7 @@ export class CityController {
     private dao = new CityDao();
 
     @Get('')
+    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();

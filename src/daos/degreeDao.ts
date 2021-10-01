@@ -7,7 +7,7 @@ export class DegreeDao {
         return await DegreeModel.find({}).select('name url slug category');
    }
    public async fetchAllWithoutDuplicate(): Promise<Degree[]> {
-     return await DegreeModel.find({duplicatedWith: null}).select('name url category');
+     return await DegreeModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
    public async fetchAllWithoutRawData(): Promise<Degree[]> {
      return await DegreeModel.find({rawData: null}).select('name url category slug');

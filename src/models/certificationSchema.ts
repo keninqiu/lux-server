@@ -9,6 +9,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface ICertification {
     name: string,
+    namet?: string,
     category: string,
     url: string,
     slug?: string,
@@ -23,6 +24,7 @@ export interface ICertification {
 }
 export interface Certification extends Document {
     name: string,
+    namet: string,
     category: Category,
     url: string,
     slug: string,
@@ -37,6 +39,10 @@ export interface Certification extends Document {
 }
 const CertificationSchema = new Schema<Certification>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'

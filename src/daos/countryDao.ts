@@ -1,7 +1,7 @@
 import { CountryModel, Country, ICountry } from '../models/countrySchema';
 export class CountryDao {
    public async fetchAll(): Promise<Country[]> {
-        return await CountryModel.find({}).select('name code url').sort('name');
+        return await CountryModel.find({}).populate('namet').select('name namet code url').sort('name');
    }
    public async fetchById(id: string): Promise<Country | null> {
         return await CountryModel.findById(id);

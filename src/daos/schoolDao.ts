@@ -6,7 +6,7 @@ export class SchoolDao {
         return await SchoolModel.find({}).select('name slug category url');
    }
    public async fetchAllWithoutDuplicate(): Promise<School[]> {
-     return await SchoolModel.find({duplicatedWith: null}).select('name url category');
+     return await SchoolModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
    public async fetchAllByText(countryCode: string, text: string): Promise<School[]> {
      return await SchoolModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 

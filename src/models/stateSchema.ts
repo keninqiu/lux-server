@@ -1,13 +1,8 @@
 import { Schema, model, Document } from "mongoose";
 
-/*
-
-Id	code  CountryName	CurrencyCode
-1	AU	  Australia	 AUD
-*/
-
 export interface IState {
     name: string,
+    namet?: string,
     code: string,
     url: string,
     type: string,
@@ -17,6 +12,7 @@ export interface IState {
 }
 export interface State extends Document {
     name: string,
+    namet: string,
     code: string,
     url: string,
     type: string,
@@ -26,6 +22,10 @@ export interface State extends Document {
 }
 const StateSchema = new Schema<State>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     code: String,
     type: String,
     url: String,

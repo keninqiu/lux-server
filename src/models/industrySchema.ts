@@ -9,6 +9,7 @@ Id	code  CountryName	CurrencyCode
 
 export interface IIndustry {
     name: string,
+    namet?: string,
     url: string,
     slug?: string,
     salaryType?: string,
@@ -17,6 +18,7 @@ export interface IIndustry {
 }
 export interface Industry extends Document {
     name: string,
+    namet: string,
     url: string,
     slug: string,
     salaryType: string,
@@ -25,6 +27,10 @@ export interface Industry extends Document {
 }
 const IndustrySchema = new Schema<Industry>({
     name: String,
+    namet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Translate'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'

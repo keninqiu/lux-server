@@ -8,6 +8,7 @@ import * as single from './single';
 import * as slug from './slug';
 import * as popular from './popular';
 import * as duplicate from './duplicate';
+import * as translate from './translate';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -32,6 +33,7 @@ const main = async function() {
     //await slug.start();
     //await popular.start();
     await duplicate.start();
+    //await translate.start();
     console.log('done');
 }
 
