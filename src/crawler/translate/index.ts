@@ -13,9 +13,10 @@ import * as certification from './certification';
 export const start = async function() {
     //await country.start();
     //await state.start();
-    await city.start();
-    /*
+    //await city.start();
+    
     await category.start();
+    /*
     await skill.start();
     await school.start();
     await job.start();

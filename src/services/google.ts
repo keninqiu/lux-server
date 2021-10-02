@@ -4,7 +4,7 @@ const querystring = require('querystring');
 export class GoogleService {
     translate(text: string) {
 
-        text = text.replace(new RegExp('"', 'g'), '\\"');
+        text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp('&', 'g'), 'and');
         text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
         console.log('text==', text);
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
