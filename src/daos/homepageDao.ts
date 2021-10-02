@@ -8,7 +8,7 @@ export class HomepageDao {
         return items[items.length - 1];
    }
 
-   public async create(data: IHomepage): Promise<Homepage | null> {
+   public async create(data: any): Promise<Homepage | null> {
         return await HomepageModel.create(data);
    }
 

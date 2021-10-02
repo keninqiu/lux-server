@@ -6,7 +6,8 @@ export const start = async function() {
         adv: {
             text: '了解 Lux 如何使高效地管理薪酬',
             url: '/'
-        }
+        },
+        carousels: []
     };
     await dao.create(data);
 }
