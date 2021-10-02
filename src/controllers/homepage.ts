@@ -116,6 +116,100 @@ export class HomepageController {
          }
     } 
 
+    @Put('salary/detail/:id')
+    @Middleware([authAdmin])
+    private async updateSalaryDetail(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const body = req.body;
+            const id = req.params.id;
+            let item = await this.dao.fetchLatest();
+     
+            if(item) {
+                item = await this.dao.updateByQuery({'salary.details._id': id}, {'salary.details.$': body});
+                return res.status(StatusCodes.OK).json(
+                 {
+                     success: true,
+                     data: item
+                 }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+             {
+                 success: false,
+                 data: 'homepage not existed'
+             }           
+            );       
+         } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+         }
+    }  
+
+
+    @Post('salary/detail')
+    @Middleware([authAdmin])
+    private async addSalaryDetail(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const body = req.body;
+
+            const data ={ $push: { 'salary.details': body } };
+            let item = await this.dao.fetchLatest();
+
+            if(item) {
+                item = await this.dao.update(item._id, data);
+                return res.status(StatusCodes.OK).json(
+                    {
+                        success: true,
+                        data: item
+                    }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+                {
+                    success: false,
+                    data: 'homepage not existed'
+                }           
+            );       
+        } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+        }
+    } 
+
+    @Delete('salary/detail/:id')
+    @Middleware([authAdmin])
+    private async deleteSalaryDetail(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const id = req.params.id;
+            let item = await this.dao.fetchLatest();
+     
+            if(item) {
+                item = await this.dao.update(item._id, { $pull: {'salary.details': {_id: id} }  });
+                return res.status(StatusCodes.OK).json(
+                 {
+                     success: true,
+                     data: item
+                 }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+             {
+                 success: false,
+                 data: 'homepage not existed'
+             }           
+            );       
+         } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+         }
+    } 
+
     @Post('carousel')
     @Middleware([authAdmin])
     private async addCarousel(req: ICustomRequest, res: Response): Promise<Response> {
