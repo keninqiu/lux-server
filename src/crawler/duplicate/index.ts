@@ -19,8 +19,7 @@ export const start = async function() {
     
     //await employer.start();
     
-    await degree.start();
-    /*
+    //await degree.start();
+    
     await certification.start();
-    */
 }
