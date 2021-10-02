@@ -15,9 +15,10 @@ export const start = async function() {
     //await state.start();
     //await city.start();
     
-    await category.start();
-    /*
+    //await category.start();
+    
     await skill.start();
+    /*
     await school.start();
     await job.start();
     await industry.start();

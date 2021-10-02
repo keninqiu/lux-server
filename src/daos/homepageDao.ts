@@ -15,5 +15,7 @@ export class HomepageDao {
    public async update(id: string, data: any): Promise<Homepage | null> {
         return await HomepageModel.findOneAndUpdate({_id: id}, data, {new: true});
    }  
-
+   public async updateByQuery(query: any, data: any): Promise<Homepage | null> {
+    return await HomepageModel.update(query, data);
+}  
 }

@@ -29,6 +29,7 @@ export class HomepageController {
     }  
 
     @Put('latest')
+    @Middleware([authAdmin])
     private async updateLatest(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const data = req.body;
@@ -51,5 +52,99 @@ export class HomepageController {
         error: err.message,
     });
     }
+    }  
+
+    @Put('carousel/:id')
+    @Middleware([authAdmin])
+    private async updateCarousel(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const body = req.body;
+            const id = req.params.id;
+            let item = await this.dao.fetchLatest();
+     
+            if(item) {
+                item = await this.dao.updateByQuery({'carousels._id': id}, {'carousels.$': body});
+                return res.status(StatusCodes.OK).json(
+                 {
+                     success: true,
+                     data: item
+                 }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+             {
+                 success: false,
+                 data: 'homepage not existed'
+             }           
+            );       
+         } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+         }
+    }  
+
+    @Delete('carousel/:id')
+    @Middleware([authAdmin])
+    private async deleteCarousel(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const id = req.params.id;
+            let item = await this.dao.fetchLatest();
+     
+            console.log('id to be deleted=', id);
+            if(item) {
+                item = await this.dao.update(item._id, { $pull: {carousels: {_id: id} }  });
+                return res.status(StatusCodes.OK).json(
+                 {
+                     success: true,
+                     data: item
+                 }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+             {
+                 success: false,
+                 data: 'homepage not existed'
+             }           
+            );       
+         } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+         }
+    } 
+
+    @Post('carousel')
+    @Middleware([authAdmin])
+    private async addCarousel(req: ICustomRequest, res: Response): Promise<Response> {
+        try {
+            const body = req.body;
+
+            const data ={ $push: { carousels: body } };
+            let item = await this.dao.fetchLatest();
+
+            if(item) {
+                item = await this.dao.update(item._id, data);
+                return res.status(StatusCodes.OK).json(
+                    {
+                        success: true,
+                        data: item
+                    }           
+                );
+            }
+            return res.status(StatusCodes.BAD_REQUEST).json(
+                {
+                    success: false,
+                    data: 'homepage not existed'
+                }           
+            );       
+        } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+        }
     }  
 }
