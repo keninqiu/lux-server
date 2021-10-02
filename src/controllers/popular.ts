@@ -2,12 +2,14 @@ import { Request, Response } from 'express';
 import { Controller, Middleware, Get, Put, Post, Delete } from '@overnightjs/core';
 import { StatusCodes } from 'http-status-codes';
 import { PopularDao } from "../daos/popularDao";
+import { TranslateDao } from "../daos/translateDao";
 import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
 
 @Controller('api/popular')
 export class PopularController {
     private dao = new PopularDao();
+    private translateDao = new TranslateDao();
 
     @Get('')
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
@@ -32,11 +34,62 @@ export class PopularController {
     try {
         const countryCode = req.params.countryCode;
         const type = req.params.type;
-       const item = await this.dao.fetchByCountryCodeAndType(countryCode, type);
+       const popular = await this.dao.fetchByCountryCodeAndType(countryCode, type);
+
+       let items: any = [];
+       let secondaryItems: any = [];
+       if(popular && popular.rawData && popular.rawData.props && popular.rawData.props.pageProps && popular.rawData.props.pageProps.pageData) {
+        items = popular.rawData.props.pageProps.pageData.items;
+        secondaryItems = popular.rawData.props.pageProps.pageData.secondaryItems;
+        if(items) {
+            const promiseAll: any = [];
+            items.forEach((item: any) => {
+                const text = item.text;
+                promiseAll.push(this.translateDao.fetchByEn(text));
+            });
+
+            secondaryItems.forEach((item: any) => {
+                const text = item.text;
+                promiseAll.push(this.translateDao.fetchByEn(text));
+            });
+
+            const allTransaltes: any = await Promise.all(promiseAll);
+
+            items.forEach( (item: any, index: number) => {
+                if(allTransaltes[index]) {
+                    item['zh'] = allTransaltes[index].zh;
+                }
+                
+            });
+
+            secondaryItems.forEach( (item: any, index: number) => {
+                if(allTransaltes[items.length + index]) {
+                    item['zh'] = allTransaltes[items.length + index].zh;
+                }
+                
+            });
+            /*
+            await items.forEach( (item: any) => {
+                const text = item.text;
+                console.log('text=', text);
+                const translate = await this.translateDao.fetchByEn(text);
+                console.log('translate==', translate);
+                if(translate) {
+                    item['zh'] = translate.zh;
+                }
+                
+            });    
+            */       
+        }
+
+       }
        return res.status(StatusCodes.OK).json(
         {
             success: true,
-            data: item
+            data: {
+                items,
+                secondaryItems
+            }
         }           
        );
     } catch (err: any) {

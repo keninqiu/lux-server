@@ -10,7 +10,7 @@ export class CategoryDao {
    }
 
    public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
-     return await CategoryModel.find({country: countryId, type}).select('name url').sort('name');
+     return await CategoryModel.find({country: countryId, type}).populate('namet').select('name namet url').sort('name');
    }
 
    public async fetchAllByCountryCodeAndType(countryCode: string, type: string): Promise<Category[]> {
@@ -40,7 +40,11 @@ export class CategoryDao {
    public async update(id: string, data: any): Promise<Category | null> {
         return await CategoryModel.findOneAndUpdate({_id: id}, data, {new: true});
    }   
-  
+
+   public async updateByQuery(query: any, data: any): Promise<Category | null> {
+     return await CategoryModel.updateMany(query, data, {new: true});
+   }   
+
    public async delete(id: string): Promise<Category | null> {
         return await CategoryModel.findByIdAndDelete(id);
    } 

@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 import * as homepage from './homepage';
+import * as popular from './popular';
 
 const setupDatabase = function() {
 
@@ -13,7 +14,9 @@ const setupDatabase = function() {
 
 const main = async function() {
     setupDatabase();
-    await homepage.start();
+    //await homepage.start();
+    await popular.start();
+    console.log('done');
 }
 
 main();
