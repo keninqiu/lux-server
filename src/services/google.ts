@@ -1,10 +1,9 @@
 import { execSync } from 'child_process';
 const querystring = require('querystring');
-
 export class GoogleService {
-    translate(text: string) {
+    translate(originText: string) {
 
-        text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp('&', 'g'), 'and');
+        let text = originText.replace(new RegExp('"', 'g'), ' ').replace(new RegExp('&', 'g'), 'and');
         text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
         console.log('text==', text);
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
@@ -39,14 +38,18 @@ export class GoogleService {
         const str1 = ',[[\\"';
         const str2 = '\\",';
         const output1 = output.substring(output.indexOf(str1) + str1.length);
-        const output2 = output1.substring(0, output1.indexOf(str2));
+        let output2 = output1.substring(0, output1.indexOf(str2));
+        if(output2 == originText) {
+            console.log('they are equal.');
+        }
         return output2;
     }
 
 
+
     translate2(text: string) {
  
-        text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp('&', 'g'), 'and');
+        text = text.replace(new RegExp('"', 'g'), ' ').replace(new RegExp('&', 'g'), 'and');
         text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
         const curlCommand = "curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=5634689650896276426&bl=boq_translate-webserver_20210929.09_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=445731&rt=c' \
@@ -87,7 +90,7 @@ export class GoogleService {
 
         translate3(text: string) {
  
-        text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp('&', 'g'), 'and');
+        text = text.replace(new RegExp('"', 'g'), ' ').replace(new RegExp('&', 'g'), 'and');
         text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
         const curlCommand = "curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=-5836442219320277637&bl=boq_translate-webserver_20210929.09_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=448662&rt=c' \
@@ -122,6 +125,46 @@ export class GoogleService {
         const output1 = output.substring(output.indexOf(str1) + str1.length);
         const output2 = output1.substring(0, output1.indexOf(str2));
         return output2;       
+    }
+
+
+    translate4(text: string) {
+        text = text.replace(new RegExp('"', 'g'), ' ').replace(new RegExp('&', 'g'), 'and');
+        text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
+        //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
+        const curlCommand = "curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=-5957784942741956367&bl=boq_translate-webserver_20210929.09_p0&hl=en&soc-app=1&soc-platform=1&soc-device=2&_reqid=250239&rt=c' \
+  -H 'authority: translate.google.com' \
+  -H 'pragma: no-cache' \
+  -H 'cache-control: no-cache' \
+  -H 'sec-ch-ua: \"Google Chrome\";v=\"93\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"93\"' \
+  -H 'x-goog-batchexecute-bgr: [\";4f-4_7LQAAbiTIIk4kxfesfOZxiCOrwmACkAIwj8RkeLRg7IjEQ72X6A5NsjwZkFtmf4q9VH_hExfs7YnixfcKjgIh8AAABWTwAAABV1AQcXALpSP7pDkEOC9JuKs_w1nAA-ZkB1cIvBeLG0nnxXbxGJQ6bQvhLYUgbJrVD2s0GBpH1SjDC6YU9wAxhNh1YDAubO_m94qotXJbesPB3b2CkFgrIg_PfqNeo_Kb_aJHzvhosyah9J0QJVP86jIF7cVIXHPorXEi2uOV7JqJOHhrsVFyxm36QUo6awlkuax7Qn-RVyFj58p8r2hh2nArN9lrNKDZSx6D2C9U40xCtzZAHIetMrvcOQ9osHE86EAkxbxe9ur7b0OZkdcURLTEJknA5XLDs6cA7BMFhNDB8IE3C9vxevwTFOqwgx8N8rG-pWoPE_x2BO8fiJhW_WxLDrFdbjqD7o9EySNsGOtle7aOF__iq7zuwbCqCaKHjzk82LRWyLiEnd3x7ya37tUL5-i9Z_CnPondwXyV5ubyET592NkxbIzr3jaiKPhUiWEFwvv0NEsb9pm8iQKJqkEWkZOcmo716tlXVOGue9dp2lo5zUDcpDA9fgT-4gxDPEJ8MLBfXaT9-sRNLec0b1G2iGC9JVWoTyd5VziLDAn-5WXUdsZtzpVgJUkK9QeneCi0czviwyWbEHpY4WmyKxF9geUXNPXrCWs5Lq39-NRQ60IYWHqATAdvn52eVYVY27cB5y7Kxva83AURnrS_lbt4Tp_S3PS0e8hdn-DT1F7hLxoDeYMom6p3VKkMGjdjLDJUbTVRU5ZBdP5U9Q4MFTB0cfhBx0orO0Cmo3etld4LE5xSLd1AnLH-YrHn6QgV913pw-sl9Z90zTROovjOueAN0_34T4cudtt93U4iv88M1aNcwwG7rLYaHUU8DwadI2Eoa3B_Z_MDJcnGPnOOS230MsJByEhZi1fFKB0uzE8PdBWTMdlSbA9Mdf9jUH8OW8fVSr6EHjLAIHPiu2u9wIflXWNWzy-AgSu6KAXAkQbER35DyJMURqbcowky8Xq_D3Xp2SwoO9J9NCPB2r1Zo8MsWUHu38_HXe2EwDzdbDQ7dkLwnzHapH1Y-OCbxnrcxk9nWiM0CwExypAPCQpDs\",null,null,375,null,null,null,0,\"2\"]' \
+  -H 'x-same-domain: 1' \
+  -H 'content-type: application/x-www-form-urlencoded;charset=UTF-8' \
+  -H 'sec-ch-ua-mobile: ?1' \
+  -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Mobile Safari/537.36' \
+  -H 'sec-ch-ua-platform: \"Android\"' \
+  -H 'accept: */*' \
+  -H 'origin: https://translate.google.com' \
+  -H 'x-client-data: CIe2yQEIpLbJAQjEtskBCKmdygEI+eHKAQiMnssBCO/yywEItPjLAQie+csBCPn5ywEIr/rLAQih/ssBCL/+ywEInv/LAQ==' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: https://translate.google.com/' \
+  -H 'accept-language: en-US,en;q=0.9,zh;q=0.8' \
+  -H 'cookie: _ga=GA1.3.1927028768.1567101727; CONSENT=YES+CA.en+20180225-07-0; SEARCH_SAMESITE=CgQIypIB; OGPC=19022519-1:19024399-1:19022591-1:19020770-1:19022552-1:19022958-1:; _gid=GA1.3.2086525403.1633053124; OTZ=6179152_72_76_104100_72_446760; HSID=Ajhe4M3H2RYl9OYPB; SSID=AvTTcTu8IUOdiDiDW; APISID=beZY7n9RgsafgiQH/AL4JDyBvj0YoF5-HF; SAPISID=cKsLYYrq5q2XzZXo/AGqY630CZWFLCVzgn; __Secure-1PAPISID=cKsLYYrq5q2XzZXo/AGqY630CZWFLCVzgn; __Secure-3PAPISID=cKsLYYrq5q2XzZXo/AGqY630CZWFLCVzgn; SID=Cgg9YCwIuEsClFJYcF6pkXjK1CmQoXD24xXJce8yHCOjU_KyF8Wqyo4ZVFCSgu51dI4srw.; __Secure-1PSID=Cgg9YCwIuEsClFJYcF6pkXjK1CmQoXD24xXJce8yHCOjU_KydgulDrv7W2X-Mml1Jsspxw.; __Secure-3PSID=Cgg9YCwIuEsClFJYcF6pkXjK1CmQoXD24xXJce8yHCOjU_KyREdZ-nwyDOwSyLgPAGagsw.; NID=511=nWN6JI1nZO1NtepMiTjFcRQhPjuu10-neX_yPonyjQJTi2AJILtX5kXLTbxOYhRPqEfXs4SbBmh2X6l9wW3qEMJt0mpzcj8PiF3VEctlUtHix-5bklYAvj6zwFX3pJMAggRC4wTfybq_zrK3xowUDci1koxmKeZ76XVminWeOm0BzePuBz85UJWJYwL5mHWdTR7bz53uJSetImy7cmKNcdbLDkYZgFd7XYoV7txqXbFBEtAx-ZgQ6KKJ8jv3g1Y-C2dQx7Tn_hn--iUZVkRamOAFulf189zZl65sVKuM157AHsLBavNd7Mkq8yMXd3puA0G82yU2O5zSYS1pBTCO-a68vmS3x_KOgTapVnhLjx2CkUgsqZoMCIILmG7Rvs24yyA42HARe6tRjeAdAZOC-Y76kfmHzRIS2rwgE_YqesOzsd-FFVjpmn96OLruLffsMoqQP5j51VHX_-b9S2hJqYNy4BJh8rfFde0wnLRTiYJniko; 1P_JAR=2021-10-02-17; SIDCC=AJi4QfEQ6B8aJb8HDhVJxLjXwyKwCfYCNTCDEZBCRiAwHdwXzEpfLvuO25t34W0q2HfnUVlo8NY; __Secure-3PSIDCC=AJi4QfEa5Czt4Ww-H_BqtPLiItcteuSclcvwfO1nfJ7wrFSHPlaje9CAzO6EJbSZyeBDlFdo1w' \
+  --data-raw 'f.req=%5B%5B%5B%22MkEWBc%22%2C%22%5B%5B%5C%22" + text + "%5C%22%2C%5C%22en%5C%22%2C%5C%22zh-CN%5C%22%2Ctrue%5D%2C%5Bnull%5D%5D%22%2Cnull%2C%22generic%22%5D%5D%5D&at=AD08yZn0fd91jTRCAg-BYo2tgYvF%3A1633197434498&' \
+  --compressed";
+
+
+        //console.log('curlCommand===', curlCommand);
+        const output = execSync(curlCommand, { encoding: 'utf-8' });
+
+console.log('output=', output);
+        const str1 = ',[[\\"';
+        const str2 = '\\",';
+        const output1 = output.substring(output.indexOf(str1) + str1.length);
+        const output2 = output1.substring(0, output1.indexOf(str2));
+        return output2;   
     }
 }
 

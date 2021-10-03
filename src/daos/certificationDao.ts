@@ -29,7 +29,7 @@ export class CertificationDao {
           return [];
      }
      console.log('category=', category);
-     return await CertificationModel.find({category: category._id}).select('name slug url category');
+     return await CertificationModel.find({category: category._id}).populate('namet').select('name namet slug url category');
    }
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Certification | null> {

@@ -25,7 +25,7 @@ export class SkillDao {
           return [];
      }
      console.log('category=', category);
-     return await SkillModel.find({category: category._id}).select('name slug url category');
+     return await SkillModel.find({category: category._id}).populate('namet').select('name namet slug url category');
    }   
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Skill | null> {

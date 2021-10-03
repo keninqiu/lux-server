@@ -21,7 +21,7 @@ export class SchoolDao {
      if(category == null) {
           return [];
      }
-     return await SchoolModel.find({category: category._id}).select('name slug url category');
+     return await SchoolModel.find({category: category._id}).populate('namet').select('name namet slug url category');
    }
 
    public async fetchAllWithoutRawData(): Promise<School[]> {

@@ -25,7 +25,7 @@ export class JobDao {
           return [];
      }
 
-     return await JobModel.find({category: category._id}).select('name slug url category');
+     return await JobModel.find({category: category._id}).populate('namet').select('name namet slug url category');
    }   
 
    public async fetchAllWithoutRawData(): Promise<Job[]> {

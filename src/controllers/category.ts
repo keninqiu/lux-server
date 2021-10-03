@@ -67,6 +67,27 @@ export class CategoryController {
     }
     } 
 
+    @Get('countryCode/:countryCode/type/:type/slug/:slug')
+    private async fetchByCountryCodeAndTypeSlug(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        const countryCode = req.params.countryCode;
+        const type = req.params.type;
+        const slug = req.params.slug;
+       const item = await this.dao.fetchByCountryCodeAndTypeSlug(countryCode, type, slug);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: item
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get('type/:type')
     private async fetchAllByType(req: ICustomRequest, res: Response): Promise<Response> {
     try {

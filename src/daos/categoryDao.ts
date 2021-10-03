@@ -21,6 +21,16 @@ export class CategoryDao {
         return await this.fetchAllByCountryAndType(country._id, type);
    }
 
+   public async fetchByCountryCodeAndTypeSlug(countryCode: string, type: string, slug: string): Promise<Category | null> {
+        const country = await CountryModel.findOne({code: countryCode});
+        if(!country) {
+             return null;
+        }
+        return await CategoryModel.findOne({country: country._id, type, slug: slug}).populate({
+             path:'country',populate: 'namet'
+             }).populate('namet');
+   }
+
    public async fetchAllByType(type: string): Promise<Category[]> {
     return await CategoryModel.find({type}).sort('name');
    }

@@ -9,7 +9,7 @@ const main = function () {
     //const translated = googleServ.translate("Good morning, my name is dddd");
     //const translated = googleServ.translate("Mr's world");
 
-    const translated = googleServ.translate3('Saint-Bruno-de-Montarville');
+    const translated = googleServ.translate('Welding Level "C" Certificates');
     console.log('translated==', translated);
 
 }

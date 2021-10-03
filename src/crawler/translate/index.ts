@@ -26,8 +26,9 @@ export const start = async function() {
     //await industry.start();
     
     await employer.start();
-    /*
-    await degree.start();
-    await certification.start();
-    */
+    
+    //await degree.start();
+    
+    //await certification.start();
+   
 }

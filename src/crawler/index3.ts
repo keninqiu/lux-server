@@ -16,14 +16,13 @@ const start = async function() {
     const dao = new TranslateDao();
     const googleServ = new GoogleService();
     const translates = await dao.fetchAll();
-    console.log('translates.length=' + translates.length);
+    //const translates = [translate];
     for(let i = 0; i < translates.length; i++) {
         const translate = translates[i];
-        console.log('translate==', translate);
         const en = translate.en.replace(new RegExp('_.', 'g'), '');
+
         let zh = translate.zh.replace(new RegExp('_.', 'g'), '').replace(new RegExp('。', 'g'), '');
-        //console.log('en=====', en);
-        //console.log('zh=====', zh);
+
         if(en == zh) {
             console.log('en==', en);
             console.log('need retrasnate for ',zh);
@@ -38,7 +37,12 @@ const start = async function() {
                 console.log('new translate222=', zh);
                 if(zh != translate.zh) {
                     await dao.update(translate._id, {zh});
-                } 
+                } else {
+                    zh = await googleServ.translate4(translate.en);
+                    if(zh != translate.zh) {
+                        await dao.update(translate._id, {zh});
+                    }                    
+                }
             }
 
             

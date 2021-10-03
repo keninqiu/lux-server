@@ -6,6 +6,7 @@ export class EmployerDao {
    public async fetchAll(): Promise<Employer[]> {
         return await EmployerModel.find({}).select('name url category');
    }
+
    public async fetchAllWithoutDuplicate(): Promise<Employer[]> {
      return await EmployerModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
@@ -26,8 +27,10 @@ export class EmployerDao {
      if(category == null) {
           return [];
      }
-     console.log('category=', category);
-     return await EmployerModel.find({category: category._id}).select('name slug url category');
+     console.log('category 4444444=', category);
+     const items = await EmployerModel.find({category: category._id}).populate('namet').select('name namet slug url category');
+     console.log('items=', items);
+     return items;
    }
    
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Employer | null> {
