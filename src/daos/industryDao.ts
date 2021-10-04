@@ -9,6 +9,17 @@ export class IndustryDao {
    public async fetchAllWithoutDuplicate(): Promise<Industry[]> {
      return await IndustryModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
+
+   public async fetchByUrl(url: string) : Promise<Industry | null> {
+     let anotherUrl = '';
+     if(url.indexOf('/Salary') > 0) {
+          anotherUrl = url.replace('/Salary', '/Hourly_Rate');
+     } else {
+          anotherUrl = url.replace('/Hourly_Rate', '/Salary');
+     }
+     return await IndustryModel.findOne({$and: [{duplicatedWith: null},{$or: [{url: url},{url: anotherUrl}]}]}).select('_id name');
+   }
+
    public async fetchAllByText(countryCode: string, text: string): Promise<Industry[]> {
      return await IndustryModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10);
    }

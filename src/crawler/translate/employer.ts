@@ -8,7 +8,7 @@ export const start = async function() {
     const dao = new EmployerDao();
     const translateDao = new TranslateDao();
     const items = await dao.fetchAllWithoutDuplicate();
-    for(let i = 0; i < items.length; i++) {
+    for(let i = 12000; i < items.length; i++) {
         console.log('i==', i);
         const item = items[i];
         const id = item._id;

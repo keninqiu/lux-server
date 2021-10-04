@@ -7,7 +7,101 @@ export class CountryDao {
         return await CountryModel.findById(id);
    }
    public async fetchByCode(code: string): Promise<Country | null> {
-     return await CountryModel.findOne({code}).populate('namet');
+     return await CountryModel.findOne({code}).populate('namet').populate(
+          {
+               path: 'byDimension', 
+               populate: [
+                    {
+                         path: 'salaryByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'salaryByEmployer', 
+                         populate: {
+                              path: 'employer',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByEmployer', 
+                         populate: {
+                              path: 'employer',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'salaryByDegree', 
+                         populate: {
+                              path: 'degree',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByDegree', 
+                         populate: {
+                              path: 'degree',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'salaryBySchool', 
+                         populate: {
+                              path: 'school',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateBySchool', 
+                         populate: {
+                              path: 'school',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    }                     
+               ]
+          }
+     );
    }
    
    public async create(data: ICountry): Promise<Country | null> {

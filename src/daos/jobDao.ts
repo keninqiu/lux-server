@@ -8,9 +8,21 @@ export class JobDao {
    public async fetchAllWithoutDuplicate(): Promise<Job[]> {
      return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
+
+   public async fetchByUrl(url: string) : Promise<Job | null> {
+     let anotherUrl = '';
+     if(url.indexOf('/Salary') > 0) {
+          anotherUrl = url.replace('/Salary', '/Hourly_Rate');
+     } else {
+          anotherUrl = url.replace('/Hourly_Rate', '/Salary');
+     }
+     return await JobModel.findOne({$and: [{duplicatedWith: null},{$or: [{url: url},{url: anotherUrl}]}]}).select('_id name');
+   }
+
    public async fetchAllByText(countryCode: string, text: string): Promise<Job[]> {
      return await JobModel.find({$and: [{url: {$regex : '/' + countryCode + '/'}},{ name: { $regex : new RegExp(text, "i") } }]}).select('name url').limit(10); 
    }
+
    public async fetchAllByCountryCodeAndCategorySlug(countryCode: string, categorySlug: string): Promise<Job[]>  {
      console.log('countryCode==');
      const country = await CountryModel.findOne({code: countryCode});

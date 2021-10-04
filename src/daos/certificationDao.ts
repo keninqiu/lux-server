@@ -10,6 +10,17 @@ export class CertificationDao {
      return await CertificationModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
 
+   public async fetchByUrl(url: string) : Promise<Certification | null> {
+     let anotherUrl = '';
+     if(url.indexOf('/Salary') > 0) {
+          anotherUrl = url.replace('/Salary', '/Hourly_Rate');
+     } else {
+          anotherUrl = url.replace('/Hourly_Rate', '/Salary');
+     }
+     return await CertificationModel.findOne({$and: [{duplicatedWith: null},{$or: [{url: url},{url: anotherUrl}]}]}).select('_id name');
+   }
+
+
    public async fetchAllWithoutRawData(): Promise<Certification[]> {
      return await CertificationModel.find({rawData: null}).select('name url category');
    }
