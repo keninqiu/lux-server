@@ -9,7 +9,7 @@ export class JobDao {
    public async fetchDistinct(): Promise<Job[]> {
         return await JobModel.distinct('name');
    }
-   
+
    public async updateManyByQuery(query: any, data: any): Promise<any> {
      return await JobModel.updateMany(query, data);
    }
@@ -20,6 +20,10 @@ export class JobDao {
 
    public async fetchAllByName(name: string): Promise<Job[]> {
      return await JobModel.find({name}).select('_id');
+   }
+
+   public async fetchOneByName(name: string): Promise<Job | null> {
+     return await JobModel.findOne({name});
    }
 
    public async fetchByUrl(url: string) : Promise<Job | null> {

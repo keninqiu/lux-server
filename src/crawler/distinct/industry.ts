@@ -5,7 +5,6 @@ const type = 'Industry';
 export const start = async function() {
     const dao = new IndustryDao();
     const translateDao = new TranslateDao();
-    await translateDao.deleteAllByType(type);
     const items = await dao.fetchDistinct();
     const translates = items.map(item => {
         return {

@@ -5,7 +5,6 @@ const type = 'Certification';
 export const start = async function() {
     const dao = new CertificationDao();
     const translateDao = new TranslateDao();
-    await translateDao.deleteAllByType(type);
     const items = await dao.fetchDistinct();
     const translates = items.map(item => {
         return {
