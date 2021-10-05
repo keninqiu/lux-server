@@ -14,6 +14,7 @@ const setupDatabase = function() {
 const main = async function() {
     setupDatabase();
     await distinct.start();
+    console.log('done');
 }
 
 main();
