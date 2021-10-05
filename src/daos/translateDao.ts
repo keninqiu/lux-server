@@ -14,7 +14,7 @@ export class TranslateDao {
      return await TranslateModel.findOne({en});
    }
 
-   public async create(data: ITranslate): Promise<Translate | null> {
+   public async create(data: any): Promise<Translate | null> {
        return await TranslateModel.findOneAndUpdate({en: data.en}, data, {upsert: true, new: true});
    }
 
@@ -32,5 +32,9 @@ export class TranslateDao {
 
    public async deleteAll(): Promise<any> {
      return await TranslateModel.deleteMany({});
+   }    
+
+   public async insertMany(translates: any): Promise<any> {
+     return await TranslateModel.insertMany(translates);
    }    
 }

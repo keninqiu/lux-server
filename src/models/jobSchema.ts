@@ -9,7 +9,6 @@ Id	code  CountryName	CurrencyCode
 
 export interface IJob {
     name: string,
-    description: string,
     namet?: string,
     url: string,
     slug?: string,
@@ -165,7 +164,6 @@ export interface IJob {
 }
 export interface Job extends Document {
     name: string,
-    description: string,
     namet: string,
     url: string,
     slug: string,
@@ -322,7 +320,6 @@ export interface Job extends Document {
 
 const JobSchema = new Schema<Job>({
     name: String,
-    description: String,
     namet: {
         type: Schema.Types.ObjectId,
         ref: 'Translate'

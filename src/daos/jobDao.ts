@@ -5,12 +5,13 @@ export class JobDao {
    public async fetchAll(): Promise<Job[]> {
         return await JobModel.find({}).select('name url category').limit(1000);
    }
-   public async fetchAllWithoutDuplicate(): Promise<Job[]> {
-     return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category').limit(1000);
+
+   public async fetchDistinct(): Promise<Job[]> {
+        return await JobModel.distinct('name');
    }
 
-   public async fetchAllWithoutDescription(): Promise<Job[]> {
-     return await JobModel.find({rawData: { $ne: null },duplicatedWith: null, description: undefined}).select('rawData').limit(1000);
+   public async fetchAllWithoutDuplicate(): Promise<Job[]> {
+     return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category').limit(1000);
    }
 
    public async fetchByUrl(url: string) : Promise<Job | null> {
