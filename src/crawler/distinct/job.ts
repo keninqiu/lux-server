@@ -5,6 +5,7 @@ const type = 'Job';
 export const start = async function() {
     const dao = new JobDao();
     const translateDao = new TranslateDao();
+    /*
     const items = await dao.fetchDistinct();
     const translates = items.map(item => {
         return {
@@ -13,6 +14,7 @@ export const start = async function() {
         };
     });
     const inserted = await translateDao.insertMany(translates);
+    */
     const translateItems = await translateDao.fetchAllByType(type);
 
     console.log('translateItems==', translateItems);
@@ -24,7 +26,7 @@ export const start = async function() {
         const entities = await dao.fetchAllByName(name);
         console.log('entities.length=', entities.length);
         const ids = entities.map(entity => entity._id);
-        const updated = await dao.updateByQuery({_id: {$in: ids}}, {namet: id});
+        const updated = await dao.updateManyByQuery({_id: {$in: ids}}, {namet: id});
         console.log('updated===', updated);
     }
 }

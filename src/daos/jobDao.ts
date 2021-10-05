@@ -102,6 +102,10 @@ export class JobDao {
      return await JobModel.findOneAndUpdate(query, data, {new: true});
    }   
   
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await JobModel.updateMany(query, data);
+   }
+   
    public async delete(id: string): Promise<Job | null> {
         return await JobModel.findByIdAndDelete(id);
    } 
