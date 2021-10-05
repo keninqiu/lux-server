@@ -30,7 +30,26 @@ export class JobController {
     }
     }  
     
+    @Get('all/withoutDescription')
+    private async fetchAllWithoutDescription(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllWithoutDescription();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get('all/withoutDuplicate')
+    @Middleware([authAdmin])
     private async fetchAllWithoutDuplicate(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAllWithoutDuplicate();

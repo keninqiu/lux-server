@@ -9,6 +9,10 @@ export class JobDao {
      return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category').limit(1000);
    }
 
+   public async fetchAllWithoutDescription(): Promise<Job[]> {
+     return await JobModel.find({rawData: { $ne: null },duplicatedWith: null, description: undefined}).select('rawData').limit(1000);
+   }
+
    public async fetchByUrl(url: string) : Promise<Job | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {
