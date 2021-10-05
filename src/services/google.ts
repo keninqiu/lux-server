@@ -1,11 +1,37 @@
 import { execSync } from 'child_process';
 const querystring = require('querystring');
 export class GoogleService {
-    translate(originText: string) {
+    queryString(text: any) {
 
+        text = text.replace(/\r\n/g, '%5C%5Cn');
+        text = text.replace(/ /g, '%20');
+        text = text.replace(/,/g, '%2C');
+        //text = text.replace(/\(/g, '%28');
+        //text = text.replace(/\)/g, '%29');
+        text = text.replace(/\//g, '%2F');
+        text = text.replace(/\'/g, "\\'");
+        console.log('final text=', text);
+        return text;
+    }
+    ////A%20logistics%20coordinator%20may%20be%20in%20charge%20of%20overseeing%20a%20wide%20variety%20of%20events%20and%20projects.
+    //%20In%20some%20cases%2C%20they%20will%20oversee%20the%20patient%20care%20logistics%20in%20hospitals%20and%20the%20disposal%20of%20hazardous%20waste.
+    //%20Other%20times%2C%20the%20coordinator%20will%20be%20in%20charge%20of%20coordinating%20events%20for%20their%20company.
+    //%5C%5CnLogistics%20coordinators%20can%20work%20in%20a%20variety%20of%20settings%2C%20such%20as%20law%20firms%2C%20retail%20stores%2C%20and%20schools.%20They%20can%20work%20as%20event%20coordinators%2C%20center%20coordinators%2C%20and%20shipping%20and%20receiving%20coordinators.%20Logistics%20event%20coordinators%20are%20in%20charge%20of%20setting%20up%20the%20entire%20event%2C%20from%20location%20to%20time%20and%20date.%20In%20schools%2C%20they%20provide%20admission%20information%20and%20work%20with%20teachers%20to%20coordinate%20daily%20school%20activities.%20Shipping%20and%20receiving%20logistics%20coordinators%20are%20responsible%20for%20manual%20tasks%20such%20as%20addressing%2C%20stamping%2C%20and%20arranging%20merchandise%20and%20materials.%5C%5CnLogistics%20coordinators%20must%20have%20good%20communication%20skills%20since%20they%20interact%20with%20suppliers%20and%20buyers.%20They%20must%20also%20have%20in-depth%20knowledge%20of%20the%20events%20or%20projects%20they%20are%20overseeing.%20Logistics%20coordinators%20typically%20must%20have%20a%20bachelor%E2%80%99s%20degree%20in%20logistics%2C%20and%20experience%20is%20preferred.%20They%20should%20also%20have%20good%20problem-solving%2C%20interpersonal%2C%20and%20analytical%20skills.%5C%22%2C%5C%22en%5C%22%2C%5C%22zh-CN%5C%22%2Ctrue%5D%2C%5Bnull%5D%5D%22%2Cnull%2C%22generic%22%5D%5D%5D&at=AD08yZlUQTRqlMP8IPCy1mREaFeZ%3A1633460986192&
+    
+    ////A%20logistics%20coordinator%20may%20be%20in%20charge%20of%20overseeing%20a%20wide%20variety%20of%20events%20and%20projects.
+    //%20In%20some%20cases%2C%20they%20will%20oversee%20the%20patient%20care%20logistics%20in%20hospitals%20and%20the%20disposal%20of%20hazardous%20waste.
+    //%20Other%20times%2C%20the%20%5C%5CnLogistics%20coordinators%20can%20work%20in%20a%20variety%20of%20settings%2C%20such%20as%20law%20firms%2C%20retail%20stores%2C%20and%20schools.%20They%20can%20work%20as%20event%20coordinators%2C%20center%20coordinators%2C%20and%20shipping%20and%20receiving%20coordinators.%20Logistics%20event%20coordinators%20are%20in%20charge%20of%20setting%20up%20the%20entire%20event%2C%20from%20location%20to%20time%20and%20date.%20In%20schools%2C%20they%20provide%20admission%20information%20and%20work%20with%20teachers%20to%20coordinate%20daily%20school%20activities.%20Shipping%20and%20receiving%20logistics%20coor%5C%5CnLogistics%20coordinators%20must%20have%20good%20communication%20skills%20since%20they%20interact%20with%20suppliers%20and%20buyers.%20They%20must%20also%20have%20in-depth%20knowledge%20of%20the%20events%20or%20projects%20they%20are%20overseeing.%20Logistics%20coordinators%20typically%20must%20have%20a%20bachelor’s%20degree%20in%20logistics%2C%20and%20experience%20is%20preferred.%20They%20should%20also%20have%20good%20problem-solving%2C%20interpersonal%2C%20and%20analytical%20skills.
+    translate(originText: string) {
+        /*
         let text = originText.replace(new RegExp('"', 'g'), ' ').replace(new RegExp('&', 'g'), 'and');
+        
         text = encodeURI(text).replace(new RegExp("'", 'g'), "\\\'");
-        console.log('text==', text);
+
+        text = text.replace(new RegExp(',', 'g'), '%2C');
+        */
+       //console.log('originText==', originText);
+        const text = this.queryString(originText);
+        //console.log('text==', text);
         //text = text.replace(new RegExp('"', 'g'), '\\"').replace(new RegExp("'", 'g'), "\\\'").replace(new RegExp(' ', 'g'), '%20');
         const curlCommand = "curl 'https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=4554740978145578046&bl=boq_translate-webserver_20210929.09_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=1637397&rt=c' \
         -H 'authority: translate.google.com' \
@@ -34,7 +60,7 @@ export class GoogleService {
         //console.log('curlCommand===', curlCommand);
         const output = execSync(curlCommand, { encoding: 'utf-8' });
 
-        console.log('output=', output);
+        //console.log('output=', output);
         const str1 = ',[[\\"';
         const str2 = '\\",';
         const output1 = output.substring(output.indexOf(str1) + str1.length);
@@ -42,6 +68,12 @@ export class GoogleService {
         if(output2 == originText) {
             console.log('they are equal.');
         }
+        const str3 = '\\"]';
+        if(output2.indexOf(str3) > 0) {
+            output2 = output2.substring(0, output2.indexOf(str3)); 
+        }
+
+        output2 = output2.replace(/\\\\n/g, '\n');
         return output2;
     }
 

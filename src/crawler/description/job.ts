@@ -10,14 +10,16 @@ export const start = async function() {
     const body = await response.json();
     console.log('body.data=', body.data);
     const items = body.data;
-    for(let i = 0; i < items.length; i++) {
+    for(let i = 4; i < items.length; i++) {
         const item = items[i];
         const rawData = item.rawData;
         const pageData = rawData.props.pageProps.pageData;
         const narratives = pageData.narratives;
         if(narratives && narratives.description) {
+            console.log('narratives.description===', narratives.description);
             const zh = await googleServ.translate(narratives.description);
             console.log('zh==', zh);
         }
     }
 }
+
