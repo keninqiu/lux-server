@@ -3,10 +3,10 @@ import { CountryModel, Country, ICountry } from '../models/countrySchema';
 import { CategoryModel, Category, ICategory } from '../models/categorySchema';
 export class JobDao {
    public async fetchAll(): Promise<Job[]> {
-        return await JobModel.find({}).select('name url category');
+        return await JobModel.find({}).select('name url category').limit(1000);
    }
    public async fetchAllWithoutDuplicate(): Promise<Job[]> {
-     return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
+     return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category').limit(1000);
    }
 
    public async fetchByUrl(url: string) : Promise<Job | null> {

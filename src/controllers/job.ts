@@ -12,6 +12,7 @@ export class JobController {
     private dao = new JobDao();
 
     @Get('')
+    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();
@@ -30,8 +31,7 @@ export class JobController {
     }  
     
     @Get('all/withoutDuplicate')
-    @Middleware([authAdmin])
-    private async fetchAllWithoutDuplicated(req: ICustomRequest, res: Response): Promise<Response> {
+    private async fetchAllWithoutDuplicate(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAllWithoutDuplicate();
        return res.status(StatusCodes.OK).json(
