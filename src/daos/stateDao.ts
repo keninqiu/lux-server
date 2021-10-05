@@ -4,6 +4,18 @@ export class StateDao {
         return await StateModel.find({}).populate('namet').select('name namet country url').sort('name');
    }
 
+   public async fetchDistinct(): Promise<State[]> {
+     return await StateModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await StateModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<State[]> {
+     return await StateModel.find({name}).select('_id');
+   }
+
    public async fetchAllByCountry(id: string): Promise<State[]> {
         return await StateModel.find({country: id}).select('name country url').sort('name');
    }

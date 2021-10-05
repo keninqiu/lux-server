@@ -6,6 +6,19 @@ export class CountryDao {
    public async fetchById(id: string): Promise<Country | null> {
         return await CountryModel.findById(id);
    }
+
+   public async fetchDistinct(): Promise<Country[]> {
+     return await CountryModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await CountryModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<Country[]> {
+     return await CountryModel.find({name}).select('_id');
+   }
+
    public async fetchByCode(code: string): Promise<Country | null> {
      return await CountryModel.findOne({code}).populate('namet').populate(
           {

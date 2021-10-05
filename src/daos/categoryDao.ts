@@ -9,6 +9,18 @@ export class CategoryDao {
      return await CategoryModel.find({rawData: null}).select('name url');
    }
 
+   public async fetchDistinct(): Promise<Category[]> {
+     return await CategoryModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await CategoryModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<Category[]> {
+     return await CategoryModel.find({name}).select('_id');
+   }
+
    public async fetchAllByCountryAndType(countryId: string, type: string): Promise<Category[]> {
      return await CategoryModel.find({country: countryId, type}).populate('namet').select('name namet url').sort('name');
    }

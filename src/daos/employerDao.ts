@@ -11,6 +11,18 @@ export class EmployerDao {
      return await EmployerModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
 
+   public async fetchDistinct(): Promise<Employer[]> {
+     return await EmployerModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await EmployerModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<Employer[]> {
+     return await EmployerModel.find({name}).select('_id');
+   }
+
    public async fetchByUrl(url: string) : Promise<Employer | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {

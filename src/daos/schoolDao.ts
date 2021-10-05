@@ -9,6 +9,18 @@ export class SchoolDao {
      return await SchoolModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
 
+   public async fetchDistinct(): Promise<School[]> {
+     return await SchoolModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await SchoolModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<School[]> {
+     return await SchoolModel.find({name}).select('_id');
+   }
+
    public async fetchByUrl(url: string) : Promise<School | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {

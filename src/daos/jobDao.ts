@@ -9,6 +9,10 @@ export class JobDao {
    public async fetchDistinct(): Promise<Job[]> {
         return await JobModel.distinct('name');
    }
+   
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await JobModel.updateMany(query, data);
+   }
 
    public async fetchAllWithoutDuplicate(): Promise<Job[]> {
      return await JobModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
@@ -102,10 +106,8 @@ export class JobDao {
      return await JobModel.findOneAndUpdate(query, data, {new: true});
    }   
   
-   public async updateManyByQuery(query: any, data: any): Promise<any> {
-     return await JobModel.updateMany(query, data);
-   }
-   
+
+
    public async delete(id: string): Promise<Job | null> {
         return await JobModel.findByIdAndDelete(id);
    } 

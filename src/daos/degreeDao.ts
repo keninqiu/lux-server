@@ -9,6 +9,19 @@ export class DegreeDao {
    public async fetchAllWithoutDuplicate(): Promise<Degree[]> {
      return await DegreeModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
+
+   public async fetchDistinct(): Promise<Degree[]> {
+     return await DegreeModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await DegreeModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<Degree[]> {
+     return await DegreeModel.find({name}).select('_id');
+   }
+
    public async fetchByUrl(url: string) : Promise<Degree | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {

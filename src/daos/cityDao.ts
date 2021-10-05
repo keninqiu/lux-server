@@ -3,6 +3,19 @@ export class CityDao {
    public async fetchAll(): Promise<City[]> {
         return await CityModel.find({}).populate('namet').select('name namet state url');
    }
+
+   public async fetchDistinct(): Promise<City[]> {
+     return await CityModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await CityModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<City[]> {
+     return await CityModel.find({name}).select('_id');
+   }
+
    public async fetchAllWithoutRawData(): Promise<City[]> {
      return await CityModel.find({rawData: null}).select('name state url');
    }

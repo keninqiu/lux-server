@@ -10,6 +10,18 @@ export class CertificationDao {
      return await CertificationModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
 
+   public async fetchDistinct(): Promise<Certification[]> {
+     return await CertificationModel.distinct('name');
+   }
+
+   public async updateManyByQuery(query: any, data: any): Promise<any> {
+     return await CertificationModel.updateMany(query, data);
+   }
+
+   public async fetchAllByName(name: string): Promise<Certification[]> {
+     return await CertificationModel.find({name}).select('_id');
+   }
+
    public async fetchByUrl(url: string) : Promise<Certification | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {
