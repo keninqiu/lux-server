@@ -1,9 +1,9 @@
-import { JobDao } from "../../daos/jobDao";
+import { CountryDao } from "../../daos/countryDao";
 import { TranslateDao } from "../../daos/translateDao";
 
-const type = 'Job';
+const type = 'Country';
 export const start = async function() {
-    const dao = new JobDao();
+    const dao = new CountryDao();
     const translateDao = new TranslateDao();
     await translateDao.deleteAllByType(type);
     const items = await dao.fetchDistinct();
@@ -24,9 +24,9 @@ export const start = async function() {
         const id = item._id;
         const name = item.en;
         const entities = await dao.fetchAllByName(name);
-        console.log('entities.length=', entities.length);
+        //console.log('entities.length=', entities.length);
         const ids = entities.map(entity => entity._id);
         const updated = await dao.updateManyByQuery({_id: {$in: ids}}, {namet: id});
-        console.log('updated===', updated);
+        //console.log('updated===', updated);
     }
 }
