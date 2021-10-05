@@ -5,7 +5,7 @@ const type = 'Job';
 export const start = async function() {
     const dao = new JobDao();
     const translateDao = new TranslateDao();
-    /*
+    await translateDao.deleteAllByType(type);
     const items = await dao.fetchDistinct();
     const translates = items.map(item => {
         return {
@@ -14,7 +14,7 @@ export const start = async function() {
         };
     });
     const inserted = await translateDao.insertMany(translates);
-    */
+    
     const translateItems = await translateDao.fetchAllByType(type);
 
     console.log('translateItems==', translateItems);

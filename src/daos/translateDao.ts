@@ -34,6 +34,10 @@ export class TranslateDao {
      return await TranslateModel.deleteMany({});
    }    
 
+   public async deleteAllByType(type: string): Promise<any> {
+     return await TranslateModel.deleteMany({type});
+   }    
+   
    public async insertMany(translates: any): Promise<any> {
      return await TranslateModel.insertMany(translates);
    }    
