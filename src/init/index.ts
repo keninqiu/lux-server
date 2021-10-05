@@ -14,8 +14,8 @@ const setupDatabase = function() {
 
 const main = async function() {
     setupDatabase();
-    //await homepage.start();
-    await popular.start();
+    await homepage.start();
+    //await popular.start();
     console.log('done');
 }
 
