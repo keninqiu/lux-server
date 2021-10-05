@@ -15,13 +15,14 @@ export const start = async function() {
     //await country.start();
     //await state.start();
     //await city.start();
-    await category.start();
-    /*
+    //await category.start();
+    
     await certification.start();
+    
     await degree.start();
     await employer.start();
     await industry.start();
     await school.start();
     await skill.start();
-    */
+    
 }
