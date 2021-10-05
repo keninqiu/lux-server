@@ -135,6 +135,7 @@ export interface ISchool {
         ],
         hourlyRateByJob: [
             {
+
                 name: string,
                 url: string,
                 profileCount: number,
@@ -490,6 +491,10 @@ const SchoolSchema = new Schema<School>({
         },
         salaryByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -500,6 +505,10 @@ const SchoolSchema = new Schema<School>({
         ],
         hourlyRateByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -510,6 +519,10 @@ const SchoolSchema = new Schema<School>({
         ],
         salaryByEmployer: [
             {
+                employer: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Employer'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -520,6 +533,10 @@ const SchoolSchema = new Schema<School>({
         ],
         hourlyRateByEmployer: [
             {
+                employer: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Employer'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -531,6 +548,10 @@ const SchoolSchema = new Schema<School>({
     },
     related: [
         {
+            school: {
+                type: Schema.Types.ObjectId,
+                ref: 'School'
+            },
             name: String,
             url: String,
             min: Number,

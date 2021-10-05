@@ -96,7 +96,6 @@ export class CountryController {
                                 job: null
                             }
                             if(item.url) {
-                                const partialUrl = item.url.replace('/Salary', '');
                                 promiseAll.push(this.jobDao.fetchByUrl(item.url));
                             }
 

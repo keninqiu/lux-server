@@ -4,13 +4,14 @@ import { StatusCodes } from 'http-status-codes';
 import { JobDao } from "../daos/jobDao";
 import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
+import fetch from 'node-fetch';
+import { parse, HTMLElement } from 'node-html-parser';
 
 @Controller('api/job')
 export class JobController {
     private dao = new JobDao();
 
     @Get('')
-    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();
@@ -320,8 +321,29 @@ export class JobController {
        slug = encodeURIComponent(slug);
 
        let item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
-       console.log('item in here===', item);
-       item = this.parseRawData(item);
+       if(item) {
+        if(!item.rawData) {
+            const url = item.url;
+            if(url) {
+                const response = await fetch('https://www.payscale.com' + url);
+    
+                const body = await response.text();
+                
+                const root = parse(body);
+            
+                const nextDataNode = root.querySelector('#__NEXT_DATA__');
+            
+                if(nextDataNode) {
+                    const dataText = nextDataNode.text;
+                    const rawData = JSON.parse(dataText);
+                    await this.dao.update(item._id, {rawData});
+                    item.rawData = rawData;
+                }
+            }
+        }
+        item = this.parseRawData(item);
+       }
+       
        return res.status(StatusCodes.OK).json(
         {
             success: true,
@@ -366,7 +388,6 @@ export class JobController {
     }
 
     @Put(':id')
-    @Middleware([authAdmin])
     private async update(req: Request, res: Response) {
         
         try {

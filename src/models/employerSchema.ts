@@ -366,6 +366,10 @@ const EmployerSchema = new Schema<Employer>({
         },        
         salaryByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -376,6 +380,10 @@ const EmployerSchema = new Schema<Employer>({
         ],        
         salaryByDegree: [
             {
+                degree: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Degree'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,

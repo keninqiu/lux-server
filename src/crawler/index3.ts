@@ -24,13 +24,8 @@ const start = async function() {
         let zh = translate.zh.replace(new RegExp('_.', 'g'), '').replace(new RegExp('。', 'g'), '');
 
         if(en == zh) {
-            console.log('en==', en);
-            console.log('need retrasnate for ',zh);
             zh = await googleServ.translate3(translate.en);
-            console.log('new translate=', zh);
             if(zh != translate.zh) {
-                console.log('zh==', zh);
-                console.log('translate.zh==', translate.zh);
                 await dao.update(translate._id, {zh});
             } else {
                 zh = await googleServ.translate2(translate.en);

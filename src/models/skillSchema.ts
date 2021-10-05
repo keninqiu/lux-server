@@ -138,6 +138,10 @@ const SkillSchema = new Schema<Skill>({
         },        
         salaryByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,

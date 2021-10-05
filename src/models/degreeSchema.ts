@@ -137,6 +137,10 @@ const DegreeSchema = new Schema<Degree>({
         },        
         salaryByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
