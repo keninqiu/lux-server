@@ -355,20 +355,30 @@ export class DegreeController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.salaryByJob.splice(i, 1); 
+                            i --;
                         }
+
+
                     }
                 }
             }
- 
+
+
+
             for(let i = 0; i < itemData.byDimension.hourlyRateByJob.length; i++) {
                 const item = itemData.byDimension.hourlyRateByJob[i];
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.hourlyRateByJob.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -380,8 +390,11 @@ export class DegreeController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.degree = entity._id;
+                        } else {
+                            itemData.related.splice(i, 1); 
+                            i --;
                         }
                     }
                 }

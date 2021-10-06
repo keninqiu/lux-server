@@ -148,8 +148,11 @@ export class IndustryController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.industry = entity._id;
+                        } else {
+                            itemData.related.splice(i, 1); 
+                            i --;
                         }
                     }
                 }

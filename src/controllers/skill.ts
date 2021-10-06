@@ -336,8 +336,11 @@ export class SkillController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.salaryByJob.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -348,8 +351,11 @@ export class SkillController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.hourlyRateByJob.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -360,8 +366,11 @@ export class SkillController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.certification = entity._id;
+                        } else {
+                            itemData.related.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
