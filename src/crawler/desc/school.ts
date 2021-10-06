@@ -12,14 +12,14 @@ export const start = async function() {
         const item = await dao.fetchOneByName(name);
         if(item) {
             const rawData = item.rawData;
-            console.log('rawData.props.pageProps===', rawData.props.pageProps);
+            //console.log('rawData.props.pageProps===', rawData.props.pageProps);
             const pageData = rawData.props.pageProps.pageData;
-            console.log('pageData===', pageData);
-            const about = pageData.about;
+            //console.log('pageData===', pageData);
+            const collegeData = pageData.collegeData;
             
-            if(about && about.abstract) {
+            if(collegeData && collegeData.about && collegeData.about.abstract) {
 
-                const updated = await translateDao.update(translate._id, {desc: about.abstract});
+                const updated = await translateDao.update(translate._id, {desc: collegeData.about.abstract});
                 console.log('updated==', updated);
             }
         }
