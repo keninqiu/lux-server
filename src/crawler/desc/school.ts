@@ -13,9 +13,9 @@ export const start = async function() {
         if(item) {
             const rawData = item.rawData;
             //console.log('rawData.props.pageProps===', rawData.props.pageProps);
-            const pageData = rawData.props.pageProps.pageData;
+            const pageProps = rawData.props.pageProps;
             //console.log('pageData===', pageData);
-            const collegeData = pageData.collegeData;
+            const collegeData = pageProps.collegeData;
             
             console.log('collegeData===', collegeData);
             if(collegeData && collegeData.about && collegeData.about.abstract) {
