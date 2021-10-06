@@ -59,6 +59,20 @@ export class IndustryDao {
                path: 'category',
                populate: 'country'
           }
+     )
+     .populate('namet')
+     .populate(
+          {
+               path: 'related',
+               populate: {
+                    path: 'degree',
+                    select: 'namet',
+                    populate: {
+                         path: 'namet',
+                         select: 'zh'
+                    }
+               }               
+          }
      );
 
      if(!items || items.length == 0) {

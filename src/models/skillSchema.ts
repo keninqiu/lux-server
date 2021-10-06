@@ -14,6 +14,7 @@ export interface ISkill {
     slug?: string,
     salaryType?: string,
     rawData?: any,
+    rawDataParsed?: boolean,
     category: string,
     categories: string[]
 }
@@ -25,7 +26,8 @@ export interface Skill extends Document {
     salaryType: string,
     category: Category,
     categories: Category[],
-    rawData: any
+    rawData: any,
+    rawDataParsed: boolean
 }
 const SkillSchema = new Schema<Skill>({
     name: String,
@@ -149,10 +151,28 @@ const SkillSchema = new Schema<Skill>({
                 max: Number,
                 avg: Number                
             }
+        ],        
+        hourlyRateByJob: [
+            {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
         ]
     },
     related: [
         {
+            skill: {
+                type: Schema.Types.ObjectId,
+                ref: 'Skill'
+            },            
             name: String,
             url: String,
             min: Number,
@@ -161,6 +181,7 @@ const SkillSchema = new Schema<Skill>({
         }
     ],
     rawData: Object,
+    rawDataParsed: Boolean,
     createdAt: {
         type: Date,
         required: true,

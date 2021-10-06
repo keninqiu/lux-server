@@ -14,7 +14,8 @@ export interface IIndustry {
     slug?: string,
     salaryType?: string,
     category: string,
-    rawData?: any
+    rawData?: any,
+    rawDataParsed?: boolean
 }
 export interface Industry extends Document {
     name: string,
@@ -23,7 +24,8 @@ export interface Industry extends Document {
     slug: string,
     salaryType: string,
     category: Category,
-    rawData: any
+    rawData: any,
+    rawDataParsed: boolean
 }
 const IndustrySchema = new Schema<Industry>({
     name: String,
@@ -46,6 +48,7 @@ const IndustrySchema = new Schema<Industry>({
         ref: 'Industry'
     },
     rawData: Object,
+    rawDataParsed: Boolean,
     url: String,
     slug: String,
     salaryType: String,
@@ -90,6 +93,10 @@ const IndustrySchema = new Schema<Industry>({
     }, 
     related: [
         {
+            industry: {
+                type: Schema.Types.ObjectId,
+                ref: 'Industry'
+            },           
             name: String,
             url: String,
             min: Number,

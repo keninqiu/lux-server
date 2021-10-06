@@ -4,11 +4,15 @@ import { StatusCodes } from 'http-status-codes';
 import { CertificationDao } from "../daos/certificationDao";
 import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
+import { parse, HTMLElement } from 'node-html-parser';
+import { JobDao } from "../daos/jobDao";
+import { EmployerDao } from 'src/daos/employerDao';
 
 @Controller('api/certification')
 export class CertificationController {
     private dao = new CertificationDao();
-
+    private jobDao = new JobDao();
+    private employerDao = new EmployerDao();
     @Get('')
     @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
@@ -68,20 +72,20 @@ export class CertificationController {
     }
     }       
     
-    private parseRawData(item: any) {
-        if(!item) {
-            return item;
+    private async parseRawData(itemData: any) {
+        if(!itemData) {
+            return itemData;
         }
-        if(item.rawData &&  !item.rawDataParsed) {
-            const pageProps = item.rawData.props.pageProps;
+        if(itemData.rawData &&  !itemData.rawDataParsed) {
+            const pageProps = itemData.rawData.props.pageProps;
             //const collegeData = pageProps.collegeData;
             const pageData = pageProps.pageData;
             //const about = collegeData.about;
-            item.currencyCode = pageData.currencyCode;
+            itemData.currencyCode = pageData.currencyCode;
             const compensation = pageData.compensation;
             const byDimension = pageData.byDimension;
-            item.reviews = pageProps.reviews;
-            item.compensation = {
+            itemData.reviews = pageProps.reviews;
+            itemData.compensation = {
                 salary: {
                     profileCount: compensation.salary ? compensation.salary.profileCount : 0,
                     min: compensation.salary ? (compensation.salary['10'] ? compensation.salary['10'] : compensation.salary['25']) : 0,
@@ -132,7 +136,7 @@ export class CertificationController {
             };
             */
            
-            item.byDimension = {
+            itemData.byDimension = {
                 experience: {
                     entryLevel: {
                         profileCount: 0,
@@ -180,11 +184,12 @@ export class CertificationController {
                     }
                 },                
                 salaryByJob: [],
+                hourlyRateByJob: [],
                 salaryByDegree: [],
-                hourlyRateByEmployer: [],
-                salaryByEmployer:[]
+                hourlyRateByEmployer: []
             };
 
+            const promiseAll: any = [];
             if(byDimension) {
                 if(byDimension['Average Salary by Gender'] || byDimension['Average Hourly Rate by Gender']) {
                     const byGenderItems = 
@@ -195,19 +200,19 @@ export class CertificationController {
                         for(let i = 0; i < byGenderItems.length;i++) {
                             const byGenderItem = byGenderItems[i];
                             if(byGenderItem.name == 'Male') {
-                                item.byDimension.gender.male.profileCount = byGenderItem.profileCount;
+                                itemData.byDimension.gender.male.profileCount = byGenderItem.profileCount;
                                 if(byGenderItem.range) {
-                                    item.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                                    item.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                                    item.byDimension.gender.male.avg = byGenderItem.range['50'];
+                                    itemData.byDimension.gender.male.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    itemData.byDimension.gender.male.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    itemData.byDimension.gender.male.avg = byGenderItem.range['50'];
                                 }
                             } else 
                             if(byGenderItem.name == 'Female') {
-                                item.byDimension.gender.female.profileCount = byGenderItem.profileCount;
+                                itemData.byDimension.gender.female.profileCount = byGenderItem.profileCount;
                                 if(byGenderItem.range) {
-                                    item.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
-                                    item.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
-                                    item.byDimension.gender.female.avg = byGenderItem.range['50'];
+                                    itemData.byDimension.gender.female.min = byGenderItem.range['10'] ? byGenderItem.range['10'] : byGenderItem.range['25'];
+                                    itemData.byDimension.gender.female.max = byGenderItem.range['90'] ? byGenderItem.range['90'] : byGenderItem.range['75'];
+                                    itemData.byDimension.gender.female.avg = byGenderItem.range['50'];
                                 }
                             }
                         }
@@ -223,42 +228,42 @@ export class CertificationController {
                     for(let i = 0; i < byExperienceItems.length;i++) {
                         const byExperienceItem = byExperienceItems[i];
                         if(byExperienceItem.name == '10-19 years') {
-                            item.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
+                            itemData.byDimension.experience.lateCareer.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {
-                                item.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                item.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                item.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
+                                itemData.byDimension.experience.lateCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                itemData.byDimension.experience.lateCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                itemData.byDimension.experience.lateCareer.avg = byExperienceItem.range['50'];
                             }
                         } else 
                         if(byExperienceItem.name == '20 years or more') {
-                            item.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
+                            itemData.byDimension.experience.experienced.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {
-                                item.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                item.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                item.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
+                                itemData.byDimension.experience.experienced.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                itemData.byDimension.experience.experienced.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                itemData.byDimension.experience.experienced.avg = byExperienceItem.range['50'];
                             }
                         } else 
                         if(byExperienceItem.name == '1-4 years') {
-                            item.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
+                            itemData.byDimension.experience.earlyCareer.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {
-                                item.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                item.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                item.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
+                                itemData.byDimension.experience.earlyCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                itemData.byDimension.experience.earlyCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                itemData.byDimension.experience.earlyCareer.avg = byExperienceItem.range['50'];
                             }
                         } else 
                         if(byExperienceItem.name == '5-9 years') {
-                            item.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
+                            itemData.byDimension.experience.midCareer.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {
-                                item.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                item.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                item.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
+                                itemData.byDimension.experience.midCareer.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                itemData.byDimension.experience.midCareer.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                itemData.byDimension.experience.midCareer.avg = byExperienceItem.range['50'];
                             }
                         } else {
-                            item.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
+                            itemData.byDimension.experience.entryLevel.profileCount = byExperienceItem.profileCount;
                             if(byExperienceItem.range) {
-                                item.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
-                                item.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
-                                item.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];   
+                                itemData.byDimension.experience.entryLevel.min = byExperienceItem.range['10'] ? byExperienceItem.range['10'] : byExperienceItem.range['25'];
+                                itemData.byDimension.experience.entryLevel.max = byExperienceItem.range['90'] ? byExperienceItem.range['90'] : byExperienceItem.range['75'];
+                                itemData.byDimension.experience.entryLevel.avg = byExperienceItem.range['50'];   
                             }                         
                         }
                     } 
@@ -266,11 +271,9 @@ export class CertificationController {
     
             }
 
-            if(byDimension['Average Salary by Job'] || byDimension['Average Hourly Rate by Job']) {
+            if(byDimension['Average Salary by Job']) {
                 const salaryByJobItems = 
-                byDimension['Average Salary by Job'] ?
-                byDimension['Average Salary by Job']['rows'] :
-                byDimension['Average Hourly Rate by Job']['rows'];
+                byDimension['Average Salary by Job']['rows'];
                 if(salaryByJobItems && salaryByJobItems.length > 0) {
                     for(let i = 0; i < salaryByJobItems.length;i++) {
                         const salaryByJobItem = salaryByJobItems[i];
@@ -281,12 +284,36 @@ export class CertificationController {
                             min: salaryByJobItem.range['10'] ? salaryByJobItem.range['10'] : (salaryByJobItem.range['25'] ? salaryByJobItem.range['25'] : 0),
                             max: salaryByJobItem.range['90'] ? salaryByJobItem.range['90'] : (salaryByJobItem.range['75'] ? salaryByJobItem.range['75'] : 0)
                         }
-                        item.byDimension.salaryByJob.push(byDimensionItem);
+                        if(salaryByJobItem.url) {
+                            promiseAll.push(this.jobDao.fetchByUrl(salaryByJobItem.url));
+                        }
+                        itemData.byDimension.salaryByJob.push(byDimensionItem);
                     }
                 }  
             }
    
+            if(byDimension['Average Hourly Rate by Job']) {
+                const hourlyRateByJobItems = 
+                byDimension['Average Hourly Rate by Job']['rows'];
+                if(hourlyRateByJobItems && hourlyRateByJobItems.length > 0) {
+                    for(let i = 0; i < hourlyRateByJobItems.length;i++) {
+                        const hourlyRateByJobItem = hourlyRateByJobItems[i];
+                        const byDimensionItem = {
+                            name: hourlyRateByJobItem.name,
+                            url: hourlyRateByJobItem.url,
+                            avg: hourlyRateByJobItem.range['50'],
+                            min: hourlyRateByJobItem.range['10'] ? hourlyRateByJobItem.range['10'] : (hourlyRateByJobItem.range['25'] ? hourlyRateByJobItem.range['25'] : 0),
+                            max: hourlyRateByJobItem.range['90'] ? hourlyRateByJobItem.range['90'] : (hourlyRateByJobItem.range['75'] ? hourlyRateByJobItem.range['75'] : 0)
+                        }
+                        if(hourlyRateByJobItem.url) {
+                            promiseAll.push(this.jobDao.fetchByUrl(hourlyRateByJobItem.url));
+                        }
+                        itemData.byDimension.hourlyRateByJob.push(byDimensionItem);
+                    }
+                }  
+            }
             
+
             if(byDimension['Average Salary by Employer']) {
                 const salaryByEmployerItems = byDimension['Average Salary by Employer']['rows'];
                 if(salaryByEmployerItems && salaryByEmployerItems.length > 0) {
@@ -299,7 +326,10 @@ export class CertificationController {
                             min: salaryByEmployerItem.range['10'] ? salaryByEmployerItem.range['10'] : (salaryByEmployerItem.range['25'] ? salaryByEmployerItem.range['25'] : 0),
                             max: salaryByEmployerItem.range['90'] ? salaryByEmployerItem.range['90'] : (salaryByEmployerItem.range['75'] ? salaryByEmployerItem.range['75'] : 0)
                         }
-                        item.byDimension.salaryByEmployer.push(byDimensionItem);
+                        if(salaryByEmployerItem.url) {
+                            promiseAll.push(this.employerDao.fetchByUrl(salaryByEmployerItem.url));
+                        }
+                        itemData.byDimension.salaryByEmployer.push(byDimensionItem);
                     }
                 }  
             }
@@ -316,7 +346,10 @@ export class CertificationController {
                             min: hourlyRateByEmployerItem.range['10'] ? hourlyRateByEmployerItem.range['10'] : (hourlyRateByEmployerItem.range['25'] ? hourlyRateByEmployerItem.range['25'] : 0),
                             max: hourlyRateByEmployerItem.range['90'] ? hourlyRateByEmployerItem.range['90'] : (hourlyRateByEmployerItem.range['75'] ? hourlyRateByEmployerItem.range['75'] : 0)
                         }
-                        item.byDimension.hourlyRateByEmployer.push(byDimensionItem);
+                        if(hourlyRateByEmployerItem.url) {
+                            promiseAll.push(this.employerDao.fetchByUrl(hourlyRateByEmployerItem.url));
+                        }
+                        itemData.byDimension.hourlyRateByEmployer.push(byDimensionItem);
                     }
                 } 
             }
@@ -336,21 +369,83 @@ export class CertificationController {
                        min: relatedItem.range['10'] ? relatedItem.range['10'] : (relatedItem.range['25'] ? relatedItem.range['25'] : 0),
                        max: relatedItem.range['90'] ? relatedItem.range['90'] : (relatedItem.range['75'] ? relatedItem.range['75'] : 0)
                    }
-                   item.related.push(relatedItemChanged);
+                    if(relatedItem.url) {
+                        promiseAll.push(this.dao.fetchByUrl(relatedItem.url));
+                    }
+                    itemData.related.push(relatedItemChanged);
                }
             }  
+
+            const entities = await Promise.all(promiseAll);
+                
+            let entityIndex = 0;
+            for(let i = 0; i < itemData.byDimension.salaryByJob.length; i++) {
+                const item = itemData.byDimension.salaryByJob[i];
+                if(item.url) {
+                    if(entityIndex < entities.length) {
+                        const entity: any = entities[entityIndex++];
+                        if(entity) {
+                            item.job = entity._id;
+                        }
+                    }
+                }
+            }
+ 
+            for(let i = 0; i < itemData.byDimension.hourlyRateByJob.length; i++) {
+                const item = itemData.byDimension.hourlyRateByJob[i];
+                if(item.url) {
+                    if(entityIndex < entities.length) {
+                        const entity: any = entities[entityIndex++];
+                        if(entity) {
+                            item.job = entity._id;
+                        }
+                    }
+                }
+            }  
+
+            for(let i = 0; i < itemData.byDimension.salaryByEmployer.length; i++) {
+                const item = itemData.byDimension.salaryByEmployer[i];
+                if(item.url) {
+                    if(entityIndex < entities.length) {
+                        const entity: any = entities[entityIndex++];
+                        if(entity) {
+                            item.employer = entity._id;
+                        }
+                    }
+                }
+            }
+ 
+            for(let i = 0; i < itemData.byDimension.hourlyRateByEmployer.length; i++) {
+                const item = itemData.byDimension.hourlyRateByEmployer[i];
+                if(item.url) {
+                    if(entityIndex < entities.length) {
+                        const entity: any = entities[entityIndex++];
+                        if(entity) {
+                            item.employer = entity._id;
+                        }
+                    }
+                }
+            }  
+
+            for(let i = 0; i < itemData.related.length; i++) {
+                const item = itemData.related[i];
+                if(item.url) {
+                    if(entityIndex < entities.length) {
+                        const entity: any = entities[entityIndex++];
+                        if(entity) {
+                            item.certification = entity._id;
+                        }
+                    }
+                }
+            }  
             if(pageData.ratings && pageData.ratings['Job Satisfaction Overall']) {
-                item.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
+                itemData.ratings.jobSatisfaction = pageData.ratings['Job Satisfaction Overall'];
             }
 
-            
-
-            console.log('item.ratings', item.ratings);
-            console.log('item===', item);
         }
 
         
-        return item;
+        return itemData;
     }
 
     @Get('countryCode/:countryCode/slug/:slug')
@@ -362,8 +457,32 @@ export class CertificationController {
        slug = encodeURIComponent(slug);
 
        let item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
-       console.log('item in here===', item);
-       item = this.parseRawData(item);
+       if(item) {
+            if(!item.rawData) {
+                const url = item.url;
+                if(url) {
+                    const response = await fetch('https://www.payscale.com' + url);
+        
+                    const body = await response.text();
+                    
+                    const root = parse(body);
+                
+                    const nextDataNode = root.querySelector('#__NEXT_DATA__');
+                
+                    if(nextDataNode) {
+                        const dataText = nextDataNode.text;
+                        const rawData = JSON.parse(dataText);
+                        await this.dao.update(item._id, {rawData});
+                        item.rawData = rawData;
+                    }
+                }
+            }
+            if(item.rawData &&  !item.rawDataParsed) {
+                item = await this.parseRawData(item);
+                await this.dao.update(item?._id, item);
+                item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
+            }
+        } 
        return res.status(StatusCodes.OK).json(
         {
             success: true,
@@ -383,7 +502,7 @@ export class CertificationController {
     try {
         const id = req.params.id;
        let item = await this.dao.fetchByIdAndPopulate(id);
-       item = this.parseRawData(item);
+       item = await this.parseRawData(item);
        return res.status(StatusCodes.OK).json(
         {
             success: true,

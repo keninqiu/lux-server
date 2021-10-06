@@ -20,7 +20,8 @@ export interface ICertification {
             score: number
         }
     },
-    rawData?: any
+    rawData?: any,
+    rawDataParsed?: boolean
 }
 export interface Certification extends Document {
     name: string,
@@ -35,7 +36,8 @@ export interface Certification extends Document {
             score: number
         }
     },
-    rawData: any
+    rawData: any,
+    rawDataParsed: boolean
 }
 const CertificationSchema = new Schema<Certification>({
     name: String,
@@ -101,6 +103,10 @@ const CertificationSchema = new Schema<Certification>({
     }, 
     related: [
         {
+            certification: {
+                type: Schema.Types.ObjectId,
+                ref: 'Certification'
+            },
             name: String,
             url: String,
             min: Number,
@@ -158,6 +164,24 @@ const CertificationSchema = new Schema<Certification>({
         },  
         salaryByJob: [
             {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],
+        hourlyRateByJob: [
+            {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -168,6 +192,10 @@ const CertificationSchema = new Schema<Certification>({
         ],
         salaryByEmployer: [
             {
+                employer: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Employer'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -178,6 +206,10 @@ const CertificationSchema = new Schema<Certification>({
         ],
         hourlyRateByEmployer: [
             {
+                employer: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Employer'
+                },
                 name: String,
                 url: String,
                 profileCount: Number,
@@ -200,6 +232,7 @@ const CertificationSchema = new Schema<Certification>({
 
     },
     rawData: Object,
+    rawDataParsed: Boolean,
     updatedAt: {
         type: Date
     }

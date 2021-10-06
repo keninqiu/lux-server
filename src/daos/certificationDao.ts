@@ -63,6 +63,71 @@ export class CertificationDao {
                path: 'category',
                populate: 'country'
           }
+     )     
+     .populate('namet')
+     .populate(
+          {
+               path: 'related',
+               populate: {
+                    path: 'certification',
+                    select: 'namet',
+                    populate: {
+                         path: 'namet',
+                         select: 'zh'
+                    }
+               }               
+          }
+     )
+     .populate(
+          {
+               path: 'byDimension', 
+               populate: [
+                    {
+                         path: 'salaryByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'salaryByEmployer', 
+                         populate: {
+                              path: 'employer',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByEmployer', 
+                         populate: {
+                              path: 'employer',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    }                   
+               ]
+          }
      );
 
      if(!items || items.length == 0) {

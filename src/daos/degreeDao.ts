@@ -77,6 +77,49 @@ export class DegreeDao {
                path: 'category',
                populate: 'country'
           }
+     )
+     .populate('namet')
+     .populate(
+          {
+               path: 'related',
+               populate: {
+                    path: 'degree',
+                    select: 'namet',
+                    populate: {
+                         path: 'namet',
+                         select: 'zh'
+                    }
+               }               
+          }
+     )
+     .populate(
+          {
+               path: 'byDimension', 
+               populate: [
+                    {
+                         path: 'salaryByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    }                  
+               ]
+          }
      );
 
      console.log('items===', items);

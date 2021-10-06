@@ -14,7 +14,8 @@ export interface IDegree {
     url: string,
     slug?: string,
     salaryType?: string,
-    rawData?: any
+    rawData?: any,
+    rawDataParsed?: boolean
 }
 export interface Degree extends Document {
     name: string,
@@ -23,7 +24,8 @@ export interface Degree extends Document {
     slug: string,
     salaryType: string,
     category: Category,
-    rawData: any
+    rawData: any,
+    rawDataParsed: boolean
 }
 const DegreeSchema = new Schema<Degree>({
     name: String,
@@ -49,6 +51,7 @@ const DegreeSchema = new Schema<Degree>({
     slug: String,
     salaryType: String,
     rawData: Object,
+    rawDataParsed: Boolean,
     currencyCode: String,
     compensation: {
         bonus: {
@@ -148,11 +151,29 @@ const DegreeSchema = new Schema<Degree>({
                 max: Number,
                 avg: Number                
             }
+        ],        
+        hourlyRateByJob: [
+            {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
         ]
     },
 
     related: [
         {
+            degree: {
+                type: Schema.Types.ObjectId,
+                ref: 'Degree'
+            },            
             name: String,
             url: String,
             min: Number,
