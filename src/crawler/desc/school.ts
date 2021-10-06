@@ -12,7 +12,9 @@ export const start = async function() {
         const item = await dao.fetchOneByName(name);
         if(item) {
             const rawData = item.rawData;
+            console.log('rawData.props.pageProps===', rawData.props.pageProps);
             const pageData = rawData.props.pageProps.pageData;
+            console.log('pageData===', pageData);
             const about = pageData.about;
             
             if(about && about.abstract) {
