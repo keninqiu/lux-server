@@ -382,6 +382,7 @@ export class EmployerController {
 
            const entities = await Promise.all(promiseAll);
                 
+           console.log('entities===', entities);
            let entityIndex = 0;
            for(let i = 0; i < itemData.byDimension.salaryByJob.length; i++) {
                const item = itemData.byDimension.salaryByJob[i];
@@ -390,6 +391,7 @@ export class EmployerController {
                        const entity: any = entities[entityIndex++];
                        if(entity) {
                            item.job = entity._id;
+                           console.log('item.job===', item.job);
                        }
                    }
                }

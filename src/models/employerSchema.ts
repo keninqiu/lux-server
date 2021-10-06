@@ -424,6 +424,10 @@ const EmployerSchema = new Schema<Employer>({
 
     related: [
         {
+            employer: {
+                type: Schema.Types.ObjectId,
+                ref: 'Employer'
+            },
             name: String,
             url: String,
             min: Number,
