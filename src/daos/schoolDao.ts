@@ -21,6 +21,10 @@ export class SchoolDao {
      return await SchoolModel.find({name}).select('_id');
    }
 
+   public async fetchOneByName(name: string): Promise<School | null> {
+     return await SchoolModel.findOne({name});
+   }
+
    public async fetchByUrl(url: string) : Promise<School | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {
