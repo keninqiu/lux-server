@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 import * as distinct from './distinct';
 import * as desc from './desc';
+import * as translate from './translate';
 const setupDatabase = function() {
 
     const connString = Secret.db_conn;
@@ -14,7 +15,8 @@ const setupDatabase = function() {
 const main = async function() {
     setupDatabase();
     //await distinct.start();
-    await desc.start();
+    //await desc.start();
+    await translate.start();
     console.log('done');
 }
 

@@ -4,7 +4,7 @@ export class TranslateDao {
         return await TranslateModel.find({});
    }
    public async fetchAllUnTranslated(): Promise<Translate[]> {
-    return await TranslateModel.find({zh: { $exists: false } });
+    return await TranslateModel.find({zh: { $exists: false } }).limit(10);
   }
    public async fetchAllByType(type: string): Promise<Translate[]> {
      return await TranslateModel.find({type});
