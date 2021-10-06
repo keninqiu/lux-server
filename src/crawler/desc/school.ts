@@ -17,6 +17,7 @@ export const start = async function() {
             //console.log('pageData===', pageData);
             const collegeData = pageData.collegeData;
             
+            console.log('collegeData===', collegeData);
             if(collegeData && collegeData.about && collegeData.about.abstract) {
 
                 const updated = await translateDao.update(translate._id, {desc: collegeData.about.abstract});
