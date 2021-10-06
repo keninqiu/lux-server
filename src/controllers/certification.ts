@@ -7,6 +7,7 @@ import { ICustomRequest } from '../interfaces/custom-request';
 import { parse, HTMLElement } from 'node-html-parser';
 import { JobDao } from "../daos/jobDao";
 import { EmployerDao } from '../daos/employerDao';
+import fetch from 'node-fetch';
 
 @Controller('api/certification')
 export class CertificationController {
@@ -185,11 +186,12 @@ export class CertificationController {
                 },                
                 salaryByJob: [],
                 hourlyRateByJob: [],
-                salaryByDegree: [],
+                salaryByEmployer: [],
                 hourlyRateByEmployer: []
             };
 
             const promiseAll: any = [];
+            console.log('111');
             if(byDimension) {
                 if(byDimension['Average Salary by Gender'] || byDimension['Average Hourly Rate by Gender']) {
                     const byGenderItems = 
@@ -218,7 +220,7 @@ export class CertificationController {
                         }
                     }
                 }
-
+                console.log('222');
             if(byDimension['Average Salary by Years_Experience Range'] || byDimension['Average Hourly Rate by Years_Experience Range']) {
                 const byExperienceItems = 
                 byDimension['Average Salary by Years_Experience Range'] ?
@@ -270,7 +272,7 @@ export class CertificationController {
                 }
     
             }
-
+            console.log('333');
             if(byDimension['Average Salary by Job']) {
                 const salaryByJobItems = 
                 byDimension['Average Salary by Job']['rows'];
@@ -291,7 +293,7 @@ export class CertificationController {
                     }
                 }  
             }
-   
+            console.log('444');
             if(byDimension['Average Hourly Rate by Job']) {
                 const hourlyRateByJobItems = 
                 byDimension['Average Hourly Rate by Job']['rows'];
@@ -313,7 +315,7 @@ export class CertificationController {
                 }  
             }
             
-
+            console.log('555');
             if(byDimension['Average Salary by Employer']) {
                 const salaryByEmployerItems = byDimension['Average Salary by Employer']['rows'];
                 if(salaryByEmployerItems && salaryByEmployerItems.length > 0) {
@@ -333,7 +335,7 @@ export class CertificationController {
                     }
                 }  
             }
-               
+            console.log('666');   
             if(byDimension['Average Hourly Rate by Employer']) {
                 const hourlyRateByEmployerItems = byDimension['Average Hourly Rate by Employer']['rows'];
                 if(hourlyRateByEmployerItems && hourlyRateByEmployerItems.length > 0) {
@@ -356,7 +358,7 @@ export class CertificationController {
             }
 
 
-
+            console.log('777');
 
             const related = pageData.related;       
             if(related && related.length > 0) {
@@ -384,8 +386,11 @@ export class CertificationController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.salaryByJob.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -396,8 +401,11 @@ export class CertificationController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.job = entity._id;
+                        } else {
+                            itemData.byDimension.hourlyRateByJob.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -408,8 +416,11 @@ export class CertificationController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.employer = entity._id;
+                        } else {
+                            itemData.byDimension.salaryByEmployer.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -420,8 +431,11 @@ export class CertificationController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.employer = entity._id;
+                        } else {
+                            itemData.byDimension.hourlyRateByEmployer.splice(i, 1); 
+                            i --;
                         }
                     }
                 }
@@ -432,8 +446,12 @@ export class CertificationController {
                 if(item.url) {
                     if(entityIndex < entities.length) {
                         const entity: any = entities[entityIndex++];
-                        if(entity) {
+                        if(entity && entity._id) {
                             item.certification = entity._id;
+                        } else {
+                            console.log('the certification removed');
+                            itemData.related.splice(i, 1); 
+                            i --;
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
 import { parse, HTMLElement } from 'node-html-parser';
 import { JobDao } from "../daos/jobDao";
+import fetch from 'node-fetch';
 
 @Controller('api/skill')
 export class SkillController {

@@ -20,7 +20,7 @@ export const start = async function() {
 
     
     const items = body.data;
-    
+    console.log('items.length=', items.length);
     for(let i = 0; i < items.length; i++) {
         console.log('i===', i);
         const item = items[i];
