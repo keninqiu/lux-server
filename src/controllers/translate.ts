@@ -27,6 +27,23 @@ export class TranslateController {
     }
     }  
     
+    @Get('all/untranslated')
+    private async fetchAllUntranslated(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllUnTranslated();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
 
     @Get('type/:type')
     @Middleware([authAdmin])
