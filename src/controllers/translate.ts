@@ -10,7 +10,6 @@ export class TranslateController {
     private dao = new TranslateDao();
 
     @Get('')
-    @Middleware([authAdmin])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAll();
@@ -70,7 +69,6 @@ export class TranslateController {
 
 
     @Put(':id')
-    @Middleware([authAdmin])
     private async update(req: Request, res: Response) {
         
         try {
