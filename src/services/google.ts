@@ -10,7 +10,6 @@ export class GoogleService {
         //text = text.replace(/\)/g, '%29');
         text = text.replace(/\//g, '%2F');
         text = text.replace(/\'/g, "\\'");
-        console.log('final text=', text);
         return text;
     }
     ////A%20logistics%20coordinator%20may%20be%20in%20charge%20of%20overseeing%20a%20wide%20variety%20of%20events%20and%20projects.

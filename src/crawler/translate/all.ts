@@ -20,13 +20,13 @@ export const start = async function() {
 
     
     const items = body.data;
-    console.log('items===', items.length);
+    
     for(let i = 0; i < items.length; i++) {
+        console.log('i===', i);
         const item = items[i];
         const en = item.en;
         const desc = item.desc;
         const zh = googleServ.translate(en);
-        console.log('zh===', zh);
         let desczh = '';
         if(desc) {
             desczh = googleServ.translate(desc);

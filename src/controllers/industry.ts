@@ -5,7 +5,6 @@ import { IndustryDao } from "../daos/industryDao";
 import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
 import { parse, HTMLElement } from 'node-html-parser';
-import { JobDao } from "../daos/jobDao";
 
 @Controller('api/industry')
 export class IndustryController {

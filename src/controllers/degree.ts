@@ -6,7 +6,7 @@ import authAdmin from '../middlewares/auth-admin';
 import { ICustomRequest } from '../interfaces/custom-request';
 import fetch from 'node-fetch';
 import { parse, HTMLElement } from 'node-html-parser';
-import { JobDao } from 'src/daos/jobDao';
+import { JobDao } from '../daos/jobDao';
 
 @Controller('api/degree')
 export class DegreeController {
