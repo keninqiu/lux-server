@@ -28,8 +28,10 @@ export class SchoolDao {
    public async fetchByUrl(url: string) : Promise<School | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {
+          url = url.substring(0, url.indexOf('/Salary')) + '/Salary';
           anotherUrl = url.replace('/Salary', '/Hourly_Rate');
      } else {
+          url = url.substring(0, url.indexOf('/Hourly_Rate')) + '/Hourly_Rate';
           anotherUrl = url.replace('/Hourly_Rate', '/Salary');
      }
      return await SchoolModel.findOne({$and: [{duplicatedWith: null},{$or: [{url: url},{url: anotherUrl}]}]}).select('_id name');

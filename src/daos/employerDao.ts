@@ -26,8 +26,10 @@ export class EmployerDao {
    public async fetchByUrl(url: string) : Promise<Employer | null> {
      let anotherUrl = '';
      if(url.indexOf('/Salary') > 0) {
+          url = url.substring(0, url.indexOf('/Salary')) + '/Salary';
           anotherUrl = url.replace('/Salary', '/Hourly_Rate');
      } else {
+          url = url.substring(0, url.indexOf('/Hourly_Rate')) + '/Hourly_Rate';
           anotherUrl = url.replace('/Hourly_Rate', '/Salary');
      }
      return await EmployerModel.findOne({$and: [{duplicatedWith: null},{$or: [{url: url},{url: anotherUrl}]}]}).select('_id name');
@@ -63,7 +65,71 @@ export class EmployerDao {
                path: 'category',
                populate: 'country'
           }
-     ).populate('namet');
+     ).populate('namet')
+     .populate(
+          {
+               path: 'related',
+               populate: {
+                    path: 'employer',
+                    select: 'namet',
+                    populate: {
+                         path: 'namet',
+                         select: 'zh'
+                    }
+               }               
+          }
+     )
+     .populate(
+          {
+               path: 'byDimension', 
+               populate: [
+                    {
+                         path: 'salaryByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByJob', 
+                         populate: {
+                              path: 'job',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'salaryByDegree', 
+                         populate: {
+                              path: 'degree',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    },
+                    {
+                         path: 'hourlyRateByDegree', 
+                         populate: {
+                              path: 'degree',
+                              select: 'namet',
+                              populate: {
+                                   path: 'namet',
+                                   select: 'zh'
+                              }
+                         }
+                    }                   
+               ]
+          }
+     );
 
      if(!items || items.length == 0) {
           return null;

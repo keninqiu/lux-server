@@ -283,6 +283,7 @@ export class EmployerController {
                                 max: salaryByJobItem.range['90'] ? salaryByJobItem.range['90'] : (salaryByJobItem.range['75'] ? salaryByJobItem.range['75'] : 0)
                             }
                             if(salaryByJobItem.url) {
+                                console.log('url for job=', salaryByJobItem.url);
                                 promiseAll.push(this.jobDao.fetchByUrl(salaryByJobItem.url));
                             }
                             itemData.byDimension.salaryByJob.push(byDimensionItem);
@@ -304,6 +305,7 @@ export class EmployerController {
                                 max: hourlyRateByJobItem.range['90'] ? hourlyRateByJobItem.range['90'] : (hourlyRateByJobItem.range['75'] ? hourlyRateByJobItem.range['75'] : 0)
                             }
                             if(hourlyRateByJobItem.url) {
+                                console.log('hourlyRateByJobItem for job=', hourlyRateByJobItem.url);
                                 promiseAll.push(this.jobDao.fetchByUrl(hourlyRateByJobItem.url));
                             }
                             itemData.byDimension.hourlyRateByJob.push(byDimensionItem);
@@ -481,7 +483,12 @@ export class EmployerController {
                 }
             }
         }
-        item = await this.parseRawData(item);
+
+        if(item.rawData &&  !item.rawDataParsed) {
+            item = await this.parseRawData(item);
+            await this.dao.update(item?._id, item);
+            item = await this.dao.fetchByCountryCodeAndySlugAndPopulate(countryCode, slug);
+        }
        }       
 
        return res.status(StatusCodes.OK).json(

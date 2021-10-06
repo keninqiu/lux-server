@@ -103,7 +103,8 @@ export interface IEmployer {
             updated: Date
         }
     ],
-    rawData?: any
+    rawData?: any,
+    rawDataParsed?: boolean
 }
 export interface Employer extends Document {
     name: string,
@@ -201,7 +202,8 @@ export interface Employer extends Document {
             updated: Date
         }
     ],
-    rawData: any
+    rawData: any,
+    rawDataParsed: boolean
 }
 const EmployerSchema = new Schema<Employer>({
     name: String,
@@ -214,6 +216,7 @@ const EmployerSchema = new Schema<Employer>({
     currencyCode: String,
     salaryType: String,
     rawData: Object,
+    rawDataParsed: Boolean,
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
