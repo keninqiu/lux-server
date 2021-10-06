@@ -63,7 +63,7 @@ export class EmployerDao {
                path: 'category',
                populate: 'country'
           }
-     );
+     ).populate('namet');
 
      if(!items || items.length == 0) {
           return null;

@@ -377,8 +377,36 @@ const EmployerSchema = new Schema<Employer>({
                 max: Number,
                 avg: Number                
             }
-        ],        
+        ],    
+        hourlyRateByJob: [
+            {
+                job: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Job'
+                },
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],      
         salaryByDegree: [
+            {
+                degree: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Degree'
+                },
+                name: String,
+                url: String,
+                profileCount: Number,
+                min: Number,
+                max: Number,
+                avg: Number                
+            }
+        ],      
+        hourlyRateByDegree: [
             {
                 degree: {
                     type: Schema.Types.ObjectId,
