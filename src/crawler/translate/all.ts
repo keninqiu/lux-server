@@ -25,20 +25,23 @@ export const start = async function() {
         const item = items[i];
         const en = item.en;
         const desc = item.desc;
-        const zh = await googleServ.translate(en);
+        const zh = googleServ.translate(en);
+        console.log('zh===', zh);
         let desczh = '';
         if(desc) {
-            desczh = await googleServ.translate(desc);
+            desczh = googleServ.translate(desc);
+            console.log('desc==', desczh);
         }
 
         const newData = {
             zh,
             desczh
         }
+        //console.log('newData==', newData);
         const updatedUrl = "http://luxs.luxacademy.cn/api/translate/" + item._id;
 
         const response = await fetch(updatedUrl, {
-            method: 'post',
+            method: 'put',
             body: JSON.stringify(newData),
             headers: {'Content-Type': 'application/json'}
         });
