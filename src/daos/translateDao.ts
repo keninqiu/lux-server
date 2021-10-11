@@ -22,8 +22,12 @@ export class TranslateDao {
          .skip((pageNum - 1) * pageSize);
   }
 
+  public async fetchAllUntranslatedByType(type: string): Promise<Translate[]> {
+    return await TranslateModel.find({ type, zh: { $exists: false } });
+  }
+
    public async fetchAllUnTranslated(): Promise<Translate[]> {
-    return await TranslateModel.find({type: 'State', zh: { $exists: false } });
+    return await TranslateModel.find({ zh: { $exists: false } });
   }
    public async fetchAllByType(type: string): Promise<Translate[]> {
      return await TranslateModel.find({type});

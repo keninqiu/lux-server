@@ -27,6 +27,43 @@ export class TranslateController {
     }
     }  
     
+    @Get('all/untranslated')
+    private async fetchAllUntranslated(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+
+       const items = await this.dao.fetchAllUnTranslated();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
+    @Get('all/untranslated/:type')
+    private async fetchAllUntranslatedByType(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const type = req.params.type;
+       const items = await this.dao.fetchAllUntranslatedByType(type);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
 
     @Get(':type/count')
     private async fetchCountByType(req: ICustomRequest, res: Response): Promise<Response> {
@@ -112,23 +149,7 @@ export class TranslateController {
 
 
 
-    @Get('all/untranslated')
-    private async fetchAllUntranslated(req: ICustomRequest, res: Response): Promise<Response> {
-    try {
-       const items = await this.dao.fetchAllUnTranslated();
-       return res.status(StatusCodes.OK).json(
-        {
-            success: true,
-            data: items
-        }           
-       );
-    } catch (err: any) {
-       return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: err.message,
-    });
-    }
-    }  
+
 
     @Get('type/:type')
     @Middleware([authAdmin])
