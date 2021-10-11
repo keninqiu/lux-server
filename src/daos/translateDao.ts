@@ -23,7 +23,7 @@ export class TranslateDao {
   }
 
    public async fetchAllUnTranslated(): Promise<Translate[]> {
-    return await TranslateModel.find({zh: { $exists: false } });
+    return await TranslateModel.find({type: 'State', zh: { $exists: false } });
   }
    public async fetchAllByType(type: string): Promise<Translate[]> {
      return await TranslateModel.find({type});
