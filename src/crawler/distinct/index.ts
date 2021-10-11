@@ -1,6 +1,6 @@
 import * as job from './job';
 import * as country from './country';
-import * as state from './country';
+import * as state from './state';
 import * as city from './city';
 import * as category from './category';
 import * as certification from './certification';
