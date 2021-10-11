@@ -7,6 +7,15 @@ export class EmployerDao {
         return await EmployerModel.find({}).select('name url category');
    }
 
+   public async fetchCount(): Promise<number> {
+     return await EmployerModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchEmployers(pageNum: number, pageSize: number): Promise<Employer[]> {
+          return await EmployerModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).sort('name url category').populate('namet').sort('name namet url');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<Employer[]> {
      return await EmployerModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

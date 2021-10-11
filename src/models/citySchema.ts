@@ -31,7 +31,7 @@ const CitySchema = new Schema<City>({
     code: String,
     state: {
         type: Schema.Types.ObjectId,
-        ref: 'Country'
+        ref: 'State'
     },
     url: String,
     rawData: Object,

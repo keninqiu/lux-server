@@ -28,6 +28,45 @@ export class StateController {
     }
     }  
     
+
+    @Get('count')
+    private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const count = await this.dao.fetchCount();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: count
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
+    @Get(':pageNum/:pageSize')
+    private async fetchStates(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const pageNum = Number(req.params.pageNum);
+       const pageSize = Number(req.params.pageSize);
+       const items = await this.dao.fetchStates(pageNum, pageSize);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get('country/:id')
     private async fetchAllByCountry(req: ICustomRequest, res: Response): Promise<Response> {
     try {

@@ -6,6 +6,16 @@ export class DegreeDao {
    public async fetchAll(): Promise<Degree[]> {
         return await DegreeModel.find({}).select('name url slug category');
    }
+
+   public async fetchCount(): Promise<number> {
+     return await DegreeModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchDegrees(pageNum: number, pageSize: number): Promise<Degree[]> {
+          return await DegreeModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').sort('name namet url');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<Degree[]> {
      return await DegreeModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

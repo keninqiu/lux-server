@@ -6,6 +6,16 @@ export class CertificationDao {
    public async fetchAll(): Promise<Certification[]> {
         return await CertificationModel.find({}).select('name url category');
    }
+
+   public async fetchCount(): Promise<number> {
+     return await CertificationModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchCertifications(pageNum: number, pageSize: number): Promise<Certification[]> {
+          return await CertificationModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').sort('name namet url');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<Certification[]> {
      return await CertificationModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

@@ -3,6 +3,16 @@ export class CountryDao {
    public async fetchAll(): Promise<Country[]> {
         return await CountryModel.find({}).populate('namet').select('name namet code url').sort('name');
    }
+
+   public async fetchCount(): Promise<number> {
+        return await CountryModel.find({}).count();
+   }
+
+   public async fetchCountries(pageNum: number, pageSize: number): Promise<Country[]> {
+        return await CountryModel.find({}).limit(pageSize)
+        .skip((pageNum - 1) * pageSize).populate('namet').select('name namet code url').sort('name');
+   }
+
    public async fetchById(id: string): Promise<Country | null> {
         return await CountryModel.findById(id);
    }

@@ -27,6 +27,91 @@ export class TranslateController {
     }
     }  
     
+
+    @Get(':type/count')
+    private async fetchCountByType(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        const type = req.params.type;
+        console.log('type===', type);
+       const count = await this.dao.fetchCountByType(type);
+       console.log('countr=', count);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: count
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+    
+    @Get('count')
+    private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const count = await this.dao.fetchCount();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: count
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
+    @Get(':pageNum/:pageSize')
+    private async fetchTranslates(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const pageNum = Number(req.params.pageNum);
+       const pageSize = Number(req.params.pageSize);
+       const items = await this.dao.fetchTranslates(pageNum, pageSize);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
+
+
+    @Get(':type/:pageNum/:pageSize')
+    private async fetchCountries(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+        const type = req.params.type;
+       const pageNum = Number(req.params.pageNum);
+       const pageSize = Number(req.params.pageSize);
+       const items = await this.dao.fetchTranslatesByType(type, pageNum, pageSize);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
+
+
     @Get('all/untranslated')
     private async fetchAllUntranslated(req: ICustomRequest, res: Response): Promise<Response> {
     try {

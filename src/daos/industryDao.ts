@@ -6,6 +6,16 @@ export class IndustryDao {
    public async fetchAll(): Promise<Industry[]> {
         return await IndustryModel.find({}).select('name url category');
    }
+
+   public async fetchCount(): Promise<number> {
+     return await IndustryModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchIndustries(pageNum: number, pageSize: number): Promise<Industry[]> {
+          return await IndustryModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).sort('name url category').populate('namet').sort('name namet url');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<Industry[]> {
      return await IndustryModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

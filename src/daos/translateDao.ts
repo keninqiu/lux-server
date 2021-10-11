@@ -3,6 +3,25 @@ export class TranslateDao {
    public async fetchAll(): Promise<Translate[]> {
         return await TranslateModel.find({});
    }
+
+   public async fetchCount(): Promise<number> {
+    return await TranslateModel.find({}).count();
+  }
+
+  public async fetchTranslates(pageNum: number, pageSize: number): Promise<Translate[]> {
+         return await TranslateModel.find({}).limit(pageSize)
+         .skip((pageNum - 1) * pageSize);
+  }
+
+  public async fetchCountByType(type: string): Promise<number> {
+    return await TranslateModel.find({type}).count();
+  }
+
+  public async fetchTranslatesByType(type: string, pageNum: number, pageSize: number): Promise<Translate[]> {
+         return await TranslateModel.find({type}).limit(pageSize)
+         .skip((pageNum - 1) * pageSize);
+  }
+
    public async fetchAllUnTranslated(): Promise<Translate[]> {
     return await TranslateModel.find({zh: { $exists: false } });
   }

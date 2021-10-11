@@ -6,6 +6,16 @@ export class JobDao {
         return await JobModel.find({}).select('name url category');
    }
 
+   public async fetchCount(): Promise<number> {
+     return await JobModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchJobs(pageNum: number, pageSize: number): Promise<Job[]> {
+          return await JobModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).sort('name namet url').populate('namet').sort('name namet url');
+   }
+
+
    public async fetchDistinct(): Promise<Job[]> {
         return await JobModel.distinct('name');
    }

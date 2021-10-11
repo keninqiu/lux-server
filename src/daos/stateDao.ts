@@ -4,6 +4,15 @@ export class StateDao {
         return await StateModel.find({}).populate('namet').select('name namet country url').sort('name');
    }
 
+   public async fetchCount(): Promise<number> {
+     return await StateModel.find({}).count();
+   }
+
+   public async fetchStates(pageNum: number, pageSize: number): Promise<State[]> {
+          return await StateModel.find({}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').populate('country').sort('name namet url country');
+   }
+
    public async fetchDistinct(): Promise<State[]> {
      return await StateModel.distinct('name');
    }

@@ -5,6 +5,15 @@ export class CategoryDao {
         return await CategoryModel.find({}).populate('namet').sort('name');
    }
 
+   public async fetchCount(): Promise<number> {
+     return await CategoryModel.find({}).count();
+   }
+
+   public async fetchCategories(pageNum: number, pageSize: number): Promise<Category[]> {
+          return await CategoryModel.find({}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').sort('name');
+   }
+
    public async fetchAllWithoutRawData(): Promise<Category[]> {
      return await CategoryModel.find({rawData: null}).select('name url');
    }

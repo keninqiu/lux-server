@@ -34,6 +34,45 @@ export class SchoolController {
     }
     }       
 
+
+    @Get('count')
+    private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const count = await this.dao.fetchCount();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: count
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
+
+    @Get(':pageNum/:pageSize')
+    private async fetchSchools(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const pageNum = Number(req.params.pageNum);
+       const pageSize = Number(req.params.pageSize);
+       const items = await this.dao.fetchSchools(pageNum, pageSize);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get('all/withoutDuplicate')
     @Middleware([authAdmin])
     private async fetchAllWithoutDuplicated(req: ICustomRequest, res: Response): Promise<Response> {

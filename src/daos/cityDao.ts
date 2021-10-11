@@ -4,6 +4,15 @@ export class CityDao {
         return await CityModel.find({}).populate('namet').select('name namet state url');
    }
 
+   public async fetchCount(): Promise<number> {
+     return await CityModel.find({}).count();
+   }
+
+   public async fetchCities(pageNum: number, pageSize: number): Promise<City[]> {
+          return await CityModel.find({}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').populate('state').sort('name namet url category');
+   }
+
    public async fetchDistinct(): Promise<City[]> {
      return await CityModel.distinct('name');
    }

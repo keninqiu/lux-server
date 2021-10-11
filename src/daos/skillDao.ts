@@ -6,6 +6,16 @@ export class SkillDao {
    public async fetchAll(): Promise<Skill[]> {
         return await SkillModel.find({}).select('name url category');
    }
+
+   public async fetchCount(): Promise<number> {
+     return await SkillModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchSkills(pageNum: number, pageSize: number): Promise<Skill[]> {
+          return await SkillModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').sort('name namet url');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<Skill[]> {
      return await SkillModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

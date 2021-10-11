@@ -5,6 +5,16 @@ export class SchoolDao {
    public async fetchAll(): Promise<School[]> {
         return await SchoolModel.find({}).select('name slug category url');
    }
+
+   public async fetchCount(): Promise<number> {
+     return await SchoolModel.find({duplicatedWith: null}).count();
+   }
+
+   public async fetchSchools(pageNum: number, pageSize: number): Promise<School[]> {
+          return await SchoolModel.find({duplicatedWith: null}).limit(pageSize)
+          .skip((pageNum - 1) * pageSize).populate('namet').sort('name url category');
+   }
+
    public async fetchAllWithoutDuplicate(): Promise<School[]> {
      return await SchoolModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }
