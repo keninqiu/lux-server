@@ -14,7 +14,7 @@ export const start = async function() {
     //const translated = googleServ.translate('Welding Level "C" Certificates');
     //console.log('translated==', translated);
 
-    const url = 'http://luxs.luxacademy.cn/api/translate/all/untranslated/State';
+    const url = 'http://luxs.luxacademy.cn/api/translate/all/untranslated/Category';
     const response = await fetch(url);
     const body = await response.json();
 

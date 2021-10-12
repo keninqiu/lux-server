@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 const querystring = require('querystring');
 export class GoogleService {
     queryString(text: any) {
-
+        text = text.replace(/&/g, 'and');
         text = text.replace(/\r\n/g, '%5C%5Cn');
         text = text.replace(/ /g, '%20');
         text = text.replace(/,/g, '%2C');
