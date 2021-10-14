@@ -11,6 +11,10 @@ export class CertificationDao {
      return await CertificationModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).limit(10);
    }
 
+   public async fetchCountNotParsed() : Promise<number> {
+     return await CertificationModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).count();
+   } 
+
    public async fetchCount(): Promise<number> {
      return await CertificationModel.find({duplicatedWith: null}).count();
    }

@@ -11,6 +11,10 @@ export class DegreeDao {
      return await DegreeModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
+   public async fetchCountNotParsed() : Promise<number> {
+     return await DegreeModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).count();
+   } 
+
    public async fetchCount(): Promise<number> {
      return await DegreeModel.find({duplicatedWith: null}).count();
    }

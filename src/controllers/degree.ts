@@ -54,6 +54,24 @@ export class DegreeController {
     }
     }  
 
+    @Get('count/notparsed')
+    private async fetchCountNotParsed(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const count = await this.dao.fetchCountNotParsed();
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: count
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
+
     @Get('count')
     private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
     try {

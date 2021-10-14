@@ -11,6 +11,10 @@ export class SkillDao {
      return await SkillModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
+   public async fetchCountNotParsed() : Promise<number> {
+     return await SkillModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).count();
+   } 
+
    public async fetchCount(): Promise<number> {
      return await SkillModel.find({duplicatedWith: null}).count();
    }
