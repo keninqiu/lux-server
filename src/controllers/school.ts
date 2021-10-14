@@ -35,7 +35,6 @@ export class SchoolController {
     }       
 
     @Get('notparsed')
-    @Middleware([authAdmin])
     private async fetchAllNotParsed(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAllNotParsed();

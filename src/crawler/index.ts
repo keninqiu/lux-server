@@ -10,6 +10,7 @@ import * as popular from './popular';
 import * as duplicate from './duplicate';
 import * as translate from './translate';
 import * as distinct from './distinct';
+import * as parse from './parse';
 import * as mongoose from 'mongoose';
 import { Secret } from '../config/secret';
 
@@ -35,7 +36,8 @@ const main = async function() {
     //await popular.start();
     //await duplicate.start();
     //await translate.start();
-    await distinct.start();
+    //await distinct.start();
+    await parse.start();
     console.log('done');
 }
 
