@@ -7,6 +7,10 @@ export class SkillDao {
         return await SkillModel.find({}).select('name url category');
    }
 
+   public async fetchAllNotParsed(): Promise<Skill[]> {
+     return await SkillModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await SkillModel.find({duplicatedWith: null}).count();
    }
@@ -61,7 +65,7 @@ export class SkillDao {
    }   
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Skill | null> {
-     const items = await SkillModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const items = await SkillModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

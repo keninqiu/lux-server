@@ -208,6 +208,7 @@ export class SchoolController {
             return itemData;
         }
         if(itemData.rawData &&  !itemData.rawDataParsed) {
+            itemData.rawDataParsed = true;
             const pageProps = itemData.rawData.props.pageProps;
             const collegeData = pageProps.collegeData;
             const pageData = pageProps.pageData;

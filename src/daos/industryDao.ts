@@ -7,6 +7,10 @@ export class IndustryDao {
         return await IndustryModel.find({}).select('name url category');
    }
 
+   public async fetchAllNotParsed(): Promise<Industry[]> {
+     return await IndustryModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await IndustryModel.find({duplicatedWith: null}).count();
    }
@@ -64,7 +68,7 @@ export class IndustryDao {
    }
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Industry | null> {
-     const items = await IndustryModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const items = await IndustryModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

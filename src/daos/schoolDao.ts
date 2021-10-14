@@ -7,7 +7,7 @@ export class SchoolDao {
    }
 
    public async fetchAllNotParsed(): Promise<School[]> {
-     return await SchoolModel.find({$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]}).select('name slug rawDataParsed rawData').limit(100);
+     return await SchoolModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
    }
 
    public async fetchCount(): Promise<number> {
@@ -96,7 +96,7 @@ export class SchoolDao {
     }
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<School | null> {
-     const schools = await SchoolModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const schools = await SchoolModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

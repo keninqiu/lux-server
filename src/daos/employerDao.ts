@@ -7,6 +7,10 @@ export class EmployerDao {
         return await EmployerModel.find({}).select('name url category');
    }
 
+   public async fetchAllNotParsed(): Promise<Employer[]> {
+     return await EmployerModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await EmployerModel.find({duplicatedWith: null}).count();
    }
@@ -69,7 +73,7 @@ export class EmployerDao {
    }
    
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Employer | null> {
-     const items = await EmployerModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const items = await EmployerModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

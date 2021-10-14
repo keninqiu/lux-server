@@ -7,6 +7,10 @@ export class CertificationDao {
         return await CertificationModel.find({}).select('name url category');
    }
 
+   public async fetchAllNotParsed(): Promise<Certification[]> {
+     return await CertificationModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await CertificationModel.find({duplicatedWith: null}).count();
    }
@@ -68,7 +72,7 @@ export class CertificationDao {
    }
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Certification | null> {
-     const items = await CertificationModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const items = await CertificationModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

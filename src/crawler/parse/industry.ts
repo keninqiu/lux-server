@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 export const start = async function() {
     while(true) {
 
-        const url = 'http://luxs.luxacademy.cn/api/school/notparsed';
+        const url = 'http://luxs.luxacademy.cn/api/industry/notparsed';
         console.log('url==', url);
         const response = await fetch(url);
         

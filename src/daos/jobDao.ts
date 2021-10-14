@@ -6,6 +6,10 @@ export class JobDao {
         return await JobModel.find({}).select('name url category');
    }
 
+   public async fetchAllNotParsed(): Promise<Job[]> {
+     return await JobModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await JobModel.find({duplicatedWith: null}).count();
    }
@@ -88,7 +92,7 @@ export class JobDao {
     }
 
     public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Job | null> {
-     const jobs = await JobModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const jobs = await JobModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

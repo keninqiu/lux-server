@@ -7,6 +7,10 @@ export class DegreeDao {
         return await DegreeModel.find({}).select('name url slug category');
    }
 
+   public async fetchAllNotParsed(): Promise<Degree[]> {
+     return await DegreeModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await DegreeModel.find({duplicatedWith: null}).count();
    }
@@ -82,7 +86,7 @@ export class DegreeDao {
    }
 
    public async fetchByCountryCodeAndySlugAndPopulate(countryCode: string, slug: string): Promise<Degree | null> {
-     const items = await DegreeModel.find({$or: [{slug: slug}, {name: slug}]}).populate(
+     const items = await DegreeModel.find({$and: [{duplicatedWith: null},{$or: [{slug: slug}, {name: slug}]}]}).populate(
           {
                path: 'category',
                populate: 'country'

@@ -31,6 +31,28 @@ export class DegreeController {
     }
     }  
   
+    @Get('notparsed')
+    private async fetchAllNotParsed(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const items = await this.dao.fetchAllNotParsed();
+       for(let i = 0; i < items.length; i++) {
+            let item = items[i];
+            item = await this.parseRawData(item);
+            await this.dao.update(item?._id, item);
+       }
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    }  
 
     @Get('count')
     private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
@@ -135,6 +157,7 @@ export class DegreeController {
             return itemData;
         }
         if(itemData.rawData &&  !itemData.rawDataParsed) {
+            itemData.rawDataParsed = true;
             const pageProps = itemData.rawData.props.pageProps;
             //const collegeData = pageProps.collegeData;
             const pageData = pageProps.pageData;
