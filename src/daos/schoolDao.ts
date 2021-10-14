@@ -10,6 +10,10 @@ export class SchoolDao {
      return await SchoolModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
+   public async fetchCountNotParsed() : Promise<number> {
+     return await SchoolModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).count();
+   } 
+
    public async fetchCount(): Promise<number> {
      return await SchoolModel.find({duplicatedWith: null}).count();
    }
