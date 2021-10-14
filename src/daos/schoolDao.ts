@@ -7,7 +7,7 @@ export class SchoolDao {
    }
 
    public async fetchAllNotParsed(): Promise<School[]> {
-     return await SchoolModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+     return await SchoolModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
    public async fetchCount(): Promise<number> {

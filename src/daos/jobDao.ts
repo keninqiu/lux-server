@@ -7,7 +7,7 @@ export class JobDao {
    }
 
    public async fetchAllNotParsed(): Promise<Job[]> {
-     return await JobModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+     return await JobModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
    public async fetchCount(): Promise<number> {

@@ -8,7 +8,7 @@ export class DegreeDao {
    }
 
    public async fetchAllNotParsed(): Promise<Degree[]> {
-     return await DegreeModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+     return await DegreeModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
    public async fetchCount(): Promise<number> {

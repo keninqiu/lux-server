@@ -8,7 +8,7 @@ export class SkillDao {
    }
 
    public async fetchAllNotParsed(): Promise<Skill[]> {
-     return await SkillModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(100);
+     return await SkillModel.find({$and: [{duplicatedWith: null}, {$or: [{rawDataParsed: false}, {rawDataParsed: undefined}]} ]}).select('name slug rawDataParsed rawData').limit(10);
    }
 
    public async fetchCount(): Promise<number> {
