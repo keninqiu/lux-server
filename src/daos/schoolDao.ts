@@ -6,6 +6,10 @@ export class SchoolDao {
         return await SchoolModel.find({}).select('name slug category url');
    }
 
+   public async fetchAllNotParsed(): Promise<School[]> {
+     return await SchoolModel.find({rawDataParsed: false}).select('name slug rawDataParsed rawData').limit(100);
+   }
+
    public async fetchCount(): Promise<number> {
      return await SchoolModel.find({duplicatedWith: null}).count();
    }

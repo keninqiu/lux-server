@@ -17,9 +17,13 @@ export const start = async function() {
     /*
     Degree
     Category
-    
+    Certification
+    Employer
+    Industry
+    Job
+    School
     */
-    const url = 'http://luxs.luxacademy.cn/api/translate/all/untranslated/Degree';
+    const url = 'http://luxs.luxacademy.cn/api/translate/all/untranslated/City';
     const response = await fetch(url);
     const body = await response.json();
 

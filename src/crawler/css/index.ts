@@ -1,23 +1,35 @@
-var csstree = require('css-tree');
 const fs = require('fs');
 
 const cssDir = '/Library/WebServer/Documents/lux/client/src/assets/css/home';
 
-
+const selectors = [
+    '.two-columns-branded'
+];
 const parseCss = function(data: any) {
-    var ast = csstree.parse(data);
-
-    // traverse AST and modify it
-    csstree.walk(ast, function(node: any) {
-        if (node.type === 'ClassSelector' && node.name === 'banner') {
-            //node.name = 'hello';
-            //console.log('node==', node);
-            //console.log(csstree.generate(node));
-            console.log('node.content=', node.combinator);
+    let allCss = '';
+    for(let i = 0; i < selectors.length; i++) {
+        const selector = selectors[i];
+        while(true) {
+            const index = data.indexOf(selector);
+            if(index >= 0) {
+                const substring = data.substring(index);
+                const index1 = substring.indexOf('{');
+                const index2 = substring.indexOf('}');
+                const css = substring.substring(index1, index2 + 1);
+                allCss += selector + css + '\n';
+                data = substring.substring(index2 + 1);
+            } else {
+                break;
+            }
         }
-    });
 
-    //console.log(csstree.generate(ast));
+    }
+
+    if(allCss) {
+        console.log('allCss==', allCss);
+    }
+    
+
 };
 
 fs.readdir(cssDir, (err: any, files: any) => {
@@ -39,17 +51,3 @@ fs.readdir(cssDir, (err: any, files: any) => {
     });
   })
 
-  /*
-// parse CSS to AST
-var ast = csstree.parse('.example { world: "!" }');
-
-// traverse AST and modify it
-csstree.walk(ast, function(node: any) {
-    if (node.type === 'ClassSelector' && node.name === 'example') {
-        node.name = 'hello';
-    }
-});
-
-// generate CSS from AST
-console.log(csstree.generate(ast));
-*/
