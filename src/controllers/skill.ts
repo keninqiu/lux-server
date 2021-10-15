@@ -164,6 +164,7 @@ export class SkillController {
             const compensation = pageData.compensation;
             const byDimension = pageData.byDimension;
             itemData.reviews = pageProps.reviews;
+            itemData.related = [];
             itemData.compensation = {
                 salary: {
                     profileCount: compensation.salary ? compensation.salary.profileCount : 0,
