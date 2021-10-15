@@ -388,7 +388,7 @@ export class DegreeController {
                     }   
                 }
 
-                if(byDimension['Average HourlyRate by Job']) {
+                if(byDimension['Average Hourly Rate by Job']) {
                     const hourlyRateByJobItems = byDimension['Average Hourly Rate by Job']['rows'];
                     if(hourlyRateByJobItems && hourlyRateByJobItems.length > 0) {
                         for(let i = 0; i < hourlyRateByJobItems.length;i++) {
