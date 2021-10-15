@@ -12,7 +12,7 @@ import * as certification from './certification';
 import * as all from './all';
 
 export const start = async function() {
-    //await country.start();
+    await country.start();
     //await state.start();
     //await city.start();
     
@@ -27,7 +27,7 @@ export const start = async function() {
     //await industry.start();
     
     //await employer.start();
-    await all.start();
+    //await all.start();
     
     //await degree.start();
     
