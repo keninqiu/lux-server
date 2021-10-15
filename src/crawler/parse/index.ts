@@ -8,10 +8,13 @@ import * as skill from './skill';
 
 export const start = async function() {
     //await school.start();
-    await job.start();
+    //await job.start();
+    
     await employer.start();
+    
     await degree.start();
     await industry.start();
     await certification.start();
     await skill.start();
+    
 }

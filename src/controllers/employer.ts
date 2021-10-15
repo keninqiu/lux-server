@@ -35,6 +35,7 @@ export class EmployerController {
     private async fetchAllNotParsed(req: ICustomRequest, res: Response): Promise<Response> {
     try {
        const items = await this.dao.fetchAllNotParsed();
+       console.log('items==', items);
        for(let i = 0; i < items.length; i++) {
             let item = items[i];
             item = await this.parseRawData(item);
@@ -267,7 +268,7 @@ export class EmployerController {
                 salaryByDegree: [],
                 hourlyRateByDegree: []
             };
-
+            itemData.related = [];
             const promiseAll: any = [];
 
             if(byDimension) {
