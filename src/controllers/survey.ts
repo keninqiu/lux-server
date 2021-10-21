@@ -40,14 +40,18 @@ export class SurveyController {
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {
         const id = req.params.id;
-       const item = await this.surveyDao.fetchById(id);
+       let item = await this.surveyDao.fetchById(id);
 
        if(item && item.job) {
            const jobUrl = item.job.url;
+           console.log('jobUrl=', jobUrl);
            const skills = this.skillDao.getRelatedByJob(jobUrl); 
            const certifications = this.certificationDao.getRelatedByJob(jobUrl);
-           item['skills'] = skills;
-           item['certifications'] = certifications;
+           item = {
+               ...item,
+               skills,
+               certifications
+           };
            /*
             if(!item.job.rawData) {
 

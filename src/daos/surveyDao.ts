@@ -4,7 +4,7 @@ export class SurveyDao {
        return await SurveyModel.find({});
    }
    public async fetchById(id: string): Promise<any> {
-    return await SurveyModel.findById(id).populate('job');
+    return await SurveyModel.findById(id).populate('job').lean();
    }
 
    public async fetchAllByUserId(userId: string): Promise<Survey[] | null> {
