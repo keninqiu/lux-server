@@ -17,13 +17,27 @@ export class AuthController {
             const { firstName, lastName, email, employer, password } = req.body;
 
             const user = await this.authDao.register({ firstName, lastName, email, employer, password });
-          
-            return res.status(StatusCodes.OK).json(
-                {
-                    success: true,
-                    data: user
-                }
-            );
+            if(user) {
+                const data = { 
+                    userId: user._id, 
+                    email: user.email,
+                    role: '' 
+                };
+                const token = jwt.sign(
+                    data,
+                    Secret.jwtSecret,
+                    { expiresIn: "3650d" }
+                );
+                return res.status(StatusCodes.OK).json(
+                    {
+                        success: true,
+                        data: {
+                            token: token
+                        }
+                    }
+                );
+            }
+
           } catch (err: any) {
              return res.status(StatusCodes.BAD_REQUEST).json({
                  success: false,
@@ -57,7 +71,7 @@ export class AuthController {
             const token = jwt.sign(
                 data,
                 Secret.jwtSecret,
-                { expiresIn: "1000h" }
+                { expiresIn: "3650d" }
             );
 
             return res.status(StatusCodes.OK).json({

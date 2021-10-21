@@ -24,6 +24,10 @@ export class SkillDao {
           .skip((pageNum - 1) * pageSize).populate('namet').sort('name namet url');
    }
 
+   public async getRelatedByJob(jobUrl: string): Promise<Skill[]> {
+     return await SkillModel.find({$or: [{'byDimension.salaryByJob.url': jobUrl}, {'byDimension.hourlyRateByJob.url': jobUrl}]}).populate('namet').select('name namet');
+   }
+   
    public async fetchAllWithoutDuplicate(): Promise<Skill[]> {
      return await SkillModel.find({duplicatedWith: null}).populate('namet').select('name namet url category');
    }

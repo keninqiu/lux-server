@@ -20,20 +20,20 @@ export class CountryController {
     private schoolDao = new SchoolDao();
     @Get('')
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
-    try {
-       const items = await this.dao.fetchAll();
-       return res.status(StatusCodes.OK).json(
-        {
-            success: true,
-            data: items
-        }           
-       );
-    } catch (err: any) {
-       return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: err.message,
-    });
-    }
+        try {
+        const items = await this.dao.fetchAll();
+        return res.status(StatusCodes.OK).json(
+            {
+                success: true,
+                data: items
+            }           
+        );
+        } catch (err: any) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                error: err.message,
+            });
+        }
     }  
     
 
@@ -55,25 +55,7 @@ export class CountryController {
     }
     }  
 
-    @Get(':pageNum/:pageSize')
-    private async fetchCountries(req: ICustomRequest, res: Response): Promise<Response> {
-    try {
-       const pageNum = Number(req.params.pageNum);
-       const pageSize = Number(req.params.pageSize);
-       const items = await this.dao.fetchCountries(pageNum, pageSize);
-       return res.status(StatusCodes.OK).json(
-        {
-            success: true,
-            data: items
-        }           
-       );
-    } catch (err: any) {
-       return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: err.message,
-    });
-    }
-    } 
+
 
 
     @Get(':id')
@@ -417,6 +399,26 @@ export class CountryController {
         return itemData;
     }
 
+    @Get('name/:name')
+    private async fetchByName(req: Request, res: Response): Promise<Response> {
+        try {
+            const name = req.params.name;
+            console.log('name===', name);
+            const items = await this.dao.fetchByName(name);
+            return res.status(StatusCodes.OK).json(
+                {
+                    success: true,
+                    data: items
+                }           
+            );
+        } catch (err: any) {
+                return res.status(StatusCodes.BAD_REQUEST).json({
+                    success: false,
+                    error: err.message,
+                });
+        }
+    }
+
     @Get('code/:code')
     private async fetchByCode(req: Request, res: Response): Promise<Response> {
     try {
@@ -555,5 +557,23 @@ export class CountryController {
         }
     }      
 
-
+    @Get(':pageNum/:pageSize')
+    private async fetchCountries(req: ICustomRequest, res: Response): Promise<Response> {
+    try {
+       const pageNum = Number(req.params.pageNum);
+       const pageSize = Number(req.params.pageSize);
+       const items = await this.dao.fetchCountries(pageNum, pageSize);
+       return res.status(StatusCodes.OK).json(
+        {
+            success: true,
+            data: items
+        }           
+       );
+    } catch (err: any) {
+       return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        error: err.message,
+    });
+    }
+    } 
 }

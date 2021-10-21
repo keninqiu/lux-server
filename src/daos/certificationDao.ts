@@ -19,6 +19,10 @@ export class CertificationDao {
      return await CertificationModel.find({duplicatedWith: null}).count();
    }
 
+   public async getRelatedByJob(jobUrl: string): Promise<Certification[]> {
+     return await CertificationModel.find({$or: [{'byDimension.salaryByJob.url': jobUrl}, {'byDimension.hourlyRateByJob.url': jobUrl}]}).populate('namet').select('name namet');
+   }
+
    public async fetchCertifications(pageNum: number, pageSize: number): Promise<Certification[]> {
           return await CertificationModel.find({duplicatedWith: null}).limit(pageSize)
           .skip((pageNum - 1) * pageSize).populate('namet').sort('name namet url');

@@ -1,7 +1,18 @@
 import { CountryModel, Country, ICountry } from '../models/countrySchema';
+import { TranslateModel, Translate, ITranslate } from '../models/translateSchema';
+
 export class CountryDao {
    public async fetchAll(): Promise<Country[]> {
         return await CountryModel.find({}).populate('namet').select('name namet code url').sort('name');
+   }
+
+   public async fetchByName(name: string): Promise<Country[]> {
+        const translates = await TranslateModel.find({$and: [{type: 'Country'}, {$or: [{en: { "$regex": name, "$options": "i" }}, {zh: { "$regex": name, "$options": "i" }}]}]});
+        if(translates && translates.length > 0) {
+             const namets = translates.map(item => item._id);
+             return await CountryModel.find({namet: {$in:namets}}).populate('namet').select('name namet code url').sort('name');
+        }
+        return [];
    }
 
    public async fetchCount(): Promise<number> {

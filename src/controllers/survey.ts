@@ -1,19 +1,27 @@
 import { Request, Response } from 'express';
 import { Controller, Middleware, Get, Put, Post, Delete } from '@overnightjs/core';
 import { StatusCodes } from 'http-status-codes';
-import { CityDao } from "../daos/cityDao";
-import authAdmin from '../middlewares/auth-admin';
+import { SurveyDao } from "../daos/surveyDao";
+import { JobDao } from "../daos/jobDao";
+import auth from '../middlewares/auth';
 import { ICustomRequest } from '../interfaces/custom-request';
+import fetch from 'node-fetch';
+import { parse, HTMLElement } from 'node-html-parser';
+import { SkillDao } from '../daos/skillDao';
+import { CertificationDao } from '../daos/certificationDao';
 
-@Controller('api/city')
-export class CityController {
-    private dao = new CityDao();
-
+@Controller('api/survey')
+export class SurveyController {
+    private surveyDao = new SurveyDao();
+    private jobDao = new JobDao();
+    private skillDao = new SkillDao();
+    private certificationDao = new CertificationDao();
     @Get('')
-    @Middleware([authAdmin])
+    @Middleware([auth])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
     try {
-       const items = await this.dao.fetchAll();
+        const userId = req.decoded.userId;
+       const items = await this.surveyDao.fetchAllByUserId(userId);
        return res.status(StatusCodes.OK).json(
         {
             success: true,
@@ -26,71 +34,46 @@ export class CityController {
         error: err.message,
     });
     }
-    }  
-    
-    @Get('name/:countryName/:cityName')
-    private async fetchByName(req: Request, res: Response): Promise<Response> {
-        try {
-            const countryName = req.params.countryName;
-            const cityName = req.params.cityName;
-            const items = await this.dao.fetchByName(countryName, cityName);
-            return res.status(StatusCodes.OK).json(
-                {
-                    success: true,
-                    data: items
-                }           
-            );
-        } catch (err: any) {
-                return res.status(StatusCodes.BAD_REQUEST).json({
-                    success: false,
-                    error: err.message,
-                });
-        }
     }
-
-    @Get('count')
-    private async fetchCount(req: ICustomRequest, res: Response): Promise<Response> {
-    try {
-       const count = await this.dao.fetchCount();
-       return res.status(StatusCodes.OK).json(
-        {
-            success: true,
-            data: count
-        }           
-       );
-    } catch (err: any) {
-       return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: err.message,
-    });
-    }
-    }  
-
-    @Get(':pageNum/:pageSize')
-    private async fetchCities(req: ICustomRequest, res: Response): Promise<Response> {
-    try {
-       const pageNum = Number(req.params.pageNum);
-       const pageSize = Number(req.params.pageSize);
-       const items = await this.dao.fetchCities(pageNum, pageSize);
-       return res.status(StatusCodes.OK).json(
-        {
-            success: true,
-            data: items
-        }           
-       );
-    } catch (err: any) {
-       return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        error: err.message,
-    });
-    }
-    } 
 
     @Get(':id')
     private async fetchById(req: Request, res: Response): Promise<Response> {
     try {
         const id = req.params.id;
-       const item = await this.dao.fetchById(id);
+       const item = await this.surveyDao.fetchById(id);
+
+       if(item && item.job) {
+           const jobUrl = item.job.url;
+           const skills = this.skillDao.getRelatedByJob(jobUrl); 
+           const certifications = this.certificationDao.getRelatedByJob(jobUrl);
+           item['skills'] = skills;
+           item['certifications'] = certifications;
+           /*
+            if(!item.job.rawData) {
+
+                const url = item.job.url;
+                console.log('url===', url);
+                if(url) {
+                    const response = await fetch('https://www.payscale.com' + url);
+        
+                    const body = await response.text();
+                    
+                    const root = parse(body);
+                
+                    const nextDataNode = root.querySelector('#__NEXT_DATA__');
+                
+                    if(nextDataNode) {
+                        const dataText = nextDataNode.text;
+                        const rawData = JSON.parse(dataText);
+                        await this.jobDao.update(item.job._id, {rawData});
+                        item.job.rawData = rawData;
+                    }
+                }
+            }
+          */
+       }
+
+
        return res.status(StatusCodes.OK).json(
         {
             success: true,
@@ -106,14 +89,14 @@ export class CityController {
     }
 
     @Put(':id')
-    @Middleware([authAdmin])
+    @Middleware([auth])
     private async update(req: Request, res: Response) {
         
         try {
             // Parses the request body and assign to the variables on the left.
             const data = req.body;
             const id = req.params.id;
-            const item = await this.dao.update(id, data);
+            const item = await this.surveyDao.update(id, data);
             return res.status(StatusCodes.OK).json(
                 {
                     success: true,
@@ -129,15 +112,15 @@ export class CityController {
     }
 
     @Post()
-    @Middleware([authAdmin])
+    @Middleware([auth])
     private async add(req: ICustomRequest, res: Response) {
         
         try {
             // Parses the request body and assign to the variables on the left.
             const body = req.body;
-            
-            const item = await this.dao.create(body);
-
+            const userId = req.decoded.userId;
+            body['user'] = userId;
+            const item = await this.surveyDao.create(body);
             return res.status(StatusCodes.OK).json(
                 {
                     success: true,
@@ -154,12 +137,12 @@ export class CityController {
 
 
     @Delete(':id')
-    @Middleware([authAdmin])
+    @Middleware([auth])
     private async delete(req: Request, res: Response) {
         
         try {
             const id = req.params.id;
-            const item = await this.dao.delete(id);
+            const item = await this.surveyDao.delete(id);
             return res.status(StatusCodes.OK).json(
                 {
                     success: true,
@@ -172,18 +155,18 @@ export class CityController {
                  error: err.message
             });
         }
-    }    
+    }
 
     @Post('deleteMany')
-    @Middleware([authAdmin])
+    @Middleware([auth])
     private async deleteMany(req: Request, res: Response) {
         try {
             const ids = req.body;
-            const items = await this.dao.deleteMany(ids);
+            const item = await this.surveyDao.deleteMany(ids);
             return res.status(StatusCodes.OK).json(
                 {
                     success: true,
-                    data: items
+                    data: item
                 }
                 );
           } catch (err: any) {
@@ -193,6 +176,5 @@ export class CityController {
             });
         }
     }      
-
 
 }
