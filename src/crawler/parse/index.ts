@@ -10,11 +10,12 @@ export const start = async function() {
     //await school.start();
     //await job.start();
     
-    await employer.start();
+    //await employer.start();
     
-    await degree.start();
-    await industry.start();
+    //await degree.start();
+    
     await certification.start();
     await skill.start();
+    await industry.start();
     
 }
