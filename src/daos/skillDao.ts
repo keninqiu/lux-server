@@ -25,7 +25,9 @@ export class SkillDao {
    }
 
    public async getRelatedByJob(jobUrl: string): Promise<Skill[]> {
-     return await SkillModel.find({$or: [{'byDimension.salaryByJob.url': jobUrl}, {'byDimension.hourlyRateByJob.url': jobUrl}]}).populate('namet').select('name namet');
+     const skills = await SkillModel.find({$or: [{'byDimension.salaryByJob.url': jobUrl}, {'byDimension.hourlyRateByJob.url': jobUrl}]}).populate('namet').select('name namet');
+     console.log('skills=', skills);
+     return skills;
    }
    
    public async fetchAllWithoutDuplicate(): Promise<Skill[]> {
