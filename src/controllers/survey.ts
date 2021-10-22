@@ -45,12 +45,13 @@ export class SurveyController {
        if(item && item.job) {
            const jobUrl = item.job.url;
            console.log('jobUrl=', jobUrl);
-           const skills = this.skillDao.getRelatedByJob(jobUrl); 
-           const certifications = this.certificationDao.getRelatedByJob(jobUrl);
+           const promiseAll: any = [this.skillDao.getRelatedByJob(jobUrl), this.certificationDao.getRelatedByJob(jobUrl)];
+
+           const all = await Promise.all(promiseAll);
            item = {
                ...item,
-               skills,
-               certifications
+               skills: all[0],
+               certifications: all[1]
            };
            /*
             if(!item.job.rawData) {
