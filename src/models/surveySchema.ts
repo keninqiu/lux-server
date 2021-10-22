@@ -6,8 +6,17 @@ export interface ISurvey {
     job: string,
     years: number,
     city: string,
-    compensationType: string
+    compensationType: string,
+    avgYears: number,
+    minYears: number,
+    education: string,
+    skills: string[],
+    certifications: string[],
+    contractStatus: string,
+    isSupervisor: boolean
 }
+
+
 
 export interface Survey extends Document {
     type: string,
@@ -15,7 +24,14 @@ export interface Survey extends Document {
     job: string,
     years: number,
     city: string,
-    compensationType: string
+    compensationType: string,
+    avgYears: number,
+    minYears: number,
+    education: string,
+    skills: string[],
+    certifications: string[],
+    contractStatus: string,
+    isSupervisor: boolean
 }
 
 const SurveySchema = new Schema<Survey>({
@@ -35,7 +51,18 @@ const SurveySchema = new Schema<Survey>({
         type: Schema.Types.ObjectId,
         ref: 'City'
     },
-    compensationType: String
+    compensationType: String,
+    avgYears: Number,
+    minYears: Number,
+    education: String,
+    skills: [
+        String
+    ],
+    certifications: [
+        String
+    ],
+    contractStatus: String,
+    isSupervisor: Boolean
 });
 
 export const SurveyModel = model<Survey>("Survey", SurveySchema);
