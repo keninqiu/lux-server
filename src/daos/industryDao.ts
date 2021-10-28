@@ -19,6 +19,12 @@ export class IndustryDao {
      return await IndustryModel.find({duplicatedWith: null}).count();
    }
 
+   public async getRelatedByJob(jobUrl: string): Promise<Industry[]> {
+     const industries = await IndustryModel.find({$or: [{'byDimension.salaryByJob.url': new RegExp(jobUrl, 'gi')}, {'byDimension.hourlyRateByJob.url': new RegExp(jobUrl, 'gi')}]}).populate('namet').select('name namet');
+     console.log('industries=', industries);
+     return industries;
+   }
+
    public async fetchIndustries(pageNum: number, pageSize: number): Promise<Industry[]> {
           return await IndustryModel.find({duplicatedWith: null}).limit(pageSize)
           .skip((pageNum - 1) * pageSize).sort('name url category').populate('namet').sort('name namet url');

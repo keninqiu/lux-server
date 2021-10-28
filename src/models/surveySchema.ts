@@ -13,7 +13,26 @@ export interface ISurvey {
     skills: string[],
     certifications: string[],
     contractStatus: string,
-    isSupervisor: boolean
+    isSupervisor: boolean,
+    employerType: string,
+    employerProductActivity: string,
+    employerName: string,
+    averageSizeCompetitor: number,
+    isGovernmentContractor: boolean,
+    vacationWeeks: number,
+    hasHealthBenefit: boolean,
+    remoteWork: string,
+    otherBenefits: string[],
+
+    age: number,
+    gender: string,
+    militaryExperience: boolean,
+    roleBefore5Years: string,
+    jobSatisfaction: string,
+    jobStress: string,
+    jobMeaning: string,
+    remoteWorkExpectations: string,
+    isParent: boolean
 }
 
 
@@ -31,7 +50,25 @@ export interface Survey extends Document {
     skills: string[],
     certifications: string[],
     contractStatus: string,
-    isSupervisor: boolean
+    isSupervisor: boolean,
+    employerType: string,
+    employerProductActivity: string,
+    employerName: string,
+    averageSizeCompetitor: number,
+    isGovernmentContractor: boolean,
+    vacationWeeks: number,
+    hasHealthBenefit: boolean,
+    remoteWork: string,
+    otherBenefits: string[],
+    age: number,
+    gender: string,
+    militaryExperience: boolean,
+    roleBefore5Years: string,
+    jobSatisfaction: string,
+    jobStress: string,
+    jobMeaning: string,
+    remoteWorkExpectations: string,
+    isParent: boolean
 }
 
 const SurveySchema = new Schema<Survey>({
@@ -62,7 +99,27 @@ const SurveySchema = new Schema<Survey>({
         String
     ],
     contractStatus: String,
-    isSupervisor: Boolean
+    isSupervisor: Boolean,
+    employerType: String,
+    employerProductActivity: String,
+    employerName: String,
+    averageSizeCompetitor: Number,
+    isGovernmentContractor: Boolean,
+    vacationWeeks: Number,
+    hasHealthBenefit: Boolean,
+    remoteWork: String,
+    otherBenefits: [
+        String
+    ],
+    age: Number,
+    gender: String,
+    militaryExperience: Boolean,
+    roleBefore5Years: String,
+    jobSatisfaction: String,
+    jobStress: String,
+    jobMeaning: String,
+    remoteWorkExpectations: String,
+    isParent: Boolean
 });
 
 export const SurveyModel = model<Survey>("Survey", SurveySchema);

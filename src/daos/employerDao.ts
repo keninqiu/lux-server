@@ -19,6 +19,12 @@ export class EmployerDao {
      return await EmployerModel.find({duplicatedWith: null}).count();
    }
 
+   public async getRelatedByJob(jobUrl: string): Promise<Employer[]> {
+     const employers = await EmployerModel.find({$or: [{'byDimension.salaryByJob.url': new RegExp(jobUrl, 'gi')}, {'byDimension.hourlyRateByJob.url': new RegExp(jobUrl, 'gi')}]}).populate('namet').select('name namet');
+     console.log('employers=', employers);
+     return employers;
+   }
+
    public async fetchEmployers(pageNum: number, pageSize: number): Promise<Employer[]> {
           return await EmployerModel.find({duplicatedWith: null}).limit(pageSize)
           .skip((pageNum - 1) * pageSize).sort('name url category').populate('namet').sort('name namet url');

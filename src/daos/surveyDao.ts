@@ -4,11 +4,21 @@ export class SurveyDao {
        return await SurveyModel.find({});
    }
    public async fetchById(id: string): Promise<any> {
-    return await SurveyModel.findById(id).populate('job').lean();
+    return await SurveyModel.findById(id).populate('job').populate(
+        { 
+            path: 'city',
+            populate: {
+                path: 'state', 
+                populate: 'country'
+            }
+        }
+    ).lean();
    }
 
    public async fetchAllByUserId(userId: string): Promise<Survey[] | null> {
-    return await SurveyModel.find({user: userId});
+    return await SurveyModel.find({user: userId})
+    .populate({ path: 'city', populate: 'namet' })
+    .populate({ path: 'job', populate: 'namet' });
    }   
 
    public async create(data: ISurvey): Promise<Survey | null> {

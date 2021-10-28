@@ -2,20 +2,21 @@ import { Request, Response } from 'express';
 import { Controller, Middleware, Get, Put, Post, Delete } from '@overnightjs/core';
 import { StatusCodes } from 'http-status-codes';
 import { SurveyDao } from "../daos/surveyDao";
-import { JobDao } from "../daos/jobDao";
 import auth from '../middlewares/auth';
 import { ICustomRequest } from '../interfaces/custom-request';
-import fetch from 'node-fetch';
-import { parse, HTMLElement } from 'node-html-parser';
 import { SkillDao } from '../daos/skillDao';
 import { CertificationDao } from '../daos/certificationDao';
+import { IndustryDao } from '../daos/industryDao';
+import { EmployerDao } from '../daos/employerDao';
 
 @Controller('api/survey')
 export class SurveyController {
     private surveyDao = new SurveyDao();
-    private jobDao = new JobDao();
     private skillDao = new SkillDao();
     private certificationDao = new CertificationDao();
+    private industryDao = new IndustryDao();
+    private employerDao = new EmployerDao();
+
     @Get('')
     @Middleware([auth])
     private async fetchAll(req: ICustomRequest, res: Response): Promise<Response> {
@@ -45,13 +46,20 @@ export class SurveyController {
        if(item && item.job) {
            const jobUrl = item.job.url;
            console.log('jobUrl=', jobUrl);
-           const promiseAll: any = [this.skillDao.getRelatedByJob(jobUrl), this.certificationDao.getRelatedByJob(jobUrl)];
+           const promiseAll: any = [
+               this.skillDao.getRelatedByJob(jobUrl), 
+               this.certificationDao.getRelatedByJob(jobUrl),
+               this.industryDao.getRelatedByJob(jobUrl),
+               this.employerDao.getRelatedByJob(jobUrl)
+            ];
 
            const all = await Promise.all(promiseAll);
            item = {
                ...item,
                skills: all[0],
-               certifications: all[1]
+               certifications: all[1],
+               industries: all[2],
+               employers: all[3]
            };
            /*
             if(!item.job.rawData) {
