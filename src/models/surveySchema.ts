@@ -32,7 +32,20 @@ export interface ISurvey {
     jobStress: string,
     jobMeaning: string,
     remoteWorkExpectations: string,
-    isParent: boolean
+    isParent: boolean,
+
+    yearlyPay: number;
+    salaryHoursPerWeek: string;
+    hourlyPay: number;
+    hoursPerWeek: number;
+  
+    hasBonus: boolean;
+    annualBonus: number;
+    hasProfitShare: boolean;
+    profitShare: number;
+    hasSalesCommissions: boolean;
+    annualSalesCommissions: number;
+    annualSalesVolume: number;
 }
 
 
@@ -68,7 +81,19 @@ export interface Survey extends Document {
     jobStress: string,
     jobMeaning: string,
     remoteWorkExpectations: string,
-    isParent: boolean
+    isParent: boolean,
+    yearlyPay: number;
+    salaryHoursPerWeek: string;
+    hourlyPay: number;
+    hoursPerWeek: number;
+  
+    hasBonus: boolean;
+    annualBonus: number;
+    hasProfitShare: boolean;
+    profitShare: number;
+    hasSalesCommissions: boolean;
+    annualSalesCommissions: number;
+    annualSalesVolume: number;
 }
 
 const SurveySchema = new Schema<Survey>({
@@ -119,7 +144,19 @@ const SurveySchema = new Schema<Survey>({
     jobStress: String,
     jobMeaning: String,
     remoteWorkExpectations: String,
-    isParent: Boolean
+    isParent: Boolean,
+    yearlyPay: Number,
+    salaryHoursPerWeek: String,
+    hourlyPay: Number,
+    hoursPerWeek: Number,
+  
+    hasBonus: Boolean,
+    annualBonus: Number,
+    hasProfitShare: Boolean,
+    profitShare: Number,
+    hasSalesCommissions: Boolean,
+    annualSalesCommissions: Number,
+    annualSalesVolume: Number
 });
 
 export const SurveyModel = model<Survey>("Survey", SurveySchema);

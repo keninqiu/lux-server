@@ -15,10 +15,17 @@ export class SurveyDao {
     ).lean();
    }
 
-   public async fetchAllByUserId(userId: string): Promise<Survey[] | null> {
+   public async fetchAllByUserId(userId: string): Promise<any[] | null> {
     return await SurveyModel.find({user: userId})
-    .populate({ path: 'city', populate: 'namet' })
-    .populate({ path: 'job', populate: 'namet' });
+    .populate({ path: 'city', populate: [
+        'namet',
+        {
+            path: 'state', 
+            populate: 'country'
+        }
+    ] })
+    .populate({ path: 'job', populate: 'namet' })
+    .sort({_id: -1});
    }   
 
    public async create(data: ISurvey): Promise<Survey | null> {
